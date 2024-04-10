@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DashBoard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -29,7 +28,7 @@
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Category</a>
+              <a class="nav-link" href="#">Shop</a>
             </li>
             <li class="nav-item">
               <a class="nav-link roleBasedRedirect" href="#">About Us</a>
@@ -37,18 +36,30 @@
             <li class="nav-item">
               <a class="nav-link roleBasedRedirect" href="#">Contact Us</a>
             </li>
-
           </ul>
+
+
+
           <div class="login_register">
+            <div class="container-fluid search_bar">
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+
             <div class="login">
               <i class="fa-regular fa-user" style="color: white;"></i>
               <p class="user">LOGIN</p>
             </div>
-          </div>
-          <div class="cart">
+
             <div class="login">
-            <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
-              <p class="cart">CART</p>
+              <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
+              <p class="user_cart">CART</p>
+            </div>
+            
+            <div class="login">
+            <i class="fa-regular fa-heart" style="color: white;"></i>
             </div>
           </div>
         </div>
@@ -58,13 +69,10 @@
 
 
 
-
-
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
-  <script src="main.js"></script>
 </body>
 
 </html>
