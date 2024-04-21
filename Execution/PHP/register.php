@@ -14,7 +14,9 @@
 </head>
 
 <body>
+    <img src="../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
     <h2 class="fw-bolder text_center mt-3">REGISTER</h2>
+    
     <div class="container border border-2 rounded color_white mt-5">
         <form method="post" id="registrationForm">
             <div class="login_container mt-4">
