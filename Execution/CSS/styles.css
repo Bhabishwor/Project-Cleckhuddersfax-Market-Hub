@@ -1,18 +1,18 @@
-*{
+* {
     margin: 0rem;
     padding: 0rem;
-    
+
 }
 
-.text_center{
+.text_center {
     text-align: center;
 }
 
-body{
+body {
     height: 100%;
     width: 100%;
     background-attachment: fixed;
-    overflow:visible;
+    overflow: visible;
     /* background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
     background-image: url("../Image/container.png");
     background-size: cover;
@@ -21,41 +21,43 @@ body{
 }
 
 
-.container{
+.container {
     width: 25rem;
     margin-top: 4rem;
     background: white;
-    
+
 }
 
-.admin{
-    border-right: 1px solid gray; 
+.admin {
+    border-right: 1px solid gray;
     border-bottom: 1px solid gray;
     border-radius: 0.25rem 0 0.25rem 0;
 }
 
-.employee{
-    border-left: 1px solid gray; 
+.employee {
+    border-left: 1px solid gray;
     border-bottom: 1px solid gray;
     border-radius: 0 0.25rem 0 0.25rem;
 }
 
-.login-border{
+.login-border {
     background-color: gray;
 }
 
-.remove{
+.remove {
     text-decoration: none;
-    color: inherit; 
+    color: inherit;
 
 }
-.login{
+
+.login {
     width: 25rem;
     margin: -0.08rem 0 0 -0.85rem;
 
 }
 
-.login,.log{
+.login,
+.log {
     display: flex;
     justify-content: space-between;
 }
@@ -63,7 +65,7 @@ body{
 
 
 
-.log{
+.log {
     cursor: pointer;
     width: 15rem;
     height: 3rem;
@@ -73,29 +75,33 @@ body{
 
 }
 
-.log i{
+.log i {
     margin: 0.5rem 0.5rem 0 0;
 }
 
 
-.login_container{
+.login_container {
     margin: 1.5rem;
     display: grid;
 }
 
-.btn{
-    border: none;
-    background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+.registerContainer {
+    height: auto;
 }
 
-.btn:hover{
-    
+.btn {
+    border: none;
+    background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+}
+
+.btn:hover {
+
     background: darkmagenta;
     cursor: pointer;
     transition: background-color 0.5s ease-out;
 }
 
-.text_box{
+.text_box {
     padding: 1rem 0 0 0.5rem;
     width: 15rem;
     border: none;
@@ -104,13 +110,13 @@ body{
     background: white;
 }
 
-.logo{
+.logo {
     padding: 0.5rem;
     text-align: center;
 }
 
 
-.fa-brands{
+.fa-brands {
     padding: 0 1rem 0 1rem;
     cursor: pointer;
     font-size: 30px;
@@ -118,37 +124,33 @@ body{
 
 
 
-.age select{
+.age select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     color: gray;
     cursor: pointer;
-  }
+}
 
-.age i{
+.age i {
     cursor: pointer;
 }
 
 
-.error{
-    display: none;
-    padding: 0.5rem
-}
-
-#forgot_password{
+#forgot_password {
     margin-top: 0.5rem;
     margin-left: 6.5rem;
 }
+
 @media (max-width: 400px) {
-    .login{
+    .login {
         display: flex;
         flex-wrap: wrap;
     }
 
-   .log{
-    width: 5 0rem;
-   }
+    .log {
+        width: 5 0rem;
+    }
 
     .text_box {
         font-size: 14px;
