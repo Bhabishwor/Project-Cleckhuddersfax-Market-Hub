@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Home</title>
+    <title>Home | Cleckhuddersfax Market Hub</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -30,7 +30,7 @@
             margin-top: -20px;
         }
 
-        .bg-container {
+        .bg-category {
             background-image: url("../Image/container2.png");
             background-size: cover; /* Cover the entire background */
             background-position: center; /* Center the background */
@@ -44,7 +44,7 @@
     
     <div class="container-fluid p-5">
         <div class="row">
-            <div class="py-5 col-md-5 welcome-message">
+            <div class="py-5 col-md-5">
                 <p class="welcome-title">WELCOME TO CLECKHUDDERSFAX MARKET HUB</p>
                 <p class="welcome-text">Discover quality products curated just for you.</p>
             </div>
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Menu container -->
-    <div class="container bg-container px-5 my-3">
+    <div class="container bg-category px-5 my-3">
         <nav class="navbar navbar-expand-lg navbar-light">
             <ul class="navbar-nav w-100 d-flex flex-wrap justify-content-between">
                 <!-- Menu Item 1 -->
@@ -143,6 +143,7 @@
             </ul>
         </nav>
     </div>
+    
     <?php include "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
