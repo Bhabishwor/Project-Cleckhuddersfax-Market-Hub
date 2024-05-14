@@ -1,143 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 
 body {
-  font-family: 'Poppins', sans-serif; 
+  font-family: sans-serif; 
 }
 
-  
- 
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
 
-  
-  .search button {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY
-  }
 
-  .productimg {
-    width: 200px; 
-    height: 200px; 
-    object-fit: cover; 
-  }
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .shop-info {
-    display: flex; 
-  }
-  
-  .shop-image {
-    width: 30%; /* Adjust width as needed */
-    object-fit: cover; /* Optional: Ensure image fills space while maintaining aspect ratio */
-    margin: 20px; /* Optional: Add margin space around the image */
-    display: flex;
-    align-items: center; /* Center child elements vertically */
-  }
-  
-  .shop-image::before {
-    content: ""; /* Empty content for a pseudo-element */
-    flex-grow: 1; /* Make it grow and fill the available space */
-  }
-  
-  .shop-details {
-    flex: 1; 
-    padding: 20px; 
-  }
-  
-  .shop-details h2 {
-    margin-bottom: 10px; 
-  }
-  
+.productimg {
+  width: 200px; 
+  height: 200px; 
+  object-fit: cover; 
+}
 
-  .featured-products .container {
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: space-between; 
-    margin: 0 auto; 
-  }
+.shop-info {
+  display: flex; 
+}
 
-  .featured-products h2 {
-    text-align: center; 
-  }
+.shop-image {
+  width: 15%; /* Adjust width to make the shop image smaller */
+  object-fit: cover; /* Optional: Ensure image fills space while maintaining aspect ratio */
+  margin: 20px; /* Optional: Add margin space around the image */
+  display: flex;
+  align-items: center; /* Center child elements vertically */
+}
 
-  .container {
+.shop-details {
+  flex: 1; 
+  padding: 20px; 
+}
+
+.shop-details h2 {
+  margin-bottom: 10px; 
+  text-align: left;
+}
+
+.featured-products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr)); 
-    gap: 5px; 
+    grid-template-rows: auto 1fr; /* Define grid rows */
+    align-items: center; /* Optional: Align items horizontally */
+  }
+  
+  .featured-products h2 {
+    text-align: left; /* Align text to the left */
+    margin: 0 10px 10px 0; /* Optional: Add margin for spacing */
+  }
+  
+  .container { /* Assuming this container holds the product grid */
+    grid-row: 2; /* Place the product grid in the second row */
+    margin: 0;
+    padding: 0;
   }
   
 
-  .product {
-    flex: 1 0 20%; 
-    margin: 5px;
-  }
   
-  .productimg {
-    width: 100%; 
-    aspect-ratio: 16 / 9; 
-    object-fit: cover;
-  }
 
-  .product-name {
-    text-align: center; 
-    margin-top: 10px; 
-  }
-  
-  .review-section {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 5px;
-    margin-top: 50px;
-  }
-  
-  .review-section h2 {
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .review-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: space-between; 
-  }
-  
-  .review {
-   
-    width: calc(33.33% - 20px); 
-    margin: 10px; 
-  }
-  
-  .customer-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .review-info {
-    flex: 1; 
-  }
-  
-  .customer-name {
-    font-weight: bold;
-    margin-right: 5px;
-  }
-  
-  .review-rating {
-    font-size: 1.2em;
-    color: #f80; 
-  }
-  
-  .review-text {
-    text-align: left; 
-  }
-  
- 
+.product {
+  flex: 1 0 20%; 
+  margin: 5px;
+}
+
+.productimg {
+  width: 90%; 
+  aspect-ratio: 16 / 9; 
+  object-fit: cover;
+}
+
+.product-name {
+  text-align: center; 
+  margin-top: 10px; 
+}
+
+.review-section {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.review-section h2 {
+  font-size: 1.5em;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.review-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+}
+
+.review {
+  width: calc(33.33% - 20px); 
+  margin: 10px; 
+}
+
+.customer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.review-info {
+  flex: 1; 
+}
+
+.customer-name {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.review-rating {
+  font-size: 1.2em;
+  color: #f80; 
+}
+
+.review-text {
+  text-align: left; 
+}
+
