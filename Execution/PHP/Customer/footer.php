@@ -10,7 +10,7 @@
 
     <style>
         .bg-footer {
-            background-image: url("../Image/container.png");
+            background-image: url("../../Image/container.png");
             background-size: cover; /* Cover the entire background */
             background-position: center; /* Center the background */
             background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-sm px-5">
             <p><b>Location</b></p>
-            <a href="https://maps.app.goo.gl/AGGWoHjje36mcPnGA" target="_blank"><img src="../Image/map.png" alt="Collection Point Location" width="371.2" height="200"></a>
+            <a href="https://maps.app.goo.gl/AGGWoHjje36mcPnGA" target="_blank"><img src="../../Image/map.png" alt="Collection Point Location" width="371.2" height="200"></a>
         </div>
 
         <div class="col-sm px-1">
@@ -54,15 +54,15 @@
         <div class="col-sm px-1">
             <p><b>Social</b></p>
             <a href="https://facebook.com" target="_blank">
-                <img src="../Image/socials/facebook_white.png" alt="Facebook" width="38" height="38">
+                <img src="../../Image/socials/facebook_white.png" alt="Facebook" width="38" height="38">
             </a>
             <br><br>
             <a href="https://instagram.com" target="_blank">
-                <img src="../Image/socials/instagram_white.png" alt="Instagram" width="38" height="38">
+                <img src="../../Image/socials/instagram_white.png" alt="Instagram" width="38" height="38">
             </a>
             <br><br>
             <a href="https://twitter.com" target="_blank">
-                <img src="../Image/socials/x_white.png" alt="X" width="38" height="38">
+                <img src="../../Image/socials/x_white.png" alt="X" width="38" height="38">
             </a><br>
         </div>
     </div>
