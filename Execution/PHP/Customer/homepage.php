@@ -31,7 +31,7 @@
         }
 
         .bg-category {
-            background-image: url("../Image/container2.png");
+            background-image: url("../../Image/container2.png");
             background-size: cover; /* Cover the entire background */
             background-position: center; /* Center the background */
             background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -58,13 +58,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="../Image/homepage_slides/homepage_slide1.png" alt="First slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../Image/homepage_slides/homepage_slide1.png" alt="Second slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../Image/homepage_slides/homepage_slide1.png" alt="Third slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselHome" role="button" data-bs-slide="prev">
@@ -84,7 +84,7 @@
                 <!-- Menu Item 1 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../Image/categories/meat.png" alt="Meat" height="150" width="150">
+                        <img src="../../Image/categories/meat.png" alt="Meat" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item1">
                         <li><a class="dropdown-item" href="#">Option 1</a></li>
@@ -96,7 +96,7 @@
                 <!-- Menu Item 2 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../Image/categories/fresh_produce.png" alt="Fresh Produce" height="150" width="150">
+                        <img src="../../Image/categories/fresh_produce.png" alt="Fresh Produce" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item2">
                         <li><a class="dropdown-item" href="#">Option 4</a></li>
@@ -108,7 +108,7 @@
                 <!-- Menu Item 3 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../Image/categories/deli_items.png" alt="Deli Items" height="150" width="150">
+                        <img src="../../Image/categories/deli_items.png" alt="Deli Items" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item3">
                         <li><a class="dropdown-item" href="#">Option 7</a></li>
@@ -120,7 +120,7 @@
                 <!-- Menu Item 4 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../Image/categories/seafood.png" alt="Seafood" height="150" width="150">
+                        <img src="../../Image/categories/seafood.png" alt="Seafood" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item3">
                         <li><a class="dropdown-item" href="#">Option 7</a></li>
@@ -132,7 +132,7 @@
                 <!-- Menu Item 5 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../Image/categories/bakery.png" alt="Bakery" height="150" width="150">
+                        <img src="../../Image/categories/bakery.png" alt="Bakery" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item3">
                         <li><a class="dropdown-item" href="#">Option 7</a></li>

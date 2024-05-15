@@ -52,16 +52,13 @@
             <div class="login_container mt-3">
                 <button type="submit" class="btn btn-dark rounded-5 mb-4">Login</button>
 
+                <button type="button" class="btn btn-dark rounded-5 mb-4">
+                    <a href="register.php" class="remove">Register As Customer</a>
+                </button>
                 <button type="button" class="btn btn-dark rounded-5">
-                    <a href="register.php" class="remove">Register</a>
+                    <a href="register.php" class="remove">Register As Trader</a>
                 </button>
 
-            </div>
-            <div class="logo">
-                <p>Sign in Using</p>
-                <i class="fa-brands fa-facebook" style="color: #4267B2;"></i>
-                <i class="fa-brands fa-twitter" style="color: #1da1f2;"></i>
-                <i class="fa-brands fa-google-plus" style="color: #DB4A39;"></i>
             </div>
 
         </div>
