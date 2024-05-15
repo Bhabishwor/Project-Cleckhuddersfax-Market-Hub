@@ -22,7 +22,7 @@
       <div class="order-items">
         <div class="order-item">
           <div class="item-details">
-            <img src="1image.jpeg" alt="Product Image 1">
+            <img src="../../Image/HistoryImages/1image.jpeg" alt="Product Image 1">
             <div class="item-info">
               <p>Non-GMO Eggs</p>
               <p>Qty: 1</p>
@@ -41,7 +41,7 @@
       <div class.order-items">
         <div class="order-item">
           <div class="item-details">
-            <img src="2image.jpeg" alt="Product Image 2">
+            <img src="./../Image/HistoryImages/2image.jpeg" alt="Product Image 2">
             <div class="item-info">
               <p>Roma Tomatoes</p>
               <p>Qty: 2</p>
@@ -56,7 +56,7 @@
         <div class.order-items">
             <div class="order-item">
               <div class="item-details">
-                <img src="3image.jpeg" alt="Product Image 2">
+                <img src="./../Image/HistoryImages/3image.jpeg" alt="Product Image 2">
                 <div class="item-info">
                   <p>Plain Leafy Kale</p>
                   <p>Qty: 2</p>
