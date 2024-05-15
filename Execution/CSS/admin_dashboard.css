@@ -1,0 +1,62 @@
+    
+.search-bar input {
+ width: calc(100% - 100px); /* Adjusted input width */
+border: none;
+outline: none;
+}
+.home-and-search {
+  display: flex;
+  align-items: center;
+  margin-left: 300px; /* Adjusted to match sidebar width */
+  margin-bottom: 20px;
+  margin-top: 2em;
+}
+.home {
+  color: grey;
+  font-size: 2em;
+  text-decoration: none;
+}
+.home-and-search a {
+  margin-right: 10px; /* Add some space between HOME link and search bar */
+}
+
+.analytics-container {
+  max-width: 800px; /* Set a maximum width for the analytics section */
+  margin: 0 auto; /* Center the section horizontally */
+}
+
+.card-img-top {
+  max-height: 200px; /* Set a maximum height for the images */
+  object-fit: cover; /* Maintain aspect ratio and fill the container */
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    overflow: hidden;
+  }
+  .sidebar.show {
+    width: 250px;
+  }
+  .toggle-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #fff; /* Button background color */
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .home-and-search {
+    margin-left: 0; /* Adjusted for smaller screens */
+    margin-top: 5em;
+  }
+  .analytics-container {
+    max-width: 100%; /* Make the analytics section full width on smaller screens */
+  }
+  .main-content {
+    padding-left: 20px; /* Adjust padding to make space for hamburger icon */
+  }
+  
+}
