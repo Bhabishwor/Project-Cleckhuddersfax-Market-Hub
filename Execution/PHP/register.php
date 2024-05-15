@@ -139,6 +139,9 @@ include "connection/connection.php";
             $error++;
         }
 
+        $check_email = "";
+        $Result_email = "";
+
 
         if ($error == 0) {
             $password = password_hash(
@@ -147,11 +150,12 @@ include "connection/connection.php";
             );
 
 
+
             //$query = "INSERT INTO Register_Customer(Customer_Name, Customer_Email, Customer_Phone, Customer_Age, Customer_Gender, Customer_Username, Customer_Pass, Customer_Role) VALUES ('$name', '$email', '$phone', '$age', '$gender', '$username', '$password', '$role')";
     
-            $query = "INSERT INTO customer(customer_id, customer_name, customer_email, customer_phone_number, customer_username, customer_password, role, status) VALUES (1 ,'$name', '$email', '$phone', '$username', '$password', '$role', '$status')";
+            $query = "INSERT INTO customer(customer_id, customer_name, customer_email, customer_phone_number, customer_username, customer_password, role, status) VALUES (2 ,'$name', '$email', '$phone', '$username', '$password', '$role', '$status')";
 
-            //mysqli_query($connect, $query);
+            //mysqli_query($connect, $query);  N
     
             if ($result = oci_parse($conn, $query))
                 ; {

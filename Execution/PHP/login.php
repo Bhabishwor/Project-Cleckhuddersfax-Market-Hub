@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <form method="post" id="customerLogin">
+    <form method="post" id="customerLogin" action="loginprocess.php">
         <img src="../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
         <h2 class="fw-bolder text_center mt-3 ">LOGIN</h2>
         <div class="container border border-2 rounded color_white pb-4">
