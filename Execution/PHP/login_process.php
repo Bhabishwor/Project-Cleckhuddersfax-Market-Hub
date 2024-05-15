@@ -1,57 +1,47 @@
-<?php 
+<?php
 include "connection/connection.php";
-if (isset($_POST['submit'])) 
-	{
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$role = $_POST['role'];
-		$error = 0;
+echo "hello";
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+    $error = 0;
+
+    echo $email;
 
 
-		if ($error == 0) 
+    if ($error == 0) {
+        // Prepared statement to prevent SQL injection
+        $query = "SELECT * FROM users WHERE user_email = :email AND user_role = :role";
+        $stmt = oci_parse($conn, $query);
 
-		{
+        oci_bind_by_name($stmt, ':email', $email);
+        oci_bind_by_name($stmt, ':role', $role);
 
-				$query = "Select * from customer where Username = '".$username."' and Role = '".$role."'";
-				
-			//$query = "Select * from Register_Customer where Customer_Username = '".$username."'";
-			//echo $query;
-			//die();
-			$result = oci_parse($conn,$query);
-	 		oci_execute($result);
+        oci_execute($stmt);
 
-			if($row = oci_fetch_assoc($result))
-			{
-				if (password_verify($password, $row['PASSWORD']) && $row['STATUS']=='Verified') 
-				{
-					$_SESSION['username'] = $username;
-					$_SESSION['role'] = $row['ROLE'];
-					$_SESSION['id'] = $row['USER_ID'];
-					$_SESSION['passmessage']="Logged in Successfully";
- 					header("Location: Customer/homepage.php");		
-				}
-				elseif ($row['STATUS']!='Verified') {
-					$_SESSION['failmessage']="Your account is not verified yet";
-					header("Location: login.php");
-				}
-				else 
-				{
-					$_SESSION['failmessage']="Authentication failed! Wrong Credentials entered";
-					header("Location: login.php");
-				}
+        if ($row = oci_fetch_assoc($stmt)) {
+            echo $row;
 
-				
-			}
-			else 
-				{
-					$_SESSION['failmessage']="Authentication failed! Wrong Credentials entered";
-					header("Location: login.php");
-					
-				}
+            if (password_verify($password, $row['USER_PASSWORD'])) {
+                session_start();
+                $_SESSION['email'] = $email; 
+                $_SESSION['role'] = $row['ROLE'];
+                $_SESSION['id'] = $row['USER_ID'];
+                $_SESSION['name'] = $row['USER_NAME'];
+                $_SESSION['passmessage'] = "Logged in Successfully";
+                header("Location: Customer/homepage.php");
+            } else {
+                $_SESSION['failmessage'] = "Authentication failed! Wrong Credentials entered";
+                header("Location: login.php");
+            }
+        } else {
+            $_SESSION['failmessage'] = "Authentication failed! Wrong Credentials entered";
+            header("Location: login.php");
+        }
 
-		
-		}
-
-	}
+        oci_free_statement($stmt); // Close the statement handle
+    }
+}
 
 ?>

@@ -39,7 +39,7 @@ include "connection/connection.php";
         $name = $_POST['fullname'];
         $email = $_POST['email'];
         $phone = $_POST['phoneNum'];
-        $username = $_POST['username'];
+        $address = $_POST['address'];
         $password = $_POST['upassword'];
         $password_confirm = $_POST['cpassword'];
         $role = "customer";
@@ -49,7 +49,7 @@ include "connection/connection.php";
         // Session
     
         $_SESSION['name'] = $name;
-        $_SESSION['username'] = $username;
+        $_SESSION['address'] = $address;
         $_SESSION['email'] = $email;
         $_SESSION['phone'] = $phone;
 
@@ -65,31 +65,13 @@ include "connection/connection.php";
             $error++;
         }
 
-
-        if (strlen($username) < 5) {
-            $error_username = "Username should be atleast five characters";
-            $error++;
-        }
-
-
-        if ($username == "") {
-            $error_username = "Please enter your username";
-            $error++;
-        }
-
-
-        if (!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
-            $error_email = "Please enter a valid email, like yourname@abc.com";
-            $error++;
-        }
-
         if ($email == "") {
             $error_email = "Please enter your email";
             $error++;
         }
 
-        if (!preg_match('/^[0-9]{10}+$/', $phone)) {
-            $error_phone = "Please enter valid mobile number";
+        if (!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
+            $error_email = "Please enter a valid email, like yourname@abc.com";
             $error++;
         }
 
@@ -98,6 +80,21 @@ include "connection/connection.php";
             $error++;
         }
 
+        if ($address == "") {
+            $error_phone = "Please enter your address";
+            $error++;
+
+        }
+        
+        if ($password == "") {
+            $error_passwd = "Please enter password";
+            $error++;
+        }
+
+        if ($password_confirm == "") {
+            $error_passwdConfirm = "No password given";
+            $error++;
+        }
 
         if (!preg_match('@[A-Z]@', $password)) {
             $error_passwd = "Password must include an uppercase character";
@@ -124,13 +121,9 @@ include "connection/connection.php";
             $error++;
         }
 
-        if ($password == "") {
-            $error_passwd = "Please enter password";
-            $error++;
-        }
 
-        if ($password_confirm == "") {
-            $error_passwdConfirm = "No password given";
+        if (!preg_match('/^[0-9]{10}+$/', $phone)) {
+            $error_phone = "Please enter valid mobile number";
             $error++;
         }
 
@@ -139,8 +132,24 @@ include "connection/connection.php";
             $error++;
         }
 
-        $check_email = "";
-        $Result_email = "";
+        $check_email = "SELECT COUNT(*) as email_count FROM users WHERE user_email = :email";
+        $bind_email = oci_parse($conn, $check_email);
+
+        oci_bind_by_name($bind_email, ':email', $email);
+
+
+        if (oci_execute($bind_email)) {
+            $result = oci_fetch_assoc($bind_email);
+
+
+
+            if ($result["EMAIL_COUNT"] > 0) {
+                $error_email = "Email already exists!";
+                $error++;
+            }
+        }
+
+
 
 
         if ($error == 0) {
@@ -153,39 +162,26 @@ include "connection/connection.php";
 
             //$query = "INSERT INTO Register_Customer(Customer_Name, Customer_Email, Customer_Phone, Customer_Age, Customer_Gender, Customer_Username, Customer_Pass, Customer_Role) VALUES ('$name', '$email', '$phone', '$age', '$gender', '$username', '$password', '$role')";
     
-            $query = "INSERT INTO customer(customer_id, customer_name, customer_email, customer_phone_number, customer_username, customer_password, role, status) VALUES (2 ,'$name', '$email', '$phone', '$username', '$password', '$role', '$status')";
+            $query = "INSERT INTO users(user_name, user_address, user_email, user_phone_number, user_password, user_role, user_status) VALUES (:name, :address, :email, :phone, :password, :role, :status)";
+            $bind_stmnt = oci_parse($conn, $query);
 
-            //mysqli_query($connect, $query);  N
-    
-            if ($result = oci_parse($conn, $query))
-                ; {
-                oci_execute($result);
+            oci_bind_by_name($bind_stmnt, ':name', $name);
+            oci_bind_by_name($bind_stmnt, ':email', $email);
+            oci_bind_by_name($bind_stmnt, ':address', $address);
+            oci_bind_by_name($bind_stmnt, ':phone', $phone);
+            oci_bind_by_name($bind_stmnt, ':password', $password);
+            oci_bind_by_name($bind_stmnt, ':role', $role);
+            oci_bind_by_name($bind_stmnt, ':status', $status);
 
-                $success = "Registration successful";
+
+            $result = oci_execute($bind_stmnt);
+
+            if ($result) {
+                $success = "Registration Successful!";
 
 
-                $_SESSION['passmessage'] = "Account Registration Successful, click to <a href='login.php'>verify</a>";
-
-                $select_email = "SELECT * FROM customer where customer_email = '$email'";
-                $email_result = oci_parse($conn, $select_email);
-                oci_execute($email_result);
-                //echo $select_email;
-                //die();
-    
-
-                // if ($row = oci_fetch_assoc($email_result)) {
-                //     $token = openssl_random_pseudo_bytes(16);
-                //     $userID = $row['USER_ID'];
-                //     $token = bin2hex($token);
-    
-                //     $token_query = "INSERT INTO PASSWORD_RESET VALUES ('$token', '$userID')";
-                //     $token_result = oci_parse($conn, $token_query);
-                //     oci_execute($token_result);
-                //     header("Location: customer_verify_email.php?token=$token&id=$userID&email=$email");
-                // }
-    
                 $_SESSION['name'] = "";
-                $_SESSION['username'] = "";
+                $_SESSION['address'] = "";
                 $_SESSION['email'] = "";
                 $_SESSION['phone'] = "";
                 session_destroy();
@@ -197,10 +193,11 @@ include "connection/connection.php";
                 // Set refresh time to 1 second and target URL
                 echo '<meta http-equiv="refresh" content="1;url=' . $target_url . '">';
             }
-            //echo $query;
         }
-
+        //echo $query;
+    
     }
+
 
 
     ?>
@@ -223,14 +220,13 @@ include "connection/connection.php";
                             ?>
                     </div>
 
-                    <div class="input-container Username">
-                        <i class="icon fas fa-user"></i>
-                        <input type="text" class="text_box" placeholder="Username" name="username" value="<?php if (isset($_SESSION['username']))
-                        echo $_SESSION['username']; ?>" />
+                    <div class="input-container Email">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="text" class="text_box" placeholder="Email" name="email" value="<?php if (isset($_SESSION['email']))
+                        echo $_SESSION['email']; ?>" />
                     <hr />
-                    <?php if (isset($error_username))
-                        echo '<div>' . $error_username . '</div>'; ?>
-
+                    <?php if (isset($error_email))
+                        echo '<div>' . $error_email . '</div>'; ?>
                 </div>
 
 
@@ -250,13 +246,13 @@ include "connection/connection.php";
                         echo '<div>' . $error_passwdConfirm . '</div>'; ?>
                 </div>
 
-                <div class="input-container Email">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="text" class="text_box" placeholder="Email" name="email" value="<?php if (isset($_SESSION['email']))
-                        echo $_SESSION['email']; ?>" />
+                <div class="input-container Address">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" class="text_box" placeholder="Address" name="address" value="<?php if (isset($_SESSION['address']))
+                        echo $_SESSION['address']; ?>" />
                     <hr />
-                    <?php if (isset($error_email))
-                        echo '<div>' . $error_email . '</div>'; ?>
+                    <?php if (isset($error_address))
+                        echo '<div>' . $error_address . '</div>'; ?>
                 </div>
 
 

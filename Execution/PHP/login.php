@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <form method="post" id="customerLogin" action="loginprocess.php">
+    <form method="POST" id="customerLogin" action="login_process.php">
         <img src="../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
         <h2 class="fw-bolder text_center mt-3 ">LOGIN</h2>
         <div class="container border border-2 rounded color_white pb-4">
@@ -23,8 +23,8 @@
                 <div class="Username">
                     <label>Username</label>
                     <div class="input-container">
-                        <i class="icon fas fa-user"></i>
-                        <input type="text" class="text_box" placeholder="Username" name="username">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="text" class="text_box" placeholder="Email" name="email">
                         <hr>
                     </div>
                 </div>
@@ -36,6 +36,14 @@
                         <input type="password" class="text_box" placeholder="Password" name="password">
                         <hr>
                     </div>
+                </div>
+
+                <div class="user-type mt-2 mb-3">
+                    <label for="userType" class="mb-2 fw-bolder">I am a:</label>
+                    <select class="form-select" id="userType" name="role">
+                        <option value="customer">Customer</option>
+                        <option value="trader">Trader</option>
+                    </select>
                 </div>
 
                 <label>
@@ -67,7 +75,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="../JS/main.js"></script>
+    <!-- <script src="../JS/main.js"></script> -->
 </body>
 
 </html>
