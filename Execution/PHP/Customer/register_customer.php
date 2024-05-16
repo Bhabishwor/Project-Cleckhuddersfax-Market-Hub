@@ -1,5 +1,5 @@
 <?php
-include "connection/connection.php";
+include "../connection/connection.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@ include "connection/connection.php";
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <link rel="stylesheet" href="../CSS/styles.css" />
+    <link rel="stylesheet" href="../../CSS/styles.css" />
 
     <style type="">
 
@@ -185,10 +185,9 @@ include "connection/connection.php";
                 $_SESSION['email'] = "";
                 $_SESSION['phone'] = "";
                 session_destroy();
-                // $_SESSION['passmessage'] = "Account Registration Successful";
-                // header("Location: login.php");
+
     
-                $target_url = "login.php";
+                $target_url = "../login.php";
 
                 // Set refresh time to 1 second and target URL
                 echo '<meta http-equiv="refresh" content="1;url=' . $target_url . '">';
@@ -202,7 +201,7 @@ include "connection/connection.php";
 
     ?>
 
-    <img src="../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
+    <img src="../../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
     <h2 class="fw-bolder text_center mt-3">REGISTER</h2>
 
     <div class="container border border-2 rounded color_white mt-5 registerContainer">

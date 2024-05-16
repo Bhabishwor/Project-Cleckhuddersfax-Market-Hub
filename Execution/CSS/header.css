@@ -97,6 +97,7 @@ body {
     align-items: center;   
     color: white;
     margin-right: 1rem;
+    cursor: pointer;
     
 }
 
@@ -104,7 +105,11 @@ body {
     align-items: center;
     padding-top: 1rem;
     padding-left: 0.5rem;
+    cursor: pointer;
 }
+
+
+
 
 
 

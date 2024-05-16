@@ -1,7 +1,11 @@
 <?php
-    session_start();
-    $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'LOGIN';
-    ?>
+session_start(); // Start the session at the beginning of the script
+
+// Check if the 'name' session variable is set and display it
+$name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
+// $name = "";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +16,23 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="stylesheet" href="../../CSS/header.css">
+
+  <style>
+    .button-icon-only {
+      background: none;
+      /* Remove background */
+      border: none;
+      /* Remove border */
+      padding: 0;
+      /* Remove padding */
+      margin: 0 0.5rem;
+    }
+
+    .link-decoration{
+      text-decoration: none;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -52,19 +73,45 @@
               </form>
             </div>
 
-            <div class="login">
-              <i class="fa-regular fa-user" style="color: white;"></i>
-              <p class="user">LOGIN</p>
+
+            <div class="dropdown">
+              <!-- Dropdown toggle button -->
+              <?php
+              if ($name != "LOGIN") {
+                echo "<button class='btn login button-icon-only dropdown-toggle' type='button' id='dropdownMenuButton'
+                 data-bs-toggle='dropdown' aria-expanded='false'>
+                <i class='fa-regular fa-user mx-1' style='color: white;'></i>";
+
+                echo "<span class='user' style='color : white;'>" . $name . "</span>";
+
+                echo "</button>";
+              } 
+              else {
+                echo "<a class='link-decoration' href='../login.php'>";
+                echo"<button class='login button-icon-only' type='button'>
+               <i class='fa-regular fa-user mx-1' style='color: white;'></i>";
+                  echo "<span class='user' style='color : white;'>" . $name . "</span>";
+                  echo"</button>";
+                  echo"</a>";
+              }
+              ?>
+              
+
+              <!-- Dropdown menu -->
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="user_profile.php">User Profile</a></li>
+                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+              </ul>
             </div>
 
-            <div class="login">
+            <button class="login button-icon-only">
               <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
               <p class="user_cart">CART</p>
-            </div>
-            
-            <div class="login">
-            <i class="fa-regular fa-heart" style="color: white;"></i>
-            </div>
+            </button>
+
+            <button class="login button-icon-only">
+              <i class="fa-regular fa-heart" style="color: white;"></i>
+            </button>
           </div>
         </div>
       </div>
