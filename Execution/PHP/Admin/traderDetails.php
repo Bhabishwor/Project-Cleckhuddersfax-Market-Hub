@@ -23,6 +23,9 @@
 </head>
 
 <body>
+        <?php
+        include "admin_navigation_pane.php";
+        ?>
     <div class="container trader_search mt-3 mb-3">
         <h3>Trader</h3>
         <form class="d-flex search_bar" role="search">

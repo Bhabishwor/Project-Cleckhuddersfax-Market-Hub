@@ -10,8 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $error = 0;
 
 
+    if($email == "admin@communityharvest.com" && $password == "admin123"){
+        header("Location: Admin/admin_dashboard.php");
+    }
 
-    if ($error == 0) {
+    elseif ($error == 0) {
+      
         // Prepared statement to prevent SQL injection
         $query = "SELECT * FROM users WHERE user_email = :email AND user_role = :role";
         $stmt = oci_parse($conn, $query);

@@ -3,6 +3,7 @@ session_start(); // Start the session at the beginning of the script
 
 // Check if the 'name' session variable is set and display it
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
+$currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 // $name = "";
 
 ?>
@@ -49,17 +50,17 @@ $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 custom-nav-links">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
+            <li class="nav-item <?php echo ($currentPage == "homepage") ? 'active' : ''; ?>">
+              <a class="nav-link" href="homepage.php">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Shop</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link roleBasedRedirect" href="#">About Us</a>
+            <li class="nav-item <?php echo ($currentPage == "about_us") ? 'active' : ''; ?>">
+              <a class="nav-link roleBasedRedirect" href="about_us.php">About Us</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link roleBasedRedirect" href="#">Contact Us</a>
+            <li class="nav-item <?php echo ($currentPage == "contact_us") ? 'active' : ''; ?>">
+              <a class="nav-link roleBasedRedirect" href="contact_us.php">Contact Us</a>
             </li>
           </ul>
 

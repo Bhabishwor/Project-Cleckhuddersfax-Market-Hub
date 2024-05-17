@@ -1,3 +1,7 @@
+<?php
+$currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +26,7 @@
       transition: transform 0.3s ease-in-out; /* Added transition effect */
       transform: translateX(0); /* Keep sidebar open by default */
       z-index: 999; /* Set higher z-index */
-      background-image: url('container.png');
+      background-image: url('../../Image/container.png');
       background-size: cover; /* Cover the entire sidebar */
       background-repeat: no-repeat; /* Do not repeat the image */
       font-size: 1.5em;
@@ -113,31 +117,31 @@
     &#9776; <!-- Hamburger icon -->
   </div>
 
-  <div class="container-fluid">
+  <div class="container w-25">
     <div class="row">
       <!-- Sidebar -->
       <div class="col-lg-3 col-md-4">
         <div class="sidebar" id="sidebar">
           <div>
             <div class="sidebar-logo">
-              <img src="logo.png" alt="Logo" style="width: 150px;">
+              <img src="../../Image/logo.png" alt="Logo" style="width: 150px;">
             </div>
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link home" href="#"><i class="fas fa-home"></i> Home</a>
                 <ul class="submenu">
-                  <li><a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                  <li><a class="nav-link" href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                   <li><a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
                 </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-users"></i> Trader</a>
                 <ul class="submenu">
-                  <li><a class="nav-link" href="#"><i class="fas fa-info-circle"></i> Trader Information</a></li>
+                  <li><a class="nav-link" href="traderDetails.php"><i class="fas fa-info-circle"></i> Trader Information</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Authentication</a>
+                <a class="nav-link" href="authentication.php"><i class="fas fa-sign-in-alt"></i> Authentication</a>
               </li>
             </ul>
           </div>

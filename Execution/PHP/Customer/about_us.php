@@ -73,7 +73,7 @@
     <div class="container p-5 offset-md-1">
         <div class="row">
             <div class="col-md-6">
-                <img src="../Image/team/Sanskriti.jpeg" alt="Sanskriti Dhungel" width="250" height="300">
+                <img src="../../Image/team/Sanskriti.jpeg" alt="Sanskriti Dhungel" width="250" height="300">
             </div>
 
             <div class="col-md-6">
@@ -91,7 +91,7 @@
             </div>
 
             <div class="col-md-6">
-                <img src="../Image/team/Arpit.jpeg" alt="Arpit Sharma" width="250" height="300">
+                <img src="../../Image/team/Arpit.jpeg" alt="Arpit Sharma" width="250" height="300">
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@
     <div class="container p-5 offset-md-1">
         <div class="row">
             <div class="col-md-6">
-                <img src="../Image/team/Aayusha.jpeg" alt="Aayusha Maharjan" width="250" height="300">
+                <img src="../../Image/team/Aayusha.jpeg" alt="Aayusha Maharjan" width="250" height="300">
             </div>
 
             <div class="col-md-6">
@@ -117,7 +117,7 @@
             </div>
 
             <div class="col-md-6">
-                <img src="../Image/team/Bhabishwor.jpeg" alt="Bhabishwor Gurung" width="250" height="300">
+                <img src="../../Image/team/Bhabishwor.jpeg" alt="Bhabishwor Gurung" width="250" height="300">
             </div>
         </div>
     </div>
@@ -125,7 +125,7 @@
     <div class="container p-5 offset-md-1">
         <div class="row">
             <div class="col-md-6">
-                <img src="../Image/team/Sana.jpeg" alt="Sana Banu" width="250" height="300">
+                <img src="../../Image/team/Sana.jpeg" alt="Sana Banu" width="250" height="300">
             </div>
 
             <div class="col-md-6">
@@ -143,15 +143,16 @@
             </div>
 
             <div class="col-md-6">
-                <img src="../Image/team/Sindhu.jpeg" alt="Sindhu Thapa Magar" width="250" height="300">
+                <img src="../../Image/team/Sindhu.jpeg" alt="Sindhu Thapa Magar" width="250" height="300">
             </div>
         </div>
     </div>
 
-    <div><img src="../Image/about us.png" alt="" class="container-fluid p-5"></div>
+    <div><img src="../../Image/about us.png" alt="" class="container-fluid p-5"></div>
 
-    <?php include "footer.php"; ?>
+
     
+    <?php include "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
