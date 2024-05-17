@@ -3,40 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>Home | Cleckhuddersfax Market Hub</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        .welcome-title {
-            font-size: 35px;
-            font-weight: bold;
-            color: #3e4652;
-            margin-top: 30px;
-        }
-
-        .welcome-text {
-            font-size: 16px;
-            font-weight: bold;
-            color: #3e4652;
-            margin-top: -20px;
-        }
-
-        .bg-category {
-            background-image: url("../../Image/container2.png");
-            background-size: cover; /* Cover the entire background */
-            background-position: center; /* Center the background */
-            background-repeat: no-repeat; /* Prevent the background from repeating */
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../CSS/main.css">
 </head>
 
 <body>
@@ -44,13 +17,13 @@
     
     <div class="container-fluid p-5">
         <div class="row">
-            <div class="py-5 col-md-5">
-                <p class="welcome-title">WELCOME TO CLECKHUDDERSFAX MARKET HUB</p>
-                <p class="welcome-text">Discover quality products curated just for you.</p>
+            <div class="container p-5 col-md-5">
+                <p class="title pt-3 mb-0">WELCOME TO CLECKHUDDERSFAX MARKET HUB</p>
+                <p>Discover quality products curated just for you.</p>
             </div>
                 
 
-            <div id="carouselHome" class="carousel slide col-md-7" data-bs-ride="carousel">
+            <div id="carouselHome" class="container carousel slide col-md-7" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-bs-target="#carouselHome" data-bs-slide-to="0" class="active"></li>
                     <li data-bs-target="#carouselHome" data-bs-slide-to="1"></li>
@@ -78,8 +51,8 @@
     </div>
 
     <!-- Menu container -->
-    <div class="container bg-category px-5 my-3">
-        <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container heritage1 px-5 my-3">
+        <nav class="navbar navbar-expand-lg navbar-light pt-3">
             <ul class="navbar-nav w-100 d-flex flex-wrap justify-content-between">
                 <!-- Menu Item 1 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
@@ -145,6 +118,10 @@
     </div>
     
     <?php include "footer.php"; ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>
