@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #e3e3e3 !important;
+    font-family: 'Poppins' !important;
+    color: #3e4652 !important;
+    font-size: 1rem !important;
+}
+
+.box{
+    padding: 1rem;
+    margin: 2rem;
+    background-color: white;
+}
+
+.title{
+    font-size: 180%;
+    font-weight: 900;
+}
+
+.heritage1{
+    background-image: url('../Image/heritage/container1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.heritage2{
+    background-image: url('../Image/heritage/container2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.heritage3{
+    background-image: url('../Image/heritage/container3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.heritage4{
+    background-image: url('../Image/heritage/container4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
