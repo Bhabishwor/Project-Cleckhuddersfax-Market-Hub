@@ -6,6 +6,26 @@ $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
 $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 // $name = "";
 
+include '../connection/connection.php';
+
+
+// Handle search query
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $search = $_POST['search'];
+    $sort = in_array(($sort = $_GET['sort'] ?? 'name'), ['name', 'price']) ? $sort : 'name';
+    $sql = "SELECT * FROM products" . (!empty($search) ? " WHERE name LIKE '%' || :search || '%'" : "") . " ORDER BY $sort ASC";
+    $stmt = oci_parse($conn, $sql);
+
+    oci_bind_by_name($stmt, ":search", $search);
+    oci_execute($stmt);
+    
+    // Display results
+    while (($row = oci_fetch_array($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
+        echo "ID: " . $row['ID'] . " - Name: " . $row['NAME'] . " - Price: $" . $row['PRICE'] . "<br>";   //Update this accordig to database field
+    }
+}
+
+oci_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,8 +88,8 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 
           <div class="login_register">
             <div class="container-fluid search_bar">
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <form class="d-flex" role="search" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
@@ -128,3 +148,5 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 </body>
 
 </html>
+
+
