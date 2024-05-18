@@ -4,6 +4,9 @@ session_start();
 $errorMsg = (isset($_SESSION['failmessage'])) ? $_SESSION['failmessage'] : '';
 unset($_SESSION['failmessage']);
 
+$successMsg = (isset($_SESSION['success_msg'])) ? $_SESSION['success_msg'] : '';
+unset($_SESSION['success_msg']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +70,9 @@ unset($_SESSION['failmessage']);
             <div id="error_customerLogin">
                 <?php
                 // Display the error message if it's set
+                if($successMsg){
+                    echo "<div class='alert alert-success' role='alert'>" . $successMsg . "</div>"; 
+                }
                 if ($errorMsg) {
                     echo "<div class='alert alert-danger' role='alert'>" . $errorMsg . "</div>";
                 }
