@@ -36,6 +36,48 @@
             background-position: center; /* Center the background */
             background-repeat: no-repeat; /* Prevent the background from repeating */
         }
+ 
+        /* Product Card */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+            transition: box-shadow 0.3s ease; /* Add transition effect for hover */
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase box shadow on hover */
+        }
+
+        .card-img-container {
+            height: 300px; /* Set a larger fixed height for the image container */
+            overflow: hidden; /* Hide any overflow from larger images */
+        }
+
+        .card img {
+            width: 100%; /* Ensure the image fills its container */
+            height: auto; /* Maintain aspect ratio */
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .card-body {
+            padding: 15px; /* Add padding inside the card body */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text p {
+            margin: 0; /* Remove default margin for paragraphs */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Truncate text with an ellipsis */
+            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        
     </style>
 </head>
 
@@ -136,15 +178,84 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item3">
                         <li><a class="dropdown-item" href="#">Option 7</a></li>
-                        <li><a class="dropdown-item" href="#">Option 8</a></li>
-                        <li><a class="dropdown-item" href="#">Option 9</a></li>
+                        <li><a class="dropdown-item" href="#">Option 8"></a></li>
+                        <li><a class="dropdown-item" href="#">Option 9"></a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </div>
+
+    <!-- Products Container -->
+    <div class="container my-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+
+    <?php
+// Include the database connection
+include "../connection/connection.php";
+
+// Define the base URL for images
+$base_url = "http://localhost/Team%20Project/Project-Cleckhuddersfax-Market-Hub/Execution/uploads/";
+
+// Fetch products from the database
+$sql = "SELECT PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_IMAGE_PATH FROM PRODUCT";
+$stmt_products = oci_parse($conn, $sql);
+oci_execute($stmt_products);
+
+// Loop through each product and display its image, name, and price
+while ($row_product = oci_fetch_assoc($stmt_products)) {
+    // Get the image path from the database
+    $image_path = $row_product['PRODUCT_IMAGE_PATH'];
+    
+    // Create the full URL for the image
+    $image_url = $base_url . urlencode(basename($image_path));
+
+    // If image URL is empty, use a placeholder image
+    if (empty($image_path)) {
+        $image_url = $base_url . 'placeholder.jpg';
+    }
+
+    // Product card HTML
+    echo "<div class='col-md-4 mb-4'>";
+    echo "<div class='card'>";
+    echo "<div class='card-img-container'>";
+    echo "<img src='" . htmlspecialchars($image_url) . "' class='card-img-top' alt='Product Image'>";
+    echo "</div>";
+    echo "<div class='card-body'>";
+    echo "<h5 class='card-title'>" . htmlspecialchars($row_product['PRODUCT_NAME']) . "</h5>";
+    echo "<p class='card-text'>Price: $" . number_format($row_product['PRODUCT_PRICE'], 2) . "</p>";
+    echo "</div>"; // Closing card-body div
+    echo "</div>"; // Closing card div
+    echo "</div>"; // Closing column div
+}
+
+// Free the statement identifier and close the connection
+oci_free_statement($stmt_products);
+oci_close($conn);
+?>
+
+
+
+        </div>
+    </div>
     
     <?php include "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all product cards
+        const productCards = document.querySelectorAll('.card');
+
+        // Add click event listener to each product card
+        productCards.forEach(function(card) {
+            card.addEventListener('click', function() {
+                // Redirect user to order.php
+                window.location.href = 'order.php';
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
