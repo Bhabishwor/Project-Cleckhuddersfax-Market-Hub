@@ -3,33 +3,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <title>Confirm Order | Cleckhuddersfax Market Hub</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../CSS/main.css">
+
     <style>
-        .body{
-            background-color: #e3e3e3;
-        }
 
-        .box{
-            padding: 1vw;
-            margin: 2vw;
-            background-color: white;
-        }
-
-        .main-div{
+        .main-content{
             display: flex;
-            font-size: 1vw;
         }
 
-        .div1{
+        .order{
             flex: 4;
             margin: 6vw;
             margin-right: 7vw;
         }
 
-        .div2{
+        .payment{
             flex: 1;
             margin: 3vw;
             margin-right: 7vw;
@@ -42,43 +36,75 @@
             justify-content: space-between;
         }
 
-        .item-div1{
+        .item-photo{
             flex: 15%;
         }
 
-        .item-div2{
+        .item-name{
             flex: 50%;
             align-self: center;
         }
 
-        .item-div3{
+        .item-price{
             flex: 10%;
             align-self: center;
         }
         
-        .item-div4{
+        .item-edit{
             flex: 25%;
         }
 
-        .summary{
-            margin-top: 3vw;
-        }
-
-        .div2 section{
+        .payment section{
             margin-bottom: 2vw;
         }
 
-        .div2 div{
-            margin-top: 3vw;
+        .payment div{
+            margin-top: 2vw;
+        }
+
+        @media (max-width: 1188px){
+            .main-content{
+                flex-direction: column;
+            }
+
+            .order{
+                margin: 6vw;
+                margin-top: 3vw;
+            }
+
+            .payment{
+                margin: 9vw;
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 765px){
+            .order-item{
+                flex-direction: column;
+            }
+
+            .img-fluid{
+                width: auto;
+                height: auto;
+            }
+
+            .item-edit{
+                align-self: center;
+            }
+
+            .payment{
+                margin: 12vw;
+                margin-top: 0;
+            }
         }
     </style>
 </head>
 
-<body class="body">
+<body>
     <?php include "header.php"; ?>
     
-    <div class="main-div">
-        <div class="div1">
+    <div class="main-content">
+        <div class="order">
             <div class="box">
                 <section>
                     <span>Collection Slot:</span>
@@ -92,42 +118,41 @@
 
             <div class="box">
                 <section class="order-item">
-                    <div class="item-div1"><img src="../Image/products/product1.jpeg" alt="Order Item 1" width="70" height="70"></div>
-                    <div class="item-div2">Lorem Ipsum</div>
-                    <div class="item-div3">
-                        <b>$25.00</b>
+                    <div class="item-photo">
+                        <img class="img-fluid" src="../../Image/products/product1.jpeg" alt="Order Item 1" width="70" height="70">
                     </div>
-                    <div class="item-div4">
-                        <img src="../Image/buttons/edit.png" alt="" width="70" height="70">
-                        <img src="../Image/buttons/delete.png" alt="" width="70" height="70">
+                    <div class="item-name">Lorem Ipsum</div>
+                    <div class="item-price"><b>$25.00</b></div>
+                    <div class="item-edit">
+                        <img class="img-fluid" src="../../Image/buttons/edit.png" alt="">
+                        <img class="img-fluid" src="../../Image/buttons/delete.png" alt="">
                     </div>
                 </section>
                 <hr>
                 <section class="order-item">
-                    <div class="item-div1"><img src="../Image/products/product2.jpeg" alt="Order Item 1" width="70" height="70"></div>
-                    <div class="item-div2">Lorem Ipsum</div>
-                    <div class="item-div3">
-                        <b>$9.00</b>
+                    <div class="item-photo">
+                        <img class="img-fluid" src="../../Image/products/product2.jpeg" alt="Order Item 1" width="70" height="70">
                     </div>
-                    <div class="item-div4">
-                        <img src="../Image/buttons/edit.png" alt="" width="70" height="70">
-                        <img src="../Image/buttons/delete.png" alt="" width="70" height="70">
+                    <div class="item-name">Lorem Ipsum</div>
+                    <div class="item-price"><b>$9.00</b></div>
+                    <div class="item-edit">
+                        <img class="img-fluid" src="../../Image/buttons/edit.png" alt="">
+                        <img class="img-fluid" src="../../Image/buttons/delete.png" alt="">
                     </div>
                 </section>
             </div>
         </div>
 
-        <div class="div2">
+        <div class="payment">
             <section>
-                <h5><b>Payment method</b></h5>
+                <b>Payment method</b>
             </section>
 
-            <section>
-                <img src="../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
+            <section class="mb-3">
+                <img src="../../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
             </section>
-            
-            <section class="summary">
-                <hr>
+            <hr>
+            <section class="mt-3">
                 <div>
                     <b>Summary</b>
                 </div>
@@ -135,7 +160,7 @@
                     <span>Subtotal</span>
                     <span>$34.00</span>
                 </div>
-                <div class="total">
+                <div>
                     <span>Total</span>
                     <span>$34.00</span>
                 </div>
@@ -149,4 +174,5 @@
 
     <?php include "footer.php"; ?>
 </body>
+
 </html>
