@@ -1,0 +1,19 @@
+.wrapper{
+    width: 100%;
+}
+
+.cartFooter{
+    background-color: rgb(92, 92, 92);
+    width: 100%;
+    min-height: 30px;
+    color: #fff;
+}
+
+.cartFooter .container{
+    display: flex;
+    padding: 10px 0px 0px 0px;
+}
+
+a{
+    text-decoration: none;
+}

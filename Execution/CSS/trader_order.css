@@ -1,0 +1,54 @@
+body{
+    background-color: #cacaca;
+
+}
+
+.wrapper{
+    width: 100%;
+    background-color: #fff;
+    height: 100vh;
+    padding: 5% 0%;
+    overflow-y: scroll;
+}
+a{
+    text-decoration: none;
+}
+
+.box{
+    background-color: #cacaca;
+    margin:auto;
+    width: 90%;
+    min-height: 100px;
+    padding: 10px;
+}
+
+
+.menu button, .btn button{
+    border-radius: 30px;
+}
+
+.col2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b2b2b2; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }
