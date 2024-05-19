@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../../CSS/main.css">
 
     <style>
-
         .main-content{
             display: flex;
         }
