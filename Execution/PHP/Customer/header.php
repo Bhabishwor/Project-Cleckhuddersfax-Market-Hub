@@ -5,7 +5,6 @@ session_start(); // Start the session at the beginning of the script
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
 $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 // $name = "";
-
 ?>
 
 <!DOCTYPE html>
@@ -41,11 +40,15 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
       <div class="container-fluid">
-        <a class="navbar-brand logo" href="#"><img src="../../Image/Logo.png" alt="Logo" height="60" width="62"></a>
+        <a class="navbar-brand logo" href="#">
+          <img src="../../Image/Logo.png" alt="Logo" height="60" width="62">
+        </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
           aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 custom-nav-links">
             <li class="nav-item <?php echo ($currentPage == "homepage") ? 'active' : ''; ?>">
@@ -62,8 +65,6 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
             </li>
           </ul>
 
-
-
           <div class="login_register">
             <div class="container-fluid search_bar">
               <form class="d-flex" role="search">
@@ -71,7 +72,6 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
-
 
             <div class="dropdown">
               <!-- Dropdown toggle button -->
@@ -116,8 +116,6 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
       </div>
     </nav>
   </header>
-
-
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
