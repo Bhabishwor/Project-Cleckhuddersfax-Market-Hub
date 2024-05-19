@@ -1,0 +1,105 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+.background {
+    background-image: url('D:/HTML/CustomerReview/container.png'); /* Adjust the path to your background image */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: center; /* Center align items horizontally */
+    margin-top: 20px; /* Add space between the containers */
+    padding-top: 50px; /* Add space for the heading */
+}
+
+h1 {
+    color: #ffffff; /* White text color */
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Add space below the heading */
+}
+
+.reviews-container {
+    width: 100%; /* Take full width */
+    max-width: 800px; /* Limit maximum width */
+}
+
+.Review-box {
+    width: 100%; /* Adjust the width of the Review-box */
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.name-user {
+    display: flex;
+    align-items: center;
+}
+
+.review {
+    margin-top: 10px;
+    color: #f9d71c; /* Yellow star color */
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.name-user strong {
+    color: #3d3d3d; /* Dark text color */
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.name-user span {
+    color: #979797; /* Light text color */
+    font-size: 0.8rem;
+}
+
+.box-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Add space below each Review-box */
+}
+
+.client-comment p {
+    font-size: 0.9rem;
+    color: #4b4b4b; /* Gray text color */
+}
