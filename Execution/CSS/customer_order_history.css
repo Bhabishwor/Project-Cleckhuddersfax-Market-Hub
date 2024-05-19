@@ -1,0 +1,88 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: left;
+    padding: 20px;
+  }
+  
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .order {
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .order p {
+    margin: 0;
+    padding: 5px;
+  }
+  
+  .order-items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .order-item {
+    width: 50%; /* Adjust width as needed for two items */
+    padding: 10px;
+  }
+  
+  .item-details {
+    display: flex; /* Keeps image and info side-by-side */
+  }
+  
+  .item-details img {
+    width: 100%; /* Adjust image width as needed */
+    height: 200px; /* Set a fixed height for cropping */
+    object-fit: cover;
+  }
+  
+  .item-info {
+    width: 50%; /* Adjust width as needed */
+    display: flex;
+    flex-direction: row; /* Makes info elements horizontal */
+    align-items: center; /* Aligns info elements vertically */
+    /* Additional line to ensure no wrapping */
+    white-space: nowrap;  
+  }
+  
+  .item-info p,
+  .item-info a {
+    margin: 0 100px; /* Adjust spacing between details horizontally */
+    font-size: 18px; /* Adjust font size as needed */
+  }
+  
+  .item-details .item-info a { /* More specific selector */
+    text-decoration: none;
+    color: #326400;
+    font-weight: bold;
+  }
+
+
+  .order-item a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  /* Styles for order info section */
+  .order-info {
+    display: flex;
+    justify-content: space-between; /* Aligns order number and date to opposite ends */
+    margin-bottom: 10px; /* Add spacing between order info and items */
+  }
+  
+  .order-number,
+  .order-date {
+    font-weight: bold; /* Make both elements bold */
+  }
+  
