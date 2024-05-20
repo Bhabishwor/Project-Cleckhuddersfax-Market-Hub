@@ -73,6 +73,7 @@
 
     .container{
       width: 35rem !important;
+      margin: auto;
     }
 
     div h2{
@@ -84,35 +85,34 @@
 <body>
   <?php include "header.php"; ?>
 
-    <div class="container border border-2 rounded bg-white m-5 py-5">
-      <form method="post" action="#">
-        <div class="p-3">
-          <h2 class="text-center"><i class="fas fa-question-circle"></i> Contact Us</h2>
+  <div class="container border border-2 rounded bg-white my-5 p-5">
+    <form method="post" action="#">
+      <div class="p-3">
+        <h2 class="text-center mb-5"><i class="fas fa-question-circle"></i> Contact Us</h2>
 
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-            <hr>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-              placeholder="Enter your email">
-            <hr>
-          </div>
-            
-          <div class="form-group">
-            <label for="message">Your Message</label>
-            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter your message">
-            </textarea>
-            <hr>
-          </div>
-
-          <button type="submit" class="btn btn-outline-success">Send</button>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+          <hr>
         </div>
-      </form>
-    </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+            placeholder="Enter your email">
+          <hr>
+        </div>
+          
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea class="form-control" id="message" name="message" rows="3" 
+            placeholder="Enter your message"></textarea>
+          <hr>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success">Send</button>
+      </div>
+    </form>
   </div>
 
   <?php include "footer.php"; ?>
