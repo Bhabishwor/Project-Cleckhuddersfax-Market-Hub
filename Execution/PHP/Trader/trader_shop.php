@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+=======
+>>>>>>> 51cd6fa018ef045adf332c832cf0187b9f171a29
 <?php
 include "../connection/connection.php";
 session_start(); // Start the session
