@@ -3,11 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
     <title>Confirm Order | Cleckhuddersfax Market Hub</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../CSS/main.css">
+
     <style>
+<<<<<<< HEAD
         .body {
             background-color: #e3e3e3;
         }
@@ -19,17 +29,27 @@
         }
 
         .main-div {
+=======
+        .main-content{
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
             display: flex;
-            font-size: 1vw;
         }
 
+<<<<<<< HEAD
         .div1 {
+=======
+        .order{
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
             flex: 4;
             margin: 6vw;
             margin-right: 7vw;
         }
 
+<<<<<<< HEAD
         .div2 {
+=======
+        .payment{
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
             flex: 1;
             margin: 3vw;
             margin-right: 7vw;
@@ -42,6 +62,7 @@
             justify-content: space-between;
         }
 
+<<<<<<< HEAD
         .item-div {
             flex: 1;
             text-align: center;
@@ -62,6 +83,68 @@
 
         .div2 div {
             margin-top: 3vw;
+=======
+        .item-photo{
+            flex: 15%;
+        }
+
+        .item-name{
+            flex: 50%;
+            align-self: center;
+        }
+
+        .item-price{
+            flex: 10%;
+            align-self: center;
+        }
+        
+        .item-edit{
+            flex: 25%;
+        }
+
+        .payment section{
+            margin-bottom: 2vw;
+        }
+
+        .payment div{
+            margin-top: 2vw;
+        }
+
+        @media (max-width: 1188px){
+            .main-content{
+                flex-direction: column;
+            }
+
+            .order{
+                margin: 6vw;
+                margin-top: 3vw;
+            }
+
+            .payment{
+                margin: 9vw;
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 765px){
+            .order-item{
+                flex-direction: column;
+            }
+
+            .img-fluid{
+                width: auto;
+                height: auto;
+            }
+
+            .item-edit{
+                align-self: center;
+            }
+
+            .payment{
+                margin: 12vw;
+                margin-top: 0;
+            }
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
         }
 
         .paypal-button-container {
@@ -76,6 +159,7 @@
     </style>
 </head>
 
+<<<<<<< HEAD
 <body class="body">
     <?php
     include "header.php";
@@ -97,6 +181,13 @@
 
     <div class="main-div">
         <div class="div1">
+=======
+<body>
+    <?php include "header.php"; ?>
+    
+    <div class="main-content">
+        <div class="order">
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
             <div class="box">
                 <section>
                     <span>Collection Slot:</span>
@@ -109,6 +200,7 @@
             </div>
             <div class="box">
                 <section class="order-item">
+<<<<<<< HEAD
                     <div class="item-div">
                         <b>Product Image</b>
                     </div>
@@ -147,24 +239,55 @@
                     echo '<hr>';
                 }
                 ?>
+=======
+                    <div class="item-photo">
+                        <img class="img-fluid" src="../../Image/products/product1.jpeg" alt="Order Item 1" width="70" height="70">
+                    </div>
+                    <div class="item-name">Lorem Ipsum</div>
+                    <div class="item-price"><b>$25.00</b></div>
+                    <div class="item-edit">
+                        <img class="img-fluid" src="../../Image/buttons/edit.png" alt="">
+                        <img class="img-fluid" src="../../Image/buttons/delete.png" alt="">
+                    </div>
+                </section>
+                <hr>
+                <section class="order-item">
+                    <div class="item-photo">
+                        <img class="img-fluid" src="../../Image/products/product2.jpeg" alt="Order Item 1" width="70" height="70">
+                    </div>
+                    <div class="item-name">Lorem Ipsum</div>
+                    <div class="item-price"><b>$9.00</b></div>
+                    <div class="item-edit">
+                        <img class="img-fluid" src="../../Image/buttons/edit.png" alt="">
+                        <img class="img-fluid" src="../../Image/buttons/delete.png" alt="">
+                    </div>
+                </section>
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
             </div>
         </div>
 
-        <div class="div2">
+        <div class="payment">
             <section>
-                <h5><b>Payment method</b></h5>
+                <b>Payment method</b>
             </section>
 
-            <section>
-                <img src="../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
+            <section class="mb-3">
+                <img src="../../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
             </section>
-            
-            <section class="summary">
-                <hr>
+            <hr>
+            <section class="mt-3">
                 <div>
                     <b>Summary</b>
                 </div>
+<<<<<<< HEAD
                 <div class="total">
+=======
+                <div>
+                    <span>Subtotal</span>
+                    <span>$34.00</span>
+                </div>
+                <div>
+>>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
                     <span>Total</span>
                     <span>
                         <?php

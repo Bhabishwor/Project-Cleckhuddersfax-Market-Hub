@@ -1,0 +1,105 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Background styles */
+.background {
+    background-image: url('container.png');
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the background behind other content */
+}
+
+/* Main container styles */
+.main-container {
+    display: flex;
+    justify-content: center; /* Center the main containers horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Fill the entire viewport height */
+}
+
+/* Sub container styles */
+.sub-container {
+    width: 50%; /* Adjust the width of each container as needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background to the container */
+}
+
+/* Wishlist item styles */
+.wishlist-item {
+    width: 100%; /* Adjust the width of the wishlist-item */
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 15px; /* Adjust margin-bottom to space between items */
+    cursor: pointer;
+}
+
+.item {
+    display: flex; /* Use flexbox to align items horizontally */
+}
+
+.item img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.item-details {
+    flex: 1; /* Take up remaining space beside the image */
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+}
+
+.item-actions {
+    margin-top: 10px;
+}
+
+.item-actions button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 10px; /* Adjust margin between buttons */
+}
+
+.item-details strong {
+    color: #3d3d3d;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    margin: 0 10px 0 0;
+}
+
+.item-details .item-price {
+    font-size: 0.9rem;
+    color: #4b4b4b;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.item-actions button i {
+    margin-right: 7px; 
+}
+
+.item-actions button.add-to-cart {
+    color: #007bff; 
+}
+
+.item-actions button.remove {
+    color: #141313; 
+}
