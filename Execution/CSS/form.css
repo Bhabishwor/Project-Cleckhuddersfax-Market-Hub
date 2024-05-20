@@ -14,7 +14,7 @@ body {
     background-attachment: fixed;
     overflow: visible;
     /* background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
-    background-image: url("../Image/container.png");
+    background-image: url("../Image/heritage/form.png");
     background-size: cover;
     background-position: center;
 
@@ -89,7 +89,7 @@ body {
     height: auto;
 }
 
-.btn {
+/* .btn {
     border: none;
     background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
 }
@@ -99,7 +99,7 @@ body {
     background: darkmagenta;
     cursor: pointer;
     transition: background-color 0.5s ease-out;
-}
+} */
 
 .text_box {
     padding: 1rem 0 0 0.5rem;
