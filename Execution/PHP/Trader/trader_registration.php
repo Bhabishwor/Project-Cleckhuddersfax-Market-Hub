@@ -158,7 +158,7 @@ include "../connection/connection.php";
 
     // File upload
     if (isset($_FILES['shop_image']) && $_FILES['shop_image']['error'] === UPLOAD_ERR_OK) {
-      $targetDir = "../../Uploaded_Image/";
+      $targetDir = "../../Uploaded_Image/Trader/";
       $fileName = basename($_FILES["shop_image"]["name"]);
       $targetFilePath = $targetDir . $fileName;
       $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
@@ -187,7 +187,7 @@ include "../connection/connection.php";
       }
     } else {
       $error_image = "Please upload your image";
-      $error++;
+      $error++;   
     }
 
     // Check for existing email
@@ -217,7 +217,7 @@ include "../connection/connection.php";
       oci_bind_by_name($bind_stmnt, ':role', $role);
       oci_bind_by_name($bind_stmnt, ':status', $status);
       oci_bind_by_name($bind_stmnt, ':shopType', $shop_type);
-      oci_bind_by_name($bind_stmnt, ':image', $fileName);
+      oci_bind_by_name($bind_stmnt, ':image', $targetFilePath);
 
       $result = oci_execute($bind_stmnt);
 

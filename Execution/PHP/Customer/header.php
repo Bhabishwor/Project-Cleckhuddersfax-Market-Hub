@@ -1,9 +1,16 @@
 <?php
 session_start(); // Start the session at the beginning of the script
-
+include "../connection/connection.php";
 // Check if the 'name' session variable is set and display it
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
+
 $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
+
+if (!isset($_SESSION['cart'])) {
+  $_SESSION['cart'] = [];
+
+}
+
 // $name = "";
 
 ?>
@@ -29,8 +36,16 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
       margin: 0 0.5rem;
     }
 
-    .link-decoration{
+    .link-decoration {
       text-decoration: none;
+    }
+
+    .small-cart-badge {
+      width: 16px;
+      /* Adjust width and height as desired */
+      height: 16px;
+      font-size: 10px;
+      /* Adjust font size as desired */
     }
   </style>
 
@@ -86,17 +101,30 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
                 echo "<span class='user' style='color : white;'>" . $name . "</span>";
 
                 echo "</button>";
-              } 
-              else {
+
+                $cart = array();
+                $query = "SELECT PRODUCT_ID, QUANTITY FROM CART WHERE CUSTOMER_ID = :customerId";
+                $stmt = oci_parse($conn, $query);
+                oci_bind_by_name($stmt, ":customerId", $_SESSION['id']);
+
+                if (oci_execute($stmt)) {
+                  while ($row = oci_fetch_assoc($stmt)) {
+
+                    $cart[$row['PRODUCT_ID']] = $row['QUANTITY'];
+                  }
+                }
+
+                $_SESSION['cart'] = $cart;
+              } else {
                 echo "<a class='link-decoration' href='../login.php'>";
-                echo"<button class='login button-icon-only' type='button'>
+                echo "<button class='login button-icon-only' type='button'>
                <i class='fa-regular fa-user mx-1' style='color: white;'></i>";
-                  echo "<span class='user' style='color : white;'>" . $name . "</span>";
-                  echo"</button>";
-                  echo"</a>";
+                echo "<span class='user' style='color : white;'>" . $name . "</span>";
+                echo "</button>";
+                echo "</a>";
               }
               ?>
-              
+
 
               <!-- Dropdown menu -->
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -104,11 +132,15 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
                 <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
               </ul>
             </div>
+              <button class="login button-icon-only position-relative" id="cartButton">
+                <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
+                <span
+                  class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle small-cart-badge">
+                  <?php echo count($_SESSION['cart']); ?>
+                </span>
+              </button>
 
-            <button class="login button-icon-only">
-              <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
-              <p class="user_cart">CART</p>
-            </button>
+
 
             <button class="login button-icon-only">
               <i class="fa-regular fa-heart" style="color: white;"></i>
@@ -125,6 +157,13 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+
+  <script>
+    const cartButton = document.getElementById('cartButton');
+    cartButton.addEventListener('click', function () {
+      window.location.href = 'cart.php';
+    });
+  </script>
 </body>
 
 </html>

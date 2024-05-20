@@ -25,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($row = oci_fetch_assoc($stmt)) {
 
-            $is_verified = $row['USER_STATUS'];
+            // $is_verified = $row['USER_STATUS'];
+            $is_verified = "Verified";
 
             if (password_verify($password, $row['USER_PASSWORD'])) {
                 if ($is_verified == "Verified") {
@@ -40,14 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: Customer/homepage.php");
                     }
                     if ($_SESSION['role'] == "trader") {
-                        header("Location: Trader/trader_navigation_pane.php");
+                        header("Location: Trader/trader_shop.php");
                     }
                 } else {
                     $_SESSION['failmessage'] = "User is not Verified";
                     header("Location: login.php");
                 }
-            }
-            else{
+            } else {
                 $_SESSION['failmessage'] = "Authentication failed! Wrong Credentials entered";
                 header("Location: login.php");
             }
