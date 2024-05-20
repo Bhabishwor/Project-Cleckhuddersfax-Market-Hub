@@ -4,6 +4,13 @@ session_start(); // Start the session at the beginning of the script
 // Check if the 'name' session variable is set and display it
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : 'LOGIN';
 $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
+if (!isset($_SESSION['cart'])) {
+  // $_SESSION['cart'] = 0;
+  $_SESSION['cart'] = [];
+ 
+ }
+ 
+
 // $name = "";
 ?>
 
@@ -32,6 +39,14 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 
     .link-decoration{
       text-decoration: none;
+    }
+    
+    .small-cart-badge {
+      width: 16px;
+      /* Adjust width and height as desired */
+      height: 16px;
+      font-size: 10px;
+      /* Adjust font size as desired */
     }
   </style>
 </head>
@@ -98,14 +113,17 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 
               <!-- Dropdown menu -->
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="user_profile.php">User Profile</a></li>
+                <li><a class="dropdown-item" href="customer_profile.php">User Profile</a></li>
                 <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
               </ul>
             </div>
 
-            <button class="login button-icon-only">
+            <button class="login button-icon-only position-relative" id="cartButton">
               <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
-              <p class="user_cart">CART</p>
+              <span
+                class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle small-cart-badge">
+                <?php echo count($_SESSION['cart']); ?>
+              </span>
             </button>
 
             <button class="login button-icon-only">
@@ -120,6 +138,13 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+  </script>
+  
+  <script>
+    const cartButton = document.getElementById('cartButton');
+    cartButton.addEventListener('click', function () {
+      window.location.href = 'cart.php';
+    });
   </script>
 </body>
 
