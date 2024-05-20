@@ -4,12 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Home | Cleckhuddersfax Market Hub</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../CSS/main.css">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
@@ -34,57 +31,36 @@
         .bg-category {
             background-image: url("../../Image/container2.png");
             background-size: cover;
-            /* Cover the entire background */
             background-position: center;
-            /* Center the background */
             background-repeat: no-repeat;
-            /* Prevent the background from repeating */
         }
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Home | Cleckhuddersfax Market Hub</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../CSS/main.css">
-
-    <style> 
 
         /* Product Card */
         .card {
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* Add box shadow for depth */
             transition: box-shadow 0.3s ease;
-            /* Add transition effect for hover */
         }
 
         .card:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            /* Increase box shadow on hover */
         }
 
         .card-img-container {
             height: 300px;
-            /* Set a larger fixed height for the image container */
             overflow: hidden;
-            /* Hide any overflow from larger images */
         }
 
         .card img {
             width: 100%;
-            /* Ensure the image fills its container */
             height: auto;
-            /* Maintain aspect ratio */
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
         }
 
         .card-body {
             padding: 15px;
-            /* Add padding inside the card body */
         }
 
         .card-title {
@@ -94,31 +70,20 @@
 
         .card-text p {
             margin: 0;
-            /* Remove default margin for paragraphs */
             overflow: hidden;
-            /* Hide overflow content */
             text-overflow: ellipsis;
-            /* Truncate text with an ellipsis */
             white-space: nowrap;
-            /* Prevent wrapping */
-
         }
 
         .btn-outline-dark.active {
             background-color: black;
-            color: black;
-            /* Makes heart icon black */
+            color: white;
         }
-
-           
-
     </style>
 </head>
 
 <body>
-    <?php
-    include "header.php";
-    ?>
+    <?php include "header.php"; ?>
 
     <div class="container-fluid p-5">
         <div class="row">
@@ -126,7 +91,6 @@
                 <p class="title pt-3 mb-0">WELCOME TO CLECKHUDDERSFAX MARKET HUB</p>
                 <p>Discover quality products curated just for you.</p>
             </div>
-
 
             <div id="carouselHome" class="container carousel slide col-md-7" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
@@ -136,16 +100,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png"
-                            alt="First slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png"
-                            alt="Second slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png"
-                            alt="Third slide">
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselHome" role="button" data-bs-slide="prev">
@@ -177,8 +138,7 @@
                 <!-- Menu Item 2 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../../Image/categories/fresh_produce.png" alt="Fresh Produce" height="150"
-                            width="150">
+                        <img src="../../Image/categories/fresh_produce.png" alt="Fresh Produce" height="150" width="150">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item2">
                         <li><a class="dropdown-item" href="#">Option 4</a></li>
@@ -194,32 +154,32 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="item3">
                         <li><a class="dropdown-item" href="#">Option 7</a></li>
-                        <li><a class="dropdown-item" href="#">Option 8</a></li>
-                        <li><a class="dropdown-item" href="#">Option 9</a></li>
+                        <li><a class="dropdown-item" href="#">Option 8"></a></li>
+                        <li><a class="dropdown-item" href="#">Option 9"></a></li>
                     </ul>
                 </li>
 
                 <!-- Menu Item 4 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
-                    <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" id="item4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../../Image/categories/seafood.png" alt="Seafood" height="150" width="150">
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="item3">
-                        <li><a class="dropdown-item" href="#">Option 7</a></li>
-                        <li><a class="dropdown-item" href="#">Option 8</a></li>
-                        <li><a class="dropdown-item" href="#">Option 9</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="item4">
+                        <li><a class="dropdown-item" href="#">Option 10</a></li>
+                        <li><a class="dropdown-item" href="#">Option 11"></a></li>
+                        <li><a class="dropdown-item" href="#">Option 12"></a></li>
                     </ul>
                 </li>
 
                 <!-- Menu Item 5 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
-                    <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" id="item5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../../Image/categories/bakery.png" alt="Bakery" height="150" width="150">
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="item3">
-                        <li><a class="dropdown-item" href="#">Option 7</a></li>
-                        <li><a class="dropdown-item" href="#">Option 8"></a></li>
-                        <li><a class="dropdown-item" href="#">Option 9"></a></li>
+                    <ul class="dropdown-menu" aria-labelledby="item5">
+                        <li><a class="dropdown-item" href="#">Option 13</a></li>
+                        <li><a class="dropdown-item" href="#">Option 14"></a></li>
+                        <li><a class="dropdown-item" href="#">Option 15"></a></li>
                     </ul>
                 </li>
             </ul>
@@ -229,8 +189,6 @@
     <!-- Products Container -->
     <div class="container my-5">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-
-
             <?php
             // Include the database connection
             include "../connection/connection.php";
@@ -255,7 +213,6 @@
                     $image_url = $base_url . 'placeholder.jpg';
                 }
 
-
                 echo "<div class='col-md-4 mb-4'>";
                 echo "<div class='card text-center'>";
                 echo "<div class='card-img-container'>";
@@ -270,8 +227,8 @@
                 echo "<form method='get' action='manage_cart.php'>";
                 // Add to Cart button
                 echo "<button type='submit' class='btn btn-primary' name='cartBtn'>
-                <i class='fa-solid fa-cart-shopping' style='color: white;'></i>
-                </button>";
+                        <i class='fa-solid fa-cart-shopping' style='color: white;'></i>
+                    </button>";
                 echo "<input type='hidden' name='Product_Name' value='" . htmlspecialchars($row_product['PRODUCT_NAME']) . "'>";
                 echo "<input type='hidden' name='Product_Price' value='" . htmlspecialchars($row_product['PRODUCT_PRICE']) . "'>";
                 echo "<input type='hidden' name='Product_Id' value='" . htmlspecialchars($row_product['PRODUCT_ID']) . "'>";
@@ -282,73 +239,44 @@
                 // Wishlist button (assuming you have a wishlist functionality)
                 echo "<button class='btn btn-outline-dark' data-toggle='tooltip' data-placement='top' title='Add to Wishlist'><i class='far fa-heart'></i></button>";
 
-                // Close button container (optional)
-                echo "</div>"; // Adjust class for desired button placement
-            
+                echo "</div>"; // Closing button container
                 echo "</div>"; // Closing card-body div
                 echo "</div>"; // Closing card div
                 echo "</div>"; // Closing column div
-            
             }
 
             // Free the statement identifier and close the connection
             oci_free_statement($stmt_products);
             oci_close($conn);
             ?>
-
-
-
         </div>
     </div>
-<<<<<<< HEAD
-=======
-    
-    <?php include "footer.php"; ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get all product cards
-        const productCards = document.querySelectorAll('.card');
->>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
 
     <?php include "footer.php"; ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Get all product cards
             const productCards = document.querySelectorAll('.card-img-container');
 
             // Add click event listener to each product card
-            productCards.forEach(function (card) {
-                card.addEventListener('click', function () {
+            productCards.forEach(function(card) {
+                card.addEventListener('click', function() {
                     // Redirect user to order.php
                     window.location.href = 'order.php';
                 });
             });
-        });
-<<<<<<< HEAD
 
-        document.addEventListener('DOMContentLoaded', function () {
+            // Add tooltip functionality to wishlist buttons
             const wishlistButtons = document.querySelectorAll('.btn-outline-dark[data-toggle="tooltip"]');
-
             wishlistButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     this.classList.toggle('active'); // Toggle active class
                 });
             });
         });
     </script>
-
-=======
-    });
-    </script>
->>>>>>> 2aa11a6dba8d890de006e0342f4380fd5c2bf119
 </body>
 
 </html>

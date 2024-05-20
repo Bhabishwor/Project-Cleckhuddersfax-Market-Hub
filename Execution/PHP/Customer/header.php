@@ -8,10 +8,8 @@ $currentPage = basename($_SERVER['SCRIPT_FILENAME'], ".php");
 
 if (!isset($_SESSION['cart'])) {
   $_SESSION['cart'] = [];
-
 }
 
-// $name = "";
 ?>
 
 <!DOCTYPE html>
@@ -29,11 +27,8 @@ if (!isset($_SESSION['cart'])) {
   <style>
     .button-icon-only {
       background: none;
-      /* Remove background */
       border: none;
-      /* Remove border */
       padding: 0;
-      /* Remove padding */
       margin: 0 0.5rem;
     }
 
@@ -43,10 +38,21 @@ if (!isset($_SESSION['cart'])) {
 
     .small-cart-badge {
       width: 16px;
-      /* Adjust width and height as desired */
       height: 16px;
       font-size: 10px;
-      /* Adjust font size as desired */
+    }
+
+    .login_register {
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle::after {
+      display: none;
     }
   </style>
 </head>
@@ -90,16 +96,14 @@ if (!isset($_SESSION['cart'])) {
 
             <div class="dropdown">
               <!-- Dropdown toggle button -->
-              <?php
-              if ($name != "LOGIN") {
-                echo "<button class='btn login button-icon-only dropdown-toggle' type='button' id='dropdownMenuButton'
-                 data-bs-toggle='dropdown' aria-expanded='false'>
-                <i class='fa-regular fa-user mx-1' style='color: white;'></i>";
+              <?php if ($name != "LOGIN"): ?>
+                <button class='btn login button-icon-only dropdown-toggle' type='button' id='dropdownMenuButton'
+                  data-bs-toggle='dropdown' aria-expanded='false'>
+                  <i class='fa-regular fa-user mx-1' style='color: white;'></i>
+                  <span class='user' style='color : white;'><?php echo $name; ?></span>
+                </button>
 
-                echo "<span class='user' style='color : white;'>" . $name . "</span>";
-
-                echo "</button>";
-
+                <?php
                 $cart = array();
                 $query = "SELECT PRODUCT_ID, QUANTITY FROM CART WHERE CUSTOMER_ID = :customerId";
                 $stmt = oci_parse($conn, $query);
@@ -107,22 +111,20 @@ if (!isset($_SESSION['cart'])) {
 
                 if (oci_execute($stmt)) {
                   while ($row = oci_fetch_assoc($stmt)) {
-
                     $cart[$row['PRODUCT_ID']] = $row['QUANTITY'];
                   }
                 }
 
                 $_SESSION['cart'] = $cart;
-              } else {
-                echo "<a class='link-decoration' href='../login.php'>";
-                echo "<button class='login button-icon-only' type='button'>
-               <i class='fa-regular fa-user mx-1' style='color: white;'></i>";
-                echo "<span class='user' style='color : white;'>" . $name . "</span>";
-                echo "</button>";
-                echo "</a>";
-              }
-              ?>
-
+                ?>
+              <?php else: ?>
+                <a class='link-decoration' href='../login.php'>
+                  <button class='login button-icon-only' type='button'>
+                    <i class='fa-regular fa-user mx-1' style='color: white;'></i>
+                    <span class='user' style='color : white;'><?php echo $name; ?></span>
+                  </button>
+                </a>
+              <?php endif; ?>
 
               <!-- Dropdown menu -->
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -130,15 +132,26 @@ if (!isset($_SESSION['cart'])) {
                 <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
               </ul>
             </div>
-              <button class="login button-icon-only position-relative" id="cartButton">
+
+            <?php if ($name != "LOGIN"): ?>
+              <a href="cart.php" style="text-decoration: none;">
+                <button class="login button-icon-only position-relative" id="cartButton">
+                  <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle small-cart-badge">
+                    <?php echo count($_SESSION['cart']); ?>
+                  </span>
+                </button>
+              </a>
+            <?php else: ?>
+              <button class="login button-icon-only position-relative" id="cartButton" disabled title="You must be logged in first">
                 <i class="fa-solid fa-cart-shopping" style="color: white;"></i>
                 <span
                   class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle small-cart-badge">
-                  <?php echo count($_SESSION['cart']); ?>
+                  0
                 </span>
               </button>
-
-
+            <?php endif; ?>
 
             <button class="login button-icon-only">
               <i class="fa-regular fa-heart" style="color: white;"></i>
@@ -150,21 +163,15 @@ if (!isset($_SESSION['cart'])) {
   </header>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
     const cartButton = document.getElementById('cartButton');
-    cartButton.addEventListener('click', function () {
-      window.location.href = 'cart.php';
-    });
-  </script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    if (!cartButton.disabled) {
+      cartButton.addEventListener('click', function () {
+        window.location.href = 'cart.php';
+      });
+    }
   </script>
 </body>
 
