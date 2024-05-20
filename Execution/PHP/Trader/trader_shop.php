@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 51cd6fa018ef045adf332c832cf0187b9f171a29
 <?php
 include "../connection/connection.php";
 session_start(); // Start the session
@@ -172,13 +175,13 @@ oci_execute($stmt_products);
             <ul class="nav flex-column">
               <!-- Additional Links -->
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a>
+                <a class="nav-link" href="trader_profile.php"><i class="fas fa-user"></i> Profile</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Order</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-store"></i> Shop</a>
+                <a class="nav-link" href="trader_shop.php"><i class="fas fa-store"></i> Shop</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reports</a>
@@ -300,5 +303,4 @@ oci_execute($stmt_products);
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
