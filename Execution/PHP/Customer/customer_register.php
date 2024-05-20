@@ -118,22 +118,22 @@ function sendMail($email, $v_code, $name)
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register With Us</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>Register as Customer | Cleckhuddersfax Market Hub</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="../../CSS/form.css" />
 
-    <link rel="stylesheet" href="../../CSS/styles.css" />
-
-    <style type="">
-
+    <style>
         .error{
             color: red;
             font-style: italic;
@@ -142,15 +142,11 @@ function sendMail($email, $v_code, $name)
         #customer_message{
             margin-top: 20px;
         }
-
-
     </style>
 </head>
 
 <body>
-
     <?php
-
     $error_name = $error_email = $error_phone = $error_username = $error_passwd = $error_passwdConfirm = '';
     if (isset($_POST['registerBtn'])) {
         $name = $_POST['fullname'];
@@ -322,89 +318,90 @@ function sendMail($email, $v_code, $name)
         //echo $query;
     
     }
-
-
-
     ?>
 
-    <img src="../../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
-    <h2 class="fw-bolder text_center mt-3">REGISTER</h2>
+    <div class="py-4">
+        <img src="../../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
+    
+        <div class="container border border-2 rounded color_white mt-4 p-2 registerContainer">
+            <form method="post" id="registrationForm">
+                <div class="login_container">
+                    <h2 class="fw-bolder text_center">REGISTER</h2>
 
-    <div class="container border border-2 rounded color_white mt-5 registerContainer">
-        <form method="post" id="registrationForm">
-            <div class="login_container mt-4">
+                    <div class="input-container Fullname">
+                        <i class="icon fas fa-user"></i>
+                        <input type="text" class="text_box" placeholder="Full Name" name="fullname" value="<?php if (isset($_SESSION['name']))
+                            echo $_SESSION['name']; ?>" />
+                        <hr />
+                        <?php if (isset($error_name))
+                            // echo '<div class="error">' . $error_name . '</div>'; 
+                            echo '<div>' . $error_name . '</div>'
+                                ?>
+                        </div>
 
-                <div class="input-container Fullname">
-                    <i class="icon fas fa-user"></i>
-                    <input type="text" class="text_box" placeholder="Full Name" name="fullname" value="<?php if (isset($_SESSION['name']))
-                        echo $_SESSION['name']; ?>" />
-                    <hr />
-                    <?php if (isset($error_name))
-                        // echo '<div class="error">' . $error_name . '</div>'; 
-                        echo '<div>' . $error_name . '</div>'
-                            ?>
+                        <div class="input-container Email">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="text" class="text_box" placeholder="Email" name="email" value="<?php if (isset($_SESSION['email']))
+                            echo $_SESSION['email']; ?>" />
+                        <hr />
+                        <?php if (isset($error_email))
+                            echo '<div>' . $error_email . '</div>'; ?>
                     </div>
 
-                    <div class="input-container Email">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="text" class="text_box" placeholder="Email" name="email" value="<?php if (isset($_SESSION['email']))
-                        echo $_SESSION['email']; ?>" />
-                    <hr />
-                    <?php if (isset($error_email))
-                        echo '<div>' . $error_email . '</div>'; ?>
+
+                    <div class="input-container Password">
+                        <i class="icon fas fa-key"></i>
+                        <input type="password" class="text_box" placeholder="Password" name="upassword" />
+                        <hr />
+                        <?php if (isset($error_passwd))
+                            echo '<div>' . $error_passwd . '</div>'; ?>
+                    </div>
+
+                    <div class="input-container ConfirmPassword">
+                        <i class="icon fas fa-clipboard-check"></i>
+                        <input type="password" class="text_box" placeholder="Confirm Password" name="cpassword" />
+                        <hr />
+                        <?php if (isset($error_passwdConfirm))
+                            echo '<div>' . $error_passwdConfirm . '</div>'; ?>
+                    </div>
+
+                    <div class="input-container Address">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" class="text_box" placeholder="Address" name="address" value="<?php if (isset($_SESSION['address']))
+                            echo $_SESSION['address']; ?>" />
+                        <hr />
+                        <?php if (isset($error_address))
+                            echo '<div>' . $error_address . '</div>'; ?>
+                    </div>
+
+
+                    <div class="input-container PhoneNum">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" class="text_box" placeholder="Phone Number" name="phoneNum" value="<?php if (isset($_SESSION['phone']))
+                            echo $_SESSION['phone']; ?>" />
+                        <hr />
+                        <?php if (isset($error_phone))
+                            echo '<div>' . $error_phone . '</div>'; ?>
+                    </div>
+
+                    <?php if (isset($success))
+                        echo '<div>' . $success . '</div>';
+                    ?>
+
+                    <div class="login_container mt-3">
+                        <button type="submit" class="btn btn-outline-success rounded-5 registered" name="registerBtn">
+                            Register
+                        </button>
+                    </div>
                 </div>
-
-
-                <div class="input-container Password">
-                    <i class="icon fas fa-lock"></i>
-                    <input type="password" class="text_box" placeholder="Password" name="upassword" />
-                    <hr />
-                    <?php if (isset($error_passwd))
-                        echo '<div>' . $error_passwd . '</div>'; ?>
-                </div>
-
-                <div class="input-container ConfirmPassword">
-                    <i class="icon fas fa-lock"></i>
-                    <input type="password" class="text_box" placeholder="Confirm Password" name="cpassword" />
-                    <hr />
-                    <?php if (isset($error_passwdConfirm))
-                        echo '<div>' . $error_passwdConfirm . '</div>'; ?>
-                </div>
-
-                <div class="input-container Address">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <input type="text" class="text_box" placeholder="Address" name="address" value="<?php if (isset($_SESSION['address']))
-                        echo $_SESSION['address']; ?>" />
-                    <hr />
-                    <?php if (isset($error_address))
-                        echo '<div>' . $error_address . '</div>'; ?>
-                </div>
-
-
-                <div class="input-container PhoneNum">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" class="text_box" placeholder="Phone Number" name="phoneNum" value="<?php if (isset($_SESSION['phone']))
-                        echo $_SESSION['phone']; ?>" />
-                    <hr />
-                    <?php if (isset($error_phone))
-                        echo '<div>' . $error_phone . '</div>'; ?>
-                </div>
-
-                <?php if (isset($success))
-                    echo '<div>' . $success . '</div>';
-                ?>
-
-                <div class="login_container mt-3">
-                    <button type="submit" class="btn btn-dark rounded-5 registered" name="registerBtn">
-                        Register
-                    </button>
-                </div>
-        </form>
+            </form>
+        </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <!-- <script src="../JS/main.js"></script> -->
 </body>
 
