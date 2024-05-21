@@ -122,9 +122,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" id="productName" name="productName" required>
             </div>
             <div class="mb-3">
-                <label for="productType" class="form-label">Product Type</label>
-                <input type="text" class="form-control" id="productType" name="productType" required>
-            </div>
+    <label for="productType" class="form-label">Product Type</label>
+    <select class="form-select" id="productType" name="productType" required>
+        <option value="Butcher">Butcher</option>
+        <option value="Greengrocer">Greengrocer</option>
+        <option value="Fishmonger">Fishmonger</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Delicatessen">Delicatessen</option>
+    </select>
+</div>
             <div class="mb-3">
                 <label for="productPrice" class="form-label">Product Price</label>
                 <input type="number" class="form-control" id="productPrice" name="productPrice" step="0.01" required>
