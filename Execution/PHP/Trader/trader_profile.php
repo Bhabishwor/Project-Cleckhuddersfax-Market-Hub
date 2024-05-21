@@ -1,23 +1,3 @@
-<?php
-include "../connection/connection.php";
-session_start(); // Start the session at the beginning of the script
-
-$email = $_SESSION['email'];
-
-// Fetch trader details from the database
-$sql = "SELECT * FROM TRADER WHERE TRADER_EMAIL = :email";
-$stmt = oci_parse($conn, $sql);
-oci_bind_by_name($stmt, ':email', $email);
-oci_execute($stmt);
-
-if (!$stmt) {
-    $error = oci_error($conn); // Get Oracle error
-    echo "Oracle Error: " . $error['message'];
-    exit();
-}
-
-$trader = oci_fetch_assoc($stmt);
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -109,12 +89,29 @@ $trader = oci_fetch_assoc($stmt);
 </style>
 </head>
 <body>
+<?php
+include "../connection/connection.php";
+include 'trader_navigation_pane.php'; // Start the session at the beginning of the script
+
+$email = $_SESSION['email'];
+
+// Fetch trader details from the database
+$sql = "SELECT * FROM TRADER WHERE TRADER_EMAIL = :email";
+$stmt = oci_parse($conn, $sql);
+oci_bind_by_name($stmt, ':email', $email);
+oci_execute($stmt);
+
+if (!$stmt) {
+    $error = oci_error($conn); // Get Oracle error
+    echo "Oracle Error: " . $error['message'];
+    exit();
+}
+
+$trader = oci_fetch_assoc($stmt);
+?>
+
 <div class="container-fluid" style="margin-top: 4em; margin: left 4em;">
     <div class="row">
-        <!-- Sidebar -->
-        <div class="col-lg-3 col-md-4">
-            <?php include 'trader_navigation_pane.php'; ?>
-        </div>
         <!-- Main Content -->
         <div class="col-lg-9 col-md-8">
             <div class="profile-info">

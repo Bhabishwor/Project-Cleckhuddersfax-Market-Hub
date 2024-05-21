@@ -13,7 +13,7 @@ include "../connection/connection.php";
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <style>
     body {
-      background-image: url('../../Image/container.png');
+      background-image: url('../../Image/heritage/navigation_pane.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;

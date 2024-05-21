@@ -37,7 +37,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
       /* Keep sidebar open by default */
       z-index: 999;
       /* Set higher z-index */
-      background-image: url('../../Image/container.png');
+      background-image: url('../../Image/heritage/navigation_pane.png');
       background-size: cover;
       /* Cover the entire sidebar */
       background-repeat: no-repeat;
@@ -141,9 +141,6 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
   </div>
 
   <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-lg-3 col-md-4">
         <div class="sidebar" id="sidebar">
           <div>
             <div class="sidebar-logo">
@@ -181,11 +178,6 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
                 Logout
               </button>
             </form>
-
-          </div>
-
-
-        </div>
       </div>
       <!-- Main Content -->
       <!--<div class="col-lg-9 col-md-8 main-content">

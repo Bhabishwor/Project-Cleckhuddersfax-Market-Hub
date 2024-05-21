@@ -12,19 +12,23 @@
         .body {
             background-color: #e3e3e3;
         }
+
         .box {
             padding: 1vw;
             margin: 2vw;
             background-color: white;
         }
+
         .main-div {
             display: flex;
         }
+
         .div1 {
             flex: 4;
             margin: 6vw;
             margin-right: 7vw;
         }
+
         .payment {
             flex: 1;
             margin: 3vw;
@@ -32,77 +36,97 @@
             padding: 3vw;
             background-color: whitesmoke;
         }
+
         .order-item {
             display: flex;
             justify-content: space-between;
         }
+
         .item-div {
             flex: 1;
             text-align: center;
         }
+
         .item-div img {
             max-width: 100%;
             height: auto;
         }
+
         .summary {
             margin-top: 3vw;
         }
+
         .div2 section {
             margin-bottom: 2vw;
         }
+
         .item-photo {
             flex: 15%;
         }
+
         .item-name {
             flex: 50%;
             align-self: center;
         }
+
         .item-price {
             flex: 10%;
             align-self: center;
         }
+
         .item-edit {
             flex: 25%;
         }
+
         .payment section {
             margin-bottom: 2vw;
         }
+
         .payment div {
             margin-top: 2vw;
         }
+
         @media (max-width: 1188px) {
             .main-content {
                 flex-direction: column;
             }
+
             .order {
                 margin: 6vw;
                 margin-top: 3vw;
             }
+
             .payment {
                 margin: 9vw;
                 margin-top: 0;
             }
         }
+
         @media (max-width: 765px) {
             .order-item {
                 flex-direction: column;
             }
+
             .img-fluid {
                 width: auto;
                 height: auto;
             }
+
             .item-edit {
                 align-self: center;
             }
+
             .payment {
                 margin: 12vw;
                 margin-top: 0;
             }
         }
+
         .paypal-button-container {
             margin-top: 2vw;
             display: none;
         }
+
         .btn-manager {
             float: right;
             margin-top: 2vw;
@@ -133,7 +157,21 @@
             <div class="box">
                 <section>
                     <span>Collection Slot:</span>
-                    <span>Lorem Ipsum</span>
+                    <form id="slot-form" action="confirm_order.php" method="post">
+                        <select name="collection_day" id="collection_day" class="form-select">
+                            <option value="" disabled selected>Select a day</option>
+                            <option value="Wed">Wednesday</option>
+                            <option value="Thu">Thursday</option>
+                            <option value="Fri">Friday</option>
+                        </select>
+                        <select name="collection_slot" id="collection_slot" class="form-select mt-2">
+                            <option value="" disabled selected>Select a slot</option>
+                            <option value="10-13">10:00 - 13:00</option>
+                            <option value="13-16">13:00 - 16:00</option>
+                            <option value="16-19">16:00 - 19:00</option>
+                        </select>
+                        <button type="submit" class="btn btn-outline-success mt-2"><small>Confirm Slot</small></button>
+                    </form>
                 </section>
                 <section>
                     <span>Email the invoice to:</span>
@@ -197,10 +235,15 @@
                 </div>
             </section>
             <section>
-                <button class="btn btn-outline-success" id="proceed-to-payment"><small>Proceed to payment</small></button>
-            </section>
-            <section id="paypal-button-container" class="paypal-button-container">
-                <!-- PayPal SDK will render the buttons here -->
+                <form action="payment.php" method="get">
+                    <button type="submit" class="btn btn-outline-success" id="proceed-to-payment"
+                        name="proceed-to-payment"><small>Proceed
+                            to payment</small></button>
+                    <?php
+                    echo "<input type='hidden' name='total_price' value='".$totalPrice."'>";
+                    echo "<input type='hidden' name='total_quantity' value='".count($_SESSION['cart'])."'>";
+                    ?>
+                </form>
             </section>
         </div>
     </div>
@@ -208,34 +251,5 @@
     <?php include "footer.php"; ?>
 
     <!-- PayPal SDK script -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AdKCZSMp56mk6ROcx-_juaoQzgpJaCH_571hD1us2EnuxSL2dqWfrwd86qXVr3r2qGkagXoLDOjvwsei&currency=USD"></script>
-    <script>
-        let paypalRendered = false;
-
-        document.getElementById('proceed-to-payment').addEventListener('click', function () {
-            if (!paypalRendered) {
-                document.getElementById('paypal-button-container').style.display = 'block';
-                paypal.Buttons({
-                    createOrder: function (data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: '<?php echo $totalPrice; ?>' // Total amount
-                                }
-                            }]
-                        });
-                    },
-                    onApprove: function (data, actions) {
-                        return actions.order.capture().then(function (details) {
-                            alert('Transaction completed by ' + details.payer.name.given_name);
-                            // Optionally, redirect the user to a success page
-                        });
-                    }
-                }).render('#paypal-button-container');
-                paypalRendered = true;
-            }
-        });
-    </script>
 </body>
-
 </html>

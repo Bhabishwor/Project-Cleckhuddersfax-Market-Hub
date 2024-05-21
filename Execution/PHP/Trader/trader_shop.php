@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 51cd6fa018ef045adf332c832cf0187b9f171a29
 <?php
 include "../connection/connection.php";
 session_start(); // Start the session
@@ -73,7 +69,7 @@ oci_execute($stmt_products);
       transition: transform 0.3s ease-in-out; /* Added transition effect */
       transform: translateX(0); /* Keep sidebar open by default */
       z-index: 999; /* Set higher z-index */
-      background-image: url('../../Image/container.png');
+      background-image: url('../../Image/heritage/navigation_pane.png');
       background-size: cover; /* Cover the entire sidebar */
       background-repeat: no-repeat; /* Do not repeat the image */
       font-size: 1.5em;
