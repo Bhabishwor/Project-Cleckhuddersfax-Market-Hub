@@ -112,7 +112,7 @@ $trader = oci_fetch_assoc($stmt);
 <div class="container-fluid" style="margin-top: 4em; margin: left 4em;">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-lg-3 col-md-4">
+        <div class="col-lg-3 col-md-3">
             <?php include 'trader_navigation_pane.php'; ?>
         </div>
         <!-- Main Content -->

@@ -1,6 +1,9 @@
 <?php
-session_start(); // Start the session at the beginning of the script
-
+// Check if the trader is logged in
+if (!isset($_SESSION['email'])) {
+  echo "Email not set in session.";
+  exit();
+}
 // Check if the 'name' session variable is set and display it
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
@@ -152,13 +155,13 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
             <ul class="nav flex-column">
               <!-- Additional Links -->
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a>
+                <a class="nav-link" href="trader_profile.php"><i class="fas fa-user"></i> Profile</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Order</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-store"></i> Shop</a>
+                <a class="nav-link" href="trader_shop.php"><i class="fas fa-store"></i> Shop</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reports</a>

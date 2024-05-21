@@ -136,9 +136,15 @@ oci_close($conn);
         <input type="text" class="form-control" id="productName" name="productName" value="<?php echo $product['PRODUCT_NAME']; ?>" required>
       </div>
       <div class="mb-3">
-        <label for="productType" class="form-label">Product Type</label>
-        <input type="text" class="form-control" id="productType" name="productType" value="<?php echo $product['PRODUCT_TYPE']; ?>" required>
-      </div>
+    <label for="productType" class="form-label">Product Type</label>
+    <select class="form-select" id="productType" name="productType" required>
+        <option value="Butcher">Butcher</option>
+        <option value="Greengrocer">Greengrocer</option>
+        <option value="Fishmonger">Fishmonger</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Delicatessen">Delicatessen</option>
+    </select>
+</div>
       <div class="mb-3">
         <label for="productPrice" class="form-label">Product Price</label>
         <input type="number" class="form-control" id="productPrice" name="productPrice" value="<?php echo $product['PRODUCT_PRICE']; ?>" step="0.01" required>
