@@ -83,12 +83,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <style>
     /* Style for body with Background Image */
     body {
-        background-image: url('../../Image/container.png');
+        background-image: url('../../Image/heritage/navigation_pane.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
         height: 100vh; /* Set body height to full viewport height */
-        margin: 0; /* Remove default margin */
+        margin: 10rem 0 0 10rem; /* Remove default margin */
+        /* margin-top: 5rem; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -120,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <!-- Edit Trader Form -->
-  <div class="container">
+  <div class="container mb-5">
     <h1>Edit Trader</h1>
     <?php if ($trader): ?>
     <form id="traderForm" method="post" enctype="multipart/form-data" action="">

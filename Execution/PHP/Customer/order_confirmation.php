@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../../CSS/main.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
         .body {
             background-color: #e3e3e3;
@@ -144,9 +145,9 @@
 
     // Prepare the query to fetch cart items
     $query = "SELECT c.PRODUCT_ID, c.QUANTITY, c.PRICE, p.PRODUCT_IMAGE_PATH, p.PRODUCT_NAME
-              FROM cart c
-              JOIN product p ON c.PRODUCT_ID = p.PRODUCT_ID
-              WHERE c.CUSTOMER_ID = :customerId";
+          FROM cart c
+          JOIN product p ON c.PRODUCT_ID = p.PRODUCT_ID
+          WHERE c.CUSTOMER_ID = :customerId";
     $stmt = oci_parse($conn, $query);
     oci_bind_by_name($stmt, ":customerId", $customerId);
     oci_execute($stmt);
@@ -157,41 +158,35 @@
             <div class="box">
                 <section>
                     <span>Collection Slot:</span>
-                    <form id="slot-form" action="confirm_order.php" method="post">
-                        <select name="collection_day" id="collection_day" class="form-select">
-                            <option value="" disabled selected>Select a day</option>
-                            <option value="Wed">Wednesday</option>
-                            <option value="Thu">Thursday</option>
-                            <option value="Fri">Friday</option>
-                        </select>
-                        <select name="collection_slot" id="collection_slot" class="form-select mt-2">
-                            <option value="" disabled selected>Select a slot</option>
-                            <option value="10-13">10:00 - 13:00</option>
-                            <option value="13-16">13:00 - 16:00</option>
-                            <option value="16-19">16:00 - 19:00</option>
-                        </select>
-                        <button type="submit" class="btn btn-outline-success mt-2"><small>Confirm Slot</small></button>
-                    </form>
+                    <form action="payment.php" method="get">
+                        <div>
+                            <div class="slot-title">Choose a collection slot:</div>
+                            <p class="collecttxt"> Collection Day:
+                                <input type="text" id="datepicker" name="day" style="width:50%; height: 40px;" />
+                            </p>
+                        </div>
+                        <div>
+                            <label for="time" class="timetxt"> Collection Time: </label>
+                            <select name="time" id="time" style="background-color: white; width:50%; height: 60px;">
+                                <option value="10-13"> 10-13</option>
+                                <option value="13-16"> 13-16</option>
+                                <option value="16-19"> 16-19</option>
+                            </select>
+                        </div>
+
+                        <p class="collecttxt">Selected Day: <span id="selectedDay"></span></p>
+                        <p class="collecttxt">Selected Date: <span id="selectedDate"></span></p>
                 </section>
-                <section>
-                    <span>Email the invoice to:</span>
-                    <span><?php echo $_SESSION['email']; ?></span>
+                <span>Email the invoice to:</span>
+                <span><?php echo $_SESSION['email']; ?></span>
                 </section>
             </div>
             <div class="box">
                 <section class="order-item">
-                    <div class="item-div">
-                        <b>Product Image</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Product Name</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Quantity</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Price</b>
-                    </div>
+                    <div class="item-div"><b>Product Image</b></div>
+                    <div class="item-div"><b>Product Name</b></div>
+                    <div class="item-div"><b>Quantity</b></div>
+                    <div class="item-div"><b>Price</b></div>
                 </section>
                 <hr>
                 <?php
@@ -221,11 +216,8 @@
             </div>
         </div>
         <div class="payment">
-            <section>
-                <b>Payment method</b>
-            </section>
-            <section class="mb-3">
-                <img src="../../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
+            <section><b>Payment method</b></section>
+            <section class="mb-3"><img src="../../Image/paypal.png" alt="Payment Option 1" width="170" height="45">
             </section>
             <hr>
             <section class="mt-3">
@@ -235,21 +227,176 @@
                 </div>
             </section>
             <section>
-                <form action="payment.php" method="get">
-                    <button type="submit" class="btn btn-outline-success" id="proceed-to-payment"
-                        name="proceed-to-payment"><small>Proceed
-                            to payment</small></button>
-                    <?php
-                    echo "<input type='hidden' name='total_price' value='".$totalPrice."'>";
-                    echo "<input type='hidden' name='total_quantity' value='".count($_SESSION['cart'])."'>";
-                    ?>
+                <button type="submit" class="btn btn-outline-success" id="proceed-to-payment" name="proceed-to-payment">
+                    <small>Proceed to payment</small>
+                </button>
+                <?php
+                echo "<input type='hidden' name='total_price' value='" . $totalPrice . "'>";
+                echo "<input type='hidden' name='total_quantity' value='" . count($_SESSION['cart']) . "'>";
+                ?>
                 </form>
             </section>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var customDate = new Date("2024-05-23T14:00:00");
+            var minDate = new Date(customDate);
+            minDate.setDate(customDate.getDate() + 1);
+
+            $("#datepicker").datepicker({
+                minDate: minDate,
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var now = new Date(customDate);
+                    var validDays = [3, 4, 5]; // Wednesday (3), Thursday (4), Friday (5)
+
+
+                    if (date.getDate() === customDate.getDate() && date.getMonth() === customDate.getMonth() && date.getFullYear() === customDate.getFullYear()) {
+                        return [false, ""];
+                    }
+
+
+                    if (validDays.indexOf(day) === -1) {
+                        return [false, ""];
+                    }
+
+                    // Disabling logic based on customDate and current day
+                    if (now.getDay() === 2) { // If today is Tuesday
+                        if (now.getHours() >= 16 && day === 3) { // After 4 PM Tuesday, disable Wednesday
+                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
+                        }
+                    } else if (now.getDay() === 3) { // If today is Wednesday
+                        if (now.getHours() >= 16 && day === 4) { // After 4 PM Wednesday, disable Thursday
+                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
+                        }
+                    } else if (now.getDay() === 4) { // If today is Thursday
+                        if (now.getHours() >= 16 && day === 5) { // After 4 PM Thursday, disable Friday
+                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
+                        }
+                    } 
+                    return [true, ""];
+                },
+                onSelect: function (dateText, inst) {
+                    var selectedDate = new Date(dateText);
+                    var day = selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
+                    var date = selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    $("#selectedDay").text(day);
+                    $("#selectedDate").text(date);
+
+                    var currentTime = customDate.getHours();
+                    var timeOptions = '<option value="10-13"> 10-13</option><option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
+                    var todayDate = customDate;
+
+                    
+                    if (selectedDate.toDateString() === minDate.toDateString()) {
+                        if (todayDate.getDay() === 2 && currentTime >= 10) { // Tuesday
+                            if (currentTime < 13) {
+                                timeOptions = '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
+                            } else if (currentTime < 16) {
+                                timeOptions = '<option value="16-19"> 16-19</option>';
+                            } else {
+                                timeOptions = '';
+                            }
+                        } else if (todayDate.getDay() === 3 && currentTime >= 10) { // Wednesday
+                            if (currentTime < 13) {
+                                timeOptions = '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
+                            } else if (currentTime < 16) {
+                                timeOptions = '<option value="16-19"> 16-19</option>';
+                            } else {
+                                timeOptions = '';
+                            }
+                        } else if (todayDate.getDay() === 4 && currentTime >= 10) { // Thursday
+                            if (currentTime < 13) {
+                                timeOptions = '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
+                            } else if (currentTime < 16) {
+                                timeOptions = '<option value="16-19"> 16-19</option>';
+                            } else {
+                                timeOptions = '';
+                            }
+                        } 
+                    }
+
+                    $("#time").html(timeOptions);
+                }
+            });
+        });
+    </script>
+
     <?php include "footer.php"; ?>
 
-    <!-- PayPal SDK script -->
 </body>
+
 </html>
+
+
+
+<!-- 
+    <script type="text/javascript">
+        $(function () {
+            var customDate = new Date("2024-05-24T16:00:00");
+            var minDate = new Date(customDate);
+            minDate.setDate(customDate.getDate() + 1);
+
+            $("#datepicker").datepicker({
+                minDate: minDate,
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var now = new Date(customDate);
+                    var validDays = [3, 4, 5]; // Wednesday (3), Thursday (4), Friday (5)
+
+                    if (date.getDate() === customDate.getDate() && date.getMonth() === customDate.getMonth() && date.getFullYear() === customDate.getFullYear()) {
+                        return [false, ""];
+                    }
+
+                    if (validDays.indexOf(day) === -1) {
+                        return [false, ""];
+                    }
+
+                    if (date.getTime() < now.getTime() + 24 * 60 * 60 * 1000) {
+                        if (day === 3 && now.getHours() >= 16) {
+                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
+                        }
+                        if (day === 4 && now.getHours() >= 16) {
+                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
+                        }
+                        if (day === 5 && now.getHours() >= 16) {
+                            return [date.getTime() >= now.getTime() + (24 * 60 * 60 * 1000), ""];
+                            
+                        }
+                    }
+
+                    return [true, ""];
+                },
+                onSelect: function (dateText, inst) {
+                    var selectedDate = new Date(dateText);
+                    var day = selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
+                    var date = selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    $("#selectedDay").text(day);
+                    $("#selectedDate").text(date);
+
+                    var currentTime = customDate.getHours();
+                    var timeOptions = '<option value="10-13"> 10-13</option><option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
+                    var todayDate = customDate;
+
+                    if (selectedDate.toDateString() === minDate.toDateString()) {
+                        if (todayDate.getDay() === 3 && currentTime > 10) {
+                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
+                        } 
+                        else if (todayDate.getDay() === 4 && currentTime > 10) {
+                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
+                        }
+                        else if (todayDate.getDay() === 5 && currentTime > 10) {
+                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
+                        }
+                    }
+
+                    $("#time").html(timeOptions);
+                }
+            });
+        });
+    </script> -->

@@ -90,12 +90,12 @@ oci_close($conn);
   <style>
     /* Style for body with Background Image */
     body {
-        background-image: url('../../Image/container.png');
+        background-image: url('../../Image/heritage/navigation_pane.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
         height: 100vh; /* Set body height to full viewport height */
-        margin: 0; /* Remove default margin */
+        margin: 10rem 0 0 10rem; /* Remove default margin */
         display: flex;
         justify-content: center;
         align-items: center;

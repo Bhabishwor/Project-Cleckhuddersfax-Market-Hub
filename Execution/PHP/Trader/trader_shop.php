@@ -1,48 +1,10 @@
-<?php
-include "../connection/connection.php";
-session_start(); // Start the session
-
-// Check if the 'name' and 'email' session variables are set and display them
-$name = isset($_SESSION['name']) ? $_SESSION['name'] : ''; // Added this line to define $name
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$traderId = isset($_SESSION['traderId']) ? $_SESSION['traderId'] : '';
-
-
-if (!isset($_SESSION['email'])) {
-    echo "Email not set in session.";
-    exit();
-}
-
-$email = $_SESSION['email']; // Retrieve email from session
-
-// Fetch traderId using the email
-$sql = "SELECT TRADER_ID FROM TRADER WHERE TRADER_EMAIL = :email";
-$stmt = oci_parse($conn, $sql);
-oci_bind_by_name($stmt, ":email", $email);
-oci_execute($stmt);
-
-$row = oci_fetch_assoc($stmt);
-if (!$row) {
-    echo "Trader not found.";
-    exit();
-}
-
-$traderId = $row['TRADER_ID'];
-
-// Fetch products for the trader
-$sql_products = "SELECT * FROM PRODUCT WHERE TRADER_ID = :traderId";
-$stmt_products = oci_parse($conn, $sql_products);
-oci_bind_by_name($stmt_products, ":traderId", $traderId);
-oci_execute($stmt_products);
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin navigation pane</title>
+  <title>Trader Shop</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome CSS -->
@@ -54,177 +16,76 @@ oci_execute($stmt_products);
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   <style>
-    /* Sidebar CSS */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 250px;
-      color: #fff;
-      padding-top: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.3s ease-in-out; /* Added transition effect */
-      transform: translateX(0); /* Keep sidebar open by default */
-      z-index: 999; /* Set higher z-index */
-      background-image: url('../../Image/heritage/navigation_pane.png');
-      background-size: cover; /* Cover the entire sidebar */
-      background-repeat: no-repeat; /* Do not repeat the image */
-      font-size: 1.5em;
-    }
-
-    .sidebar-logo {
-      text-align: center;
-      margin-bottom: 30px; /* Increased margin-bottom */
-    }
-
-    .nav-link {
-      padding: 10px;
-      display: block;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .nav-link i {
-      margin-right: 10px; /* Add margin between icon and text */
-    }
-
-    .nav-link:hover {
-      background-color: #555;
-    }
-
-    .submenu {
-      display: none;
-    }
-
-    .nav-item:hover .submenu {
-      display: block;
-    }
-
-    .username-box {
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      color: #000;
-      font-size: 14px;
-      width: 200px;
-      text-align: center;
-      cursor: pointer;
-      margin: 0 auto 20px;
-    }
-
-    /* Hamburger Icon CSS */
-    .hamburger {
-      display: none; /* Hide hamburger icon by default */
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 250px;
-        transform: translateX(-250px); /* Initially hide sidebar on small screens */
-      }
-
-      .sidebar.open {
-        transform: translateX(0); /* Show sidebar when open class is added */
-      }
-
-      .hamburger {
-        display: block; /* Show hamburger icon on small screens */
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        z-index: 1000; /* Ensure it's above other content */
-        background-color: #fff; /* Button background color */
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .hamburger:hover {
-        background-color: #ccc;
-      }
-
-      .main-content {
-        padding-left: 20px; /* Adjust padding to make space for hamburger icon */
-      }
+    /* Additional Custom Styles */
+    .main-content {
+      padding-left: 270px;
+      /* Adjusted to accommodate the sidebar */
     }
   </style>
 </head>
+
 <body>
-  <!-- Hamburger Icon -->
-  <div class="hamburger d-lg-none" onclick="toggleSidebar()">
-    &#9776; <!-- Hamburger icon -->
-  </div>
+  <!-- Trader Navigation Pane -->
+  <?php
+  include "../connection/connection.php";
+  include "trader_navigation_pane.php"; 
 
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-lg-3 col-md-4">
-        <div class="sidebar" id="sidebar">
-          <div>
-            <div class="sidebar-logo">
-              <img src="../../Image/logo.png" alt="Logo" style="width: 150px;">
-            </div>
-            <ul class="nav flex-column">
-              <!-- Additional Links -->
-              <li class="nav-item">
-                <a class="nav-link" href="trader_profile.php"><i class="fas fa-user"></i> Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Order</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="trader_shop.php"><i class="fas fa-store"></i> Shop</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reports</a>
-                <ul class="submenu">
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-day"></i> Daily</a></li>
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-week"></i> Weekly</a></li>
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Monthly</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="username-box">
-            <?php
-            echo "<p>" . $name . "</p>";
-            echo "<p>" . $email . "</p>";
-            ?>
-            <form action="../logout.php" method="post">
-              <button class="btn btn-outline-success logoutBtn" type="submit">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
-              </button>
-            </form>
+  
+  // Check if the 'name' and 'email' session variables are set and display them
+  $name = isset($_SESSION['name']) ? $_SESSION['name'] : ''; // Added this line to define $name
+  $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
+  $traderId = isset($_SESSION['traderId']) ? $_SESSION['traderId'] : '';
 
-          </div>
+
+  if (!isset($_SESSION['email'])) {
+    echo "Email not set in session.";
+    exit();
+  }
+
+  $email = $_SESSION['email']; // Retrieve email from session
+  
+  // Fetch traderId using the email
+  $sql = "SELECT TRADER_ID FROM TRADER WHERE TRADER_EMAIL = :email";
+  $stmt = oci_parse($conn, $sql);
+  oci_bind_by_name($stmt, ":email", $email);
+  oci_execute($stmt);
+
+  $row = oci_fetch_assoc($stmt);
+  if (!$row) {
+    echo "Trader not found.";
+    exit();
+  }
+
+  $traderId = $row['TRADER_ID'];
+
+  // Fetch products for the trader
+  $sql_products = "SELECT * FROM PRODUCT WHERE TRADER_ID = :traderId";
+  $stmt_products = oci_parse($conn, $sql_products);
+  oci_bind_by_name($stmt_products, ":traderId", $traderId);
+  oci_execute($stmt_products);
+  ?>
+
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1 class="product-heading" style="margin-top: 2em; margin-right: 5em; text-align: center;">
+      <i class="fas fa-box-open"></i> YOUR PRODUCTS
+    </h1>
+    <!-- Add Product Button -->
+    <div class="container-fluid" style="margin-left: 7em;">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 text-center">
+          <button class="btn btn-primary mt-3 mb-3" onclick="location.href='add_product.php'">
+            <i class="fas fa-plus-circle"></i> Add Product
+          </button>
         </div>
       </div>
-      <!-- Main Content -->
-      <div class="col-lg-9 col-md-8">
-        <h1 class="product-heading" style="margin-top: 2em; margin-right: 5em; text-align: center;">
-          <!-- Combined inline styles -->
-          <i class="fas fa-box-open"></i> YOUR PRODUCTS
-        </h1>
-        <!-- Add Product Button -->
-        <div class="container-fluid" style="margin-left: 7em;">
-          <div class="row">
-            <div class="col-lg-9 col-md-8 text-center"> <!-- Added text-center class -->
-              <button class="btn btn-primary mt-3 mb-3" onclick="location.href='add_product.php'">
-                <i class="fas fa-plus-circle"></i> Add Product
-              </button>
-            </div>
-          </div>
-        </div>
+    </div>
 
-        <div class="row" style="margin-right: 3em;">
-    <?php
-    // Display product data
-    while ($row_product = oci_fetch_assoc($stmt_products)) {
+    <div class="row" style="margin-right: 3em;">
+      <?php
+      // Display product data
+      while ($row_product = oci_fetch_assoc($stmt_products)) {
         echo "<div class='col-md-4 mb-4'>";
         echo "<div class='card'>";
         echo "<div class='card-img-container'>";
@@ -242,13 +103,11 @@ oci_execute($stmt_products);
         echo "<div class='card-buttons mt-3 d-flex justify-content-between'>";
         echo "<a href='edit_product.php?product_id=" . $row_product['PRODUCT_ID'] . "' class='btn btn-primary btn-sm'>Edit</a>";
         echo "<button class='btn btn-danger btn-sm' onclick='confirmDelete(" . $row_product['PRODUCT_ID'] . ")'>Delete</button>";
-
-        //echo "<button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteProductModal" . $row['PRODUCT_ID'] . "'>Delete</button>";
         echo "</div>";
         echo "</div>"; // Closing card-body div
         echo "</div>"; // Closing card div
         echo "</div>"; // Closing col-md-4 div
-
+      
         // Delete Product Modal for each product
         echo "<div class='modal fade' id='deleteProductModal" . $row_product['PRODUCT_ID'] . "' tabindex='-1' role='dialog' aria-labelledby='deleteProductModalLabel" . $row_product['PRODUCT_ID'] . "' aria-hidden='true'>";
         echo "<div class='modal-dialog' role='document'>";
@@ -269,22 +128,22 @@ oci_execute($stmt_products);
         echo "</div>";
         echo "</div>";
         echo "</div>";
-    }
-    ?>
-</div>
-
-      </div>
+      }
+      ?>
     </div>
   </div>
 
+
+
   <script>
     // Function to handle delete confirmation
+
     function confirmDelete(productId) {
       // Show the modal
       $('#deleteProductModal' + productId).modal('show');
 
       // When user confirms deletion
-      $('#confirmDeleteBtn' + productId).click(function() {
+      $('#confirmDeleteBtn' + productId).click(function () {
         // Redirect to delete script
         window.location.href = 'delete.php?product_id=' + productId;
         // Redirect to traders_shop.php after deletion
@@ -299,4 +158,5 @@ oci_execute($stmt_products);
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

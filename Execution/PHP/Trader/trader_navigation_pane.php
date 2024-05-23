@@ -1,14 +1,17 @@
 <?php
 // Check if the trader is logged in
-if (!isset($_SESSION['email'])) {
-  echo "Email not set in session.";
-  exit();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
 }
+
 // Check if the 'name' session variable is set and display it
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 // $name = "";
-
+if (!isset($_SESSION['email'])) {
+  echo "Email not set in session.";
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

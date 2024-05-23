@@ -1,7 +1,123 @@
 <?php
-
 include "../connection/connection.php";
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+function sendMail($email, $v_code, $name)
+{
+
+    require ("PHPMailer/PHPMailer.php");
+    require ("PHPMailer/SMTP.php");
+    require ("PHPMailer/Exception.php");
+
+    $mail = new PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+        $mail->Username = 'luciferdynamic598@gmail.com';                     //SMTP username
+        $mail->Password = 'wgvf rsrm egmc ejqx';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('luciferdynamic598@gmail.com', 'Community Harvest');
+        $mail->addAddress($email);     //Add a recipient
+
+
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Email Verification From Community Harvest';
+        $mail->Body = "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+          <meta charset='UTF-8'>
+          <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+          <title>Verify Your Email Address</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 0;
+              color: #333;
+            }
+        
+            .container {
+              padding: 20px;
+              max-width: 600px;
+              margin: 0 auto;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+            }
+        
+            .header {
+              text-align: center;
+              padding: 10px;
+              background-color: #f0f0f0;
+              border-bottom: 1px solid #ddd;
+            }
+        
+            .content {
+              padding: 20px;
+            }
+        
+            .link {
+              display: block;
+              text-align: center;
+              margin-top: 20px;
+              font-weight: bold;
+            }
+        
+            a {
+              color: #333;
+              text-decoration: none;
+            }
+        
+            a:hover {
+              text-decoration: underline;
+            }
+        
+            .footer {
+              text-align: center;
+              padding: 10px;
+              font-size: 12px;
+              color: #aaa;
+            }
+          </style>
+        </head>
+        <body>
+          <div class='container'>
+            <div class='header'>
+              <h2>Verify Your Email Address</h2>
+            </div>
+            <div class='content'>
+              <p>Hi $name,</p>
+              <p>Thank you Trader for signing up for our website! To activate your account, please click the link below:</p>
+              <p><a href='http://localhost/CommunityHarvest/Execution/PHP/Customer/verify.php?email=$email&v_code=$v_code'>Verify your email address</a></p>
+              <p>If you did not create an account with us, please ignore this email.</p>
+            </div>
+            <div class='footer'>
+              <p>Sincerely,</p>
+              <p>Community Harvest Team</p>
+            </div>
+          </div>
+        </body>
+        </html>";
+
+
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +188,7 @@ include "../connection/connection.php";
     $password_confirm = $_POST['cpassword'];
     $role = "trader";
     $status = "Not Verified";
+    $admin_verified = "N";
     $error = 0;
 
     // Session
@@ -110,6 +227,11 @@ include "../connection/connection.php";
       $error_phone = "Please enter a valid mobile number";
       $error++;
     }
+
+    if (!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
+      $error_email = "Please enter a valid email, like yourname@abc.com";
+      $error++;
+  }
 
     if (empty($address)) {
       $error_phone = "Please enter your address";
@@ -205,8 +327,11 @@ include "../connection/connection.php";
     // If no errors, insert into database
     if ($error == 0) {
       $password = password_hash($password, PASSWORD_DEFAULT);
-      $query = "INSERT INTO users(user_name, user_address, user_email, user_phone_number, user_password, user_role, user_status, user_shop, user_shop_image)
-       VALUES (:name, :address, :email, :phone, :password, :role, :status, :shopType, :image)";
+
+      $verification_code = bin2hex(random_bytes(16));
+
+      $query = "INSERT INTO users(user_name, user_address, user_email, user_phone_number, user_password, user_role, user_status, user_shop, user_shop_image, admin_verified, verification_code)
+       VALUES (:name, :address, :email, :phone, :password, :role, :status, :shopType, :image, :admin_verify, :verify)";
       $bind_stmnt = oci_parse($conn, $query);
 
       oci_bind_by_name($bind_stmnt, ':name', $name);
@@ -218,15 +343,29 @@ include "../connection/connection.php";
       oci_bind_by_name($bind_stmnt, ':status', $status);
       oci_bind_by_name($bind_stmnt, ':shopType', $shop_type);
       oci_bind_by_name($bind_stmnt, ':image', $targetFilePath);
+      oci_bind_by_name($bind_stmnt, ':admin_verify', $admin_verified);
+      oci_bind_by_name($bind_stmnt, ':verify', $verification_code);
 
       $result = oci_execute($bind_stmnt);
 
-      if ($result) {
+      if ($result && sendMail($email, $verification_code, $name)) {
         $success = "Registration Successful!";
+        $_SESSION['name'] = "";
+        $_SESSION['address'] = "";
+        $_SESSION['email'] = "";
+        $_SESSION['phone'] = "";
         session_destroy();
+
         $target_url = "../login.php";
         echo '<meta http-equiv="refresh" content="1;url=' . $target_url . '">';
-      }
+      }else {
+        echo "
+        <script>
+        alert('Registration Failed');
+        windows.location.href='homepage.php';
+        </script>
+        ";
+    }
     }
   }
   ?>

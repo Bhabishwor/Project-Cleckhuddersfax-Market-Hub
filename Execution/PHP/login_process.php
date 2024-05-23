@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($password, $row['USER_PASSWORD'])) {
                 if ($is_verified == "Verified") {
 
-                    $_SESSION['email'] = $email;
+                    $_SESSION['email'] = $row['USER_EMAIL'];
                     $_SESSION['role'] = $row['USER_ROLE'];
                     $_SESSION['id'] = $row['USER_ID'];
                     $_SESSION['name'] = $row['USER_NAME'];
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: Customer/homepage.php");
                     }
                     if ($_SESSION['role'] == "trader") {
-                        header("Location: Trader/trader_shop.php");
+                        header("Location: Trader/trader_navigation_pane.php");
                     }
                 } else {
                     $_SESSION['failmessage'] = "User is not Verified";

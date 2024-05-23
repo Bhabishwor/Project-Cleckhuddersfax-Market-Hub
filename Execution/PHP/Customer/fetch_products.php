@@ -2,18 +2,51 @@
 // Include the database connection
 include "../connection/connection.php";
 
-// Get the product type from the query parameter
+// Get the product type, sort order, and search term from the query parameters
 $productType = isset($_GET['type']) ? $_GET['type'] : '';
+$sortOrder = isset($_GET['sort']) ? $_GET['sort'] : 'default';
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Prepare the SQL statement to fetch products based on the product type
+// Prepare the SQL statement to fetch products based on the product type, sort order, and search term
+$sql = "SELECT * FROM PRODUCT WHERE 1=1";
+
 if ($productType) {
-    $sql = "SELECT * FROM PRODUCT WHERE PRODUCT_TYPE = :product_type";
-    $stmt_products = oci_parse($conn, $sql);
-    oci_bind_by_name($stmt_products, ':product_type', $productType);
-} else {
-    $sql = "SELECT * FROM PRODUCT";
-    $stmt_products = oci_parse($conn, $sql);
+    $sql .= " AND PRODUCT_TYPE = :product_type";
 }
+
+if ($searchTerm) {
+    $sql .= " AND LOWER(PRODUCT_NAME) LIKE '%' || LOWER(:search_term) || '%'";
+}
+
+// Append sorting logic
+switch ($sortOrder) {
+    case 'price_asc':
+        $sql .= " ORDER BY PRODUCT_PRICE ASC";
+        break;
+    case 'price_desc':
+        $sql .= " ORDER BY PRODUCT_PRICE DESC";
+        break;
+    case 'name_asc':
+        $sql .= " ORDER BY PRODUCT_NAME ASC";
+        break;
+    case 'name_desc':
+        $sql .= " ORDER BY PRODUCT_NAME DESC";
+        break;
+    default:
+        // Default sorting logic if any, or no sorting
+        break;
+}
+
+$stmt_products = oci_parse($conn, $sql);
+
+if ($productType) {
+    oci_bind_by_name($stmt_products, ':product_type', $productType);
+}
+
+if ($searchTerm) {
+    oci_bind_by_name($stmt_products, ':search_term', $searchTerm);
+}
+
 oci_execute($stmt_products);
 
 // Generate the product cards
@@ -49,7 +82,7 @@ while ($row_product = oci_fetch_assoc($stmt_products)) {
     $output .= "</div>"; 
     $output .= "</div>"; 
     $output .= "</div>";
-}    
+}
 
 echo $output;
 

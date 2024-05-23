@@ -123,16 +123,6 @@
     <div class="main-div">
         <div class="div1">
             <div class="box">
-                <section>
-                    <span>Collection Slot:</span>
-                    <span>Lorem Ipsum</span>
-                </section>
-                <section>
-                    <span>Email the invoice to:</span>
-                    <span><?php echo $_SESSION['email']; ?></span>
-                </section>
-            </div>
-            <div class="box">
                 <section class="order-item">
                     <div class="item-div">
                         <b>Product Image</b>

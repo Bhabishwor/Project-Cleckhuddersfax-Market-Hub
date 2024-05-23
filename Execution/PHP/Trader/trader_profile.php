@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,9 +90,12 @@
 <body>
 <?php
 include "../connection/connection.php";
-include 'trader_navigation_pane.php'; // Start the session at the beginning of the script
+include "trader_navigation_pane.php"; // Start the session at the beginning of the script
 
-$email = $_SESSION['email'];
+$name = isset($_SESSION['name']) ? $_SESSION['name'] : ''; // Added this line to define $name
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
+$traderId = isset($_SESSION['traderId']) ? $_SESSION['traderId'] : '';
+
 
 // Fetch trader details from the database
 $sql = "SELECT * FROM TRADER WHERE TRADER_EMAIL = :email";
