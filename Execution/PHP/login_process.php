@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // $is_verified = $row['USER_STATUS'];
             $is_verified = "Verified";
 
-            if (password_verify($password, $row['USER_PASSWORD'])) {
+            if (md5($password) === $row['USER_PASSWORD']) {
                 if ($is_verified == "Verified") {
 
                     $_SESSION['email'] = $row['USER_EMAIL'];

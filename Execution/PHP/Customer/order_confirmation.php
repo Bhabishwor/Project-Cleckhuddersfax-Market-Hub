@@ -158,7 +158,7 @@
             <div class="box">
                 <section>
                     <span>Collection Slot:</span>
-                    <form action="payment.php" method="get">
+                    <form action="payment.php" method="post" id="order-form">
                         <div>
                             <div class="slot-title">Choose a collection slot:</div>
                             <p class="collecttxt"> Collection Day:
@@ -177,9 +177,15 @@
                         <p class="collecttxt">Selected Day: <span id="selectedDay"></span></p>
                         <p class="collecttxt">Selected Date: <span id="selectedDate"></span></p>
                 </section>
+                <input type="hidden" name="collection_date" id="collection_date_hidden" value="">
+                <input type="hidden" name="collection_time" id="collection_time_hidden" value="">
+                <?php
+                echo "<input type='hidden' name='customerId' value='" . $customerId . "'>";
+                ?>
+
                 <span>Email the invoice to:</span>
                 <span><?php echo $_SESSION['email']; ?></span>
-                </section>
+
             </div>
             <div class="box">
                 <section class="order-item">
@@ -278,7 +284,7 @@
                         if (now.getHours() >= 16 && day === 5) { // After 4 PM Thursday, disable Friday
                             return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
                         }
-                    } 
+                    }
                     return [true, ""];
                 },
                 onSelect: function (dateText, inst) {
@@ -288,11 +294,13 @@
                     $("#selectedDay").text(day);
                     $("#selectedDate").text(date);
 
+                    $("#collection_date_hidden").val(dateText);
+
                     var currentTime = customDate.getHours();
                     var timeOptions = '<option value="10-13"> 10-13</option><option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
                     var todayDate = customDate;
 
-                    
+
                     if (selectedDate.toDateString() === minDate.toDateString()) {
                         if (todayDate.getDay() === 2 && currentTime >= 10) { // Tuesday
                             if (currentTime < 13) {
@@ -318,11 +326,21 @@
                             } else {
                                 timeOptions = '';
                             }
-                        } 
+                        }
                     }
 
                     $("#time").html(timeOptions);
+
                 }
+            });
+
+            $("#time").on("change", function () {
+                $("#collection_time_hidden").val($(this).val());
+            });
+
+            $("#order-form").on("submit", function () {
+                $("#collection_date_hidden").val($("#datepicker").val());
+                $("#collection_time_hidden").val($("#time").val());
             });
         });
     </script>
@@ -332,71 +350,3 @@
 </body>
 
 </html>
-
-
-
-<!-- 
-    <script type="text/javascript">
-        $(function () {
-            var customDate = new Date("2024-05-24T16:00:00");
-            var minDate = new Date(customDate);
-            minDate.setDate(customDate.getDate() + 1);
-
-            $("#datepicker").datepicker({
-                minDate: minDate,
-                beforeShowDay: function (date) {
-                    var day = date.getDay();
-                    var now = new Date(customDate);
-                    var validDays = [3, 4, 5]; // Wednesday (3), Thursday (4), Friday (5)
-
-                    if (date.getDate() === customDate.getDate() && date.getMonth() === customDate.getMonth() && date.getFullYear() === customDate.getFullYear()) {
-                        return [false, ""];
-                    }
-
-                    if (validDays.indexOf(day) === -1) {
-                        return [false, ""];
-                    }
-
-                    if (date.getTime() < now.getTime() + 24 * 60 * 60 * 1000) {
-                        if (day === 3 && now.getHours() >= 16) {
-                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
-                        }
-                        if (day === 4 && now.getHours() >= 16) {
-                            return [date.getTime() >= now.getTime() + 24 * 60 * 60 * 1000, ""];
-                        }
-                        if (day === 5 && now.getHours() >= 16) {
-                            return [date.getTime() >= now.getTime() + (24 * 60 * 60 * 1000), ""];
-                            
-                        }
-                    }
-
-                    return [true, ""];
-                },
-                onSelect: function (dateText, inst) {
-                    var selectedDate = new Date(dateText);
-                    var day = selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
-                    var date = selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-                    $("#selectedDay").text(day);
-                    $("#selectedDate").text(date);
-
-                    var currentTime = customDate.getHours();
-                    var timeOptions = '<option value="10-13"> 10-13</option><option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>';
-                    var todayDate = customDate;
-
-                    if (selectedDate.toDateString() === minDate.toDateString()) {
-                        if (todayDate.getDay() === 3 && currentTime > 10) {
-                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
-                        } 
-                        else if (todayDate.getDay() === 4 && currentTime > 10) {
-                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
-                        }
-                        else if (todayDate.getDay() === 5 && currentTime > 10) {
-                            timeOptions = currentTime < 13 ? '<option value="13-16"> 13-16</option><option value="16-19"> 16-19</option>' : '<option value="16-19"> 16-19</option>';
-                        }
-                    }
-
-                    $("#time").html(timeOptions);
-                }
-            });
-        });
-    </script> -->

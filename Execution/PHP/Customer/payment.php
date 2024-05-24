@@ -1,4 +1,11 @@
 <?php
+
+$collectionDate = $_POST['collection_date'];
+$collectionTime = $_POST['collection_time'];
+$totalPrice = $_POST['total_price'];
+$totalQuantity = $_POST['total_quantity'];
+$customerId = $_POST['customerId'];
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -6,13 +13,14 @@ error_reporting(E_ALL);
 // Replace these placeholders with your actual sandbox credentials
 $clientId = 'AVERPVeJXC7_LWnHvkTfzDoU2a6zDsjyMCKUQ-I1SZgvaq3I91Vk6LXPP3tXgafXz3a7s_GU4_4vWmVh';
 $clientSecret = 'ENgAzWIBnMvtAem3GGvxTOK2Fco9IElqPeAm2dtBQc51BczmNTyjHiKfnNpCWSlQ7tRIBE5J83eK4AT3';
- // Assuming 'order_id' is passed from the previous page
+// Assuming 'order_id' is passed from the previous page
 
 // Include connection file to the database
-include("connection/connection.php");
+include ("../connection/connection.php");
 
 // Function to make API call to PayPal
-function makePayPalApiCall($apiEndpoint, $headers, $body) {
+function makePayPalApiCall($apiEndpoint, $headers, $body)
+{
     $ch = curl_init($apiEndpoint . '/v1/payments/payment');
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -23,17 +31,15 @@ function makePayPalApiCall($apiEndpoint, $headers, $body) {
     return json_decode($response, true);
 }
 
-// Set up the payment amount and currency
-$amount = $_GET['total_price']; // Amount in pence or smallest currency unit
+
+$productDescription = "Community Harvest";
 $currency = 'GBP'; // Currency code for pound sterling
 
-// Set up your product details
-$productName = "HudderFoods";
-$productDescription = "Purchased " . $_GET["total_products"] . " Products From HudderFoods";
+
 
 // Set up PayPal API endpoints for sandbox
 $apiEndpoint = 'https://api.sandbox.paypal.com';
-$redirectUrl = 'http://localhost/CommunityHarvest//Execution/PHP/Customer/homepage.php'; // Replace with your thank you page URL
+$redirectUrl = 'http://localhost/CommunityHarvest/Execution/PHP/Customer/confirm_order.php'; // Replace with your thank you page URL
 
 // Set up PayPal API request headers
 $headers = [
@@ -50,18 +56,20 @@ $body = [
     'transactions' => [
         [
             'amount' => [
-                'total' => number_format($amount / 100, 2),
+                'total' => number_format($totalPrice/ 100, 2),
                 'currency' => $currency
             ],
             'description' => $productDescription
         ]
     ],
     'redirect_urls' => [
-        'return_url' => $redirectUrl . '?success=true' . 
-                        '&total_price=' . urlencode($_GET['total_price']) . 
-                        '&total_products=' . urlencode($_GET['total_products']) . 
-                        '&customer_id=' . urlencode($_GET['customer_id']),
-        'cancel_url' => $redirectUrl . '?success=false'
+        'return_url' => $redirectUrl . '?success=true' .
+            '&collection_date=' . urlencode($collectionDate) .
+            '&collection_time=' . urlencode($collectionTime) .
+            '&total_price=' . urlencode($totalPrice) .
+            '&total_products=' . urlencode($totalQuantity) .
+            '&customer_id=' . urlencode($customerId),
+            'cancel_url' => $redirectUrl . '?success=false'
     ]
 ];
 
@@ -69,7 +77,7 @@ $body = [
 $payment = makePayPalApiCall($apiEndpoint, $headers, $body);
 
 // Redirect user to PayPal for payment authorization
-if(isset($payment['id'])) {
+if (isset($payment['id'])) {
     $redirectUrl = $payment['links'][1]['href'];
     header('Location: ' . $redirectUrl); // Redirect to PayPal for payment authorization
     exit;

@@ -127,19 +127,19 @@ function sendMail($email, $v_code, $name)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Register as Customer | Cleckhuddersfax Market Hub</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="../../CSS/form.css" />
 
     <style>
-        .error{
+        .error {
             color: red;
             font-style: italic;
         }
 
-        #customer_message{
+        #customer_message {
             margin-top: 20px;
         }
     </style>
@@ -266,10 +266,7 @@ function sendMail($email, $v_code, $name)
 
 
         if ($error == 0) {
-            $password = password_hash(
-                $password,
-                PASSWORD_DEFAULT
-            );
+            $password = md5($password);
 
             $verification_code = bin2hex(random_bytes(16));
 
@@ -322,7 +319,7 @@ function sendMail($email, $v_code, $name)
 
     <div class="py-4">
         <img src="../../Image/Logo.png" class="img-fluid rounded mx-auto d-block" height="50px" width="70px" alt="">
-    
+
         <div class="container border border-2 rounded color_white mt-4 p-2 registerContainer">
             <form method="post" id="registrationForm">
                 <div class="login_container">
@@ -384,6 +381,11 @@ function sendMail($email, $v_code, $name)
                             echo '<div>' . $error_phone . '</div>'; ?>
                     </div>
 
+                    <label class="mb-2">
+                        <input type="checkbox" required> <!-- 'required' attribute makes it mandatory -->
+                        I agree to the <a href="#">terms and conditions</a>
+                    </label>
+
                     <?php if (isset($success))
                         echo '<div>' . $success . '</div>';
                     ?>
@@ -399,9 +401,9 @@ function sendMail($email, $v_code, $name)
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
     <!-- <script src="../JS/main.js"></script> -->
 </body>
 

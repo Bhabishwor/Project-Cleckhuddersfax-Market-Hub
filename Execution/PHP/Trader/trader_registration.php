@@ -9,30 +9,30 @@ use PHPMailer\PHPMailer\Exception;
 function sendMail($email, $v_code, $name)
 {
 
-    require ("PHPMailer/PHPMailer.php");
-    require ("PHPMailer/SMTP.php");
-    require ("PHPMailer/Exception.php");
+  require ("PHPMailer/PHPMailer.php");
+  require ("PHPMailer/SMTP.php");
+  require ("PHPMailer/Exception.php");
 
-    $mail = new PHPMailer(true);
+  $mail = new PHPMailer(true);
 
-    try {
-        //Server settings
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth = true;                                   //Enable SMTP authentication
-        $mail->Username = 'luciferdynamic598@gmail.com';                     //SMTP username
-        $mail->Password = 'wgvf rsrm egmc ejqx';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+  try {
+    //Server settings
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+    $mail->Username = 'luciferdynamic598@gmail.com';                     //SMTP username
+    $mail->Password = 'wgvf rsrm egmc ejqx';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-        //Recipients
-        $mail->setFrom('luciferdynamic598@gmail.com', 'Community Harvest');
-        $mail->addAddress($email);     //Add a recipient
+    //Recipients
+    $mail->setFrom('luciferdynamic598@gmail.com', 'Community Harvest');
+    $mail->addAddress($email);     //Add a recipient
 
 
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Email Verification From Community Harvest';
-        $mail->Body = "<!DOCTYPE html>
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Email Verification From Community Harvest';
+    $mail->Body = "<!DOCTYPE html>
         <html lang='en'>
         <head>
           <meta charset='UTF-8'>
@@ -110,11 +110,11 @@ function sendMail($email, $v_code, $name)
 
 
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        return false;
-    }
+    $mail->send();
+    return true;
+  } catch (Exception $e) {
+    return false;
+  }
 }
 ?>
 
@@ -175,7 +175,7 @@ function sendMail($email, $v_code, $name)
 
 <body>
 
-<?php
+  <?php
   session_start();
   $error_name = $error_email = $error_phone = $error_username = $error_passwd = $error_passwdConfirm = $error_image = '';
   if (isset($_POST['register_trader'])) {
@@ -231,7 +231,7 @@ function sendMail($email, $v_code, $name)
     if (!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
       $error_email = "Please enter a valid email, like yourname@abc.com";
       $error++;
-  }
+    }
 
     if (empty($address)) {
       $error_phone = "Please enter your address";
@@ -309,7 +309,7 @@ function sendMail($email, $v_code, $name)
       }
     } else {
       $error_image = "Please upload your image";
-      $error++;   
+      $error++;
     }
 
     // Check for existing email
@@ -326,7 +326,7 @@ function sendMail($email, $v_code, $name)
 
     // If no errors, insert into database
     if ($error == 0) {
-      $password = password_hash($password, PASSWORD_DEFAULT);
+      $password = md5($password);
 
       $verification_code = bin2hex(random_bytes(16));
 
@@ -358,14 +358,14 @@ function sendMail($email, $v_code, $name)
 
         $target_url = "../login.php";
         echo '<meta http-equiv="refresh" content="1;url=' . $target_url . '">';
-      }else {
+      } else {
         echo "
         <script>
         alert('Registration Failed');
         windows.location.href='homepage.php';
         </script>
         ";
-    }
+      }
     }
   }
   ?>
