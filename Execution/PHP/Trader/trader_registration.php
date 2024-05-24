@@ -454,6 +454,11 @@ function sendMail($email, $v_code, $name)
             ?>
           </div>
 
+          <label class="mb-2">
+                        <input type="checkbox" required> <!-- 'required' attribute makes it mandatory -->
+                        I agree to the <a href="#">terms and conditions</a>
+          </label>
+
           <?php if (isset($success))
             echo '<div>' . $success . '</div>';
           ?>
