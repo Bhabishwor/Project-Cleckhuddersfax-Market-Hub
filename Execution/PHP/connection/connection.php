@@ -1,5 +1,5 @@
 <?php
-$conn = oci_connect('COMMUNITY_HARVEST', 'communityharvest', '//localhost/xe');
+$conn = oci_connect('C_HARVEST', 'charvest', '//localhost/xe');
 
 
 if (!$conn) {

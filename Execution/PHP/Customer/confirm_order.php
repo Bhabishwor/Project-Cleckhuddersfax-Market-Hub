@@ -1,6 +1,10 @@
 <?php
 include "../connection/connection.php";
 
+session_start();
+
+// require "invoice.php";
+
 $payment = $_GET['success'];
 $collectionDate = $_GET['collection_date'];
 $collectionTime = $_GET['collection_time'];
@@ -9,9 +13,6 @@ $totalQuantity = $_GET['total_products'];
 $customerId = $_GET['customer_id'];
 
 if ($payment === 'true') {
-
-
-
 
     // Inserting data into confirm_order table
     $order_query = "INSERT INTO confirm_order (CUSTOMER_ID, TOTAL_PRICE, TOTAL_QUANTITY)
@@ -24,36 +25,18 @@ if ($payment === 'true') {
     oci_bind_by_name($insert_order_query, ':totalQuantity', $totalQuantity);
 
 
-
-
-
-
     if (oci_execute($insert_order_query, OCI_DEFAULT)) {
-
-        // Payment Table
-        // $payment_query = "INSERT INTO payment (ORDER_ID, CUSTOMER_ID, PAYMENT_AMOUNT,PAYMENT_DATE)
-        // VALUES(:orderID, :customerID, :paymentAmount, :paymentDate)";
-
-        // $insert_payment = oci_parse($conn, $payment_query);
-
-        // $dateTime = new DateTime();
-        // $paymentDate = $dateTime->format('Y-m-d');
-
-        // oci_bind_by_name($insert_payment,":orderID", $orderId);
-        // oci_bind_by_name($insert_payment,":customerID", $customerId);
-        // oci_bind_by_name($insert_payment,":paymentAmount", $totalPrice);
-        // oci_bind_by_name($insert_payment,":paymentDate", $paymentDate);
-
-
 
         // Order Sequence
 
-        $order_sequence_query = "SELECT confirm_order_seq.CURRVAL AS order_id FROM dual";
-        $stmt_order_id = oci_parse($conn. $order_sequence_query);
+        $order_sequence_query = "SELECT confirm_order_seq.CURRVAL AS ORDER_ID FROM dual";
+        $stmt_order_id = oci_parse($conn, $order_sequence_query);
         oci_execute($stmt_order_id);
 
         $row = oci_fetch_assoc($stmt_order_id);
-        $orderId = $row['ORDER_ID'];  
+        $orderId = $row['ORDER_ID'];
+
+
 
 
 
@@ -76,13 +59,24 @@ if ($payment === 'true') {
 
                 oci_execute($insert_order_details);
 
+                // Selecting the stock
+                $select_stock_query = "SELECT STOCK FROM product WHERE PRODUCT_ID = :productId";
+                $select_stock = oci_parse($conn, $select_stock_query);
+                oci_bind_by_name($select_stock, ":productId", $order_cart['PRODUCT_ID']);
+                oci_execute($select_stock);
+                $row = oci_fetch_assoc($select_stock);
+
+                $remaining_stock = $row['STOCK'] - $order_cart['QUANTITY'];
+
+
                 // Updating the stock
                 $update_stock_query = "UPDATE product SET STOCK = :stock WHERE PRODUCT_ID = :productId";
                 $update_stock = oci_parse($conn, $update_stock_query);
-
-                oci_bind_by_name($update_stock_query, ":productID", $order_cart['PRODUCT_ID']);
-
+                oci_bind_by_name($update_stock, ":productID", $order_cart['PRODUCT_ID']);
+                oci_bind_by_name($update_stock, ":stock", $remaining_stock);
                 oci_execute($update_stock);
+
+
             }
         }
 
@@ -96,11 +90,63 @@ if ($payment === 'true') {
         oci_bind_by_name($insert_collection_slot, ":collectionTime", $collectionTime);
 
         oci_execute($insert_collection_slot);
+
+
+        // Payment Table
+        $payment_query = "INSERT INTO payment (ORDER_ID, USER_ID, PAYMENT_AMOUNT)
+VALUES(:orderID, :customerID, :paymentAmount)";
+
+        $insert_payment = oci_parse($conn, $payment_query);
+
+        // Check if oci_parse was successful
+        if (!$insert_payment) {
+            $e = oci_error($conn);
+            echo "Error parsing SQL: " . $e['message'];
+            exit;
+        }
+
+        oci_bind_by_name($insert_payment, ":orderID", $orderId);
+        oci_bind_by_name($insert_payment, ":customerID", $customerId);
+        oci_bind_by_name($insert_payment, ":paymentAmount", $totalPrice);
+
+        if (!oci_execute($insert_payment, OCI_NO_AUTO_COMMIT)) {
+            $e = oci_error($insert_payment);
+            echo "Error executing SQL: " . $e['message'];
+            exit;
+        }
+
+        // Commit the transaction
+        if (!oci_commit($conn)) {
+            $e = oci_error($conn);
+            echo "Error committing transaction: " . $e['message'];
+            exit;
+        }
+
+        echo "Data successfully inserted.";
+
+
+        // Delete the items in the cart of the particular customer
+        $delete_cart_query = "DELETE FROM cart WHERE CUSTOMER_ID = :customerId";
+        $delete_cart = oci_parse($conn, $delete_cart_query);
+        oci_bind_by_name($delete_cart, ":customerId", $customerId);
+        oci_execute($delete_cart);
+
+        unset($_SESSION['cart']);
+
+
+
+        $_SESSION['order_placed'] = true;
+
+
+
     } else {
         // Rollback the transaction in case of any failure
         oci_rollback($conn);
         echo "Failed to insert order.";
     }
+
+
+    header("Location: homepage.php");
 } else {
     echo "Payment not successful.";
 }

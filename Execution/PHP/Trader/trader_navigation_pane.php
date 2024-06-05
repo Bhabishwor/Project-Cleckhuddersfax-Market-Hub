@@ -158,18 +158,14 @@ if (!isset($_SESSION['email'])) {
                 <a class="nav-link" href="trader_profile.php"><i class="fas fa-user"></i> Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Order</a>
+                <a class="nav-link" href="trader_orders.php"><i class="fas fa-shopping-cart"></i> Order</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="trader_shop.php"><i class="fas fa-store"></i> Shop</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reports</a>
-                <ul class="submenu">
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-day"></i> Daily</a></li>
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-week"></i> Weekly</a></li>
-                  <li><a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Monthly</a></li>
-                </ul>
+                <a class="nav-link" href="http://127.0.0.1:8080/apex/f?p=102:LOGIN_DESKTOP:12760291647567:::::"><i class="fas fa-chart-bar"></i> Reports</a>
+                
               </li>
             </ul>
           </div>
@@ -185,10 +181,7 @@ if (!isset($_SESSION['email'])) {
               </button>
             </form>
       </div>
-      <!-- Main Content -->
-      <!--<div class="col-lg-9 col-md-8 main-content">
-    <h1>Main Content Area</h1>
-    </div>-->
+
     </div>
   </div>
 

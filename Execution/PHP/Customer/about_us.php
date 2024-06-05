@@ -1,3 +1,5 @@
+<?php include "header.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,21 +13,22 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../../CSS/main.css">
 
-    <style>
-        .member-name {
-            font-weight: bold;
-        }
-
-        .align-right {
-            display: flex;
-            text-align: right;
-        }
-    </style>
 </head>
+<style>
+    .image-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures the image covers the container without stretching */
+    }
+</style>
 
 <body>
-    <?php include "header.php"; ?>
-
     <div class="container-fluid p-5">
         <p class="title text-center pb-5">OUR STORY</p>
 
@@ -51,109 +54,49 @@
     </div>
 
     <div class="container-fluid p-5">
-        <p class="title text-center pb-5">OUR TEAM</p>
-
         <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <img src="../../Image/team/Sanskriti.jpeg" alt="Sanskriti Dhungel" width="250" height="300">
+            <div class="col-md-4 image-container">
+                <img src="../../Image/about_us/about_us1.png" alt="About Us Image 1">
             </div>
 
-            <div class="col-md-6">
-                <span class="member-name align-right justify-content-end">
-                    Sanskriti Dhungel
-                </span>
-                <span class="align-right justify-content-end">
-                    Leader<br>Shaper, Complete Finisher, Specialist
-                </span>
-            </div>
-        </div>
-
-        <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <span class="member-name">
-                    Arpit Sharma
-                </span>
-                <br>
-                <span>
-                    Plant, Co-ordinator, Complete Finisher
-                </span>
-            </div>
-
-            <div class="col-md-6 align-right justify-content-end">
-                <img src="../../Image/team/Arpit.jpeg" alt="Arpit Sharma" width="250" height="300">
-            </div>
-        </div>
-
-        <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <img src="../../Image/team/Aayusha.jpeg" alt="Aayusha Maharjan" width="250" height="300">
-            </div>
-
-            <div class="col-md-6">
-                <span class="member-name align-right justify-content-end">
-                    Aayusha Maharjan
-                </span>
-                <span class="align-right justify-content-end">
-                    Shaper, Complete Finisher, Specialist
-                </span>
-            </div>
-        </div>
-
-        <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <span class="member-name">
-                    Bhabishwor Gurung
-                </span>
-                <br>
-                <span>
-                    Monitor Evaluator, Complete Finisher, Teamworker
-                </span>
-            </div>
-
-            <div class="col-md-6 align-right justify-content-end">
-                <img src="../../Image/team/Bhabishwor.jpeg" alt="Bhabishwor Gurung" width="250" height="300">
-            </div>
-        </div>
-
-        <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <img src="../../Image/team/Sana.jpeg" alt="Sana Banu" width="250" height="300">
-            </div>
-
-            <div class="col-md-6">
-                <span class="member-name align-right justify-content-end">
-                    Sana Banu
-                </span>
-                <span class="align-right justify-content-end">
-                    Teamworker, Monitor Evaluator, Implementer
-                </span>
-            </div>
-        </div>
-
-        <div class="row container-fluid p-5">
-            <div class="col-md-6">
-                <span class="member-name">
-                    Sindhu Thapa Magar
-                </span>
-                <br>
-                <span>
-                    Resource Investigator, Implementer, Specialist
-                </span>
-            </div>
-
-            <div class="col-md-6 align-right justify-content-end">
-                <img src="../../Image/team/Sindhu.jpeg" alt="Sindhu Thapa Magar" width="250" height="300">
+            <div class="col-md-8 d-flex align-items-center">
+                <div>
+                    <p class="title text-center">OUR VISION</p>
+                    <span>
+                        To preserve and enhance the vibrant local shopping culture of Cleckhuddersfax by integrating
+                        modern e-commerce solutions that support and empower small independent businesses.
+                    </span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div><img src="../../Image/about us.png" alt="" class="container-fluid px-0 py-5"></div>
+    <div class="container-fluid p-5">
+        <div class="row container-fluid p-5">
+            <div class="col-md-8 d-flex align-items-center">
+                <div>
+                    <p class="title text-center">OUR MISSION</p>
+                    <span>
+                        To develop a user-friendly e-commerce platform that enables local traders to reach more
+                        customers,
+                        providing convenience and accessibility while maintaining the community spirit and heritage of
+                        our
+                        shopping area.
+                    </span>
+                </div>
+            </div>
 
-    <?php include "footer.php"; ?>
+            <div class="col-md-4 image-container">
+                <img src="../../Image/about_us/about_us2.png" alt="About Us Image 1">
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>
+
+<?php include "footer.php"; ?>

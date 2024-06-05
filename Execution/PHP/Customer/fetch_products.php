@@ -1,4 +1,5 @@
 <?php
+
 // Include the database connection
 include "../connection/connection.php";
 
@@ -7,13 +8,14 @@ $productType = isset($_GET['type']) ? $_GET['type'] : '';
 $sortOrder = isset($_GET['sort']) ? $_GET['sort'] : 'default';
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
+
 // Prepare the SQL statement to fetch products based on the product type, sort order, and search term
-$sql = "SELECT P.PRODUCT_ID, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_IMAGE_PATH, T.TRADER_NAME, AVG(R.RATING) AS AVG_RATING
+$sql = "SELECT P.PRODUCT_ID, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_IMAGE_PATH, P.STOCK, T.USER_NAME, AVG(R.RATING) AS AVG_RATING
         FROM PRODUCT P 
-        JOIN TRADER T ON P.TRADER_ID = T.TRADER_ID 
+        JOIN USERS T ON P.USER_ID = T.USER_ID 
         LEFT JOIN REVIEWS R ON P.PRODUCT_ID = R.PRODUCT_ID";
 
-$sql .= " WHERE 1=1";
+$sql .= " WHERE P.ADMIN_VERIFIED = 'Y'";
 
 if ($productType) {
     $sql .= " AND P.PRODUCT_TYPE = :product_type";
@@ -21,11 +23,11 @@ if ($productType) {
 
 if ($searchTerm) {
     $sql .= " AND (LOWER(P.PRODUCT_NAME) LIKE '%' || LOWER(:search_term) || '%' 
-                   OR LOWER(T.TRADER_NAME) LIKE '%' || LOWER(:search_term) || '%')";
+                   OR LOWER(T.USER_NAME) LIKE '%' || LOWER(:search_term) || '%')";
 }
 
 // Append grouping and sorting logic
-$sql .= " GROUP BY P.PRODUCT_ID, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_IMAGE_PATH, T.TRADER_NAME";
+$sql .= " GROUP BY P.PRODUCT_ID, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_IMAGE_PATH, P.STOCK, T.USER_NAME";
 
 switch ($sortOrder) {
     case 'price_asc':
@@ -69,7 +71,7 @@ while ($row_product = oci_fetch_assoc($stmt_products)) {
     $output .= "</div>";
     $output .= "<div class='card-body' data-rating='" . htmlspecialchars($row_product['AVG_RATING']) . "'>";
     $output .= "<h5 class='card-title'>" . htmlspecialchars($row_product['PRODUCT_NAME']) . "</h5>";
-    $output .= "<p class='card-text'>Trader: " . htmlspecialchars($row_product['TRADER_NAME']) . "</p>";
+    $output .= "<p class='card-text'>Trader: " . htmlspecialchars($row_product['USER_NAME']) . "</p>";
     $output .= "<p class='card-text'>Price: $" . number_format($row_product['PRODUCT_PRICE'], 2) . "</p>";
     $output .= "<p class='card-text'>Average Rating: ";
     $output .= "<span>";
@@ -77,7 +79,13 @@ while ($row_product = oci_fetch_assoc($stmt_products)) {
     $output .= "</span>";
     $output .= "</p>";
     $output .= "<div class='d-flex justify-content-between'>";
+    $output .= "<form action='manage_cart.php' method='get'>";
+    $output .= "<input type='hidden' name='Product_Id' value='" . htmlspecialchars($row_product['PRODUCT_ID']) . "'>";
+    $output .= "<input type='hidden' name='Product_Name' value='" . htmlspecialchars($row_product['PRODUCT_NAME']) . "'>";
+    $output .= "<input type='hidden' name='Product_Price' value='" . htmlspecialchars($row_product['PRODUCT_PRICE']) . "'>";
+    $output .= "<input type='hidden' name='stock' value='" . htmlspecialchars($row_product['STOCK']) . "'>";
     $output .= "<button type='submit' class='btn btn-primary' name='cartBtn'><i class='fa-solid fa-cart-shopping' style='color: white;'></i></button>";
+    $output .= "</form>";   
     $output .= "<button class='btn btn-outline-dark' data-toggle='tooltip' data-placement='top' title='Add to Wishlist'><i class='far fa-heart'></i></button>";
     $output .= "</div>"; 
     $output .= "</div>"; 

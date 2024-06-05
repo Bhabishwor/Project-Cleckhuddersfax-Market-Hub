@@ -11,5 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     oci_bind_by_name($stmt, ":productId", $productId);
     oci_bind_by_name($stmt, ":customerId", $customerId);
     oci_execute($stmt);
+
+       // Delete the item from the session cart
+    if (isset($_SESSION['cart'][$productId])) {
+        unset($_SESSION['cart'][$productId]);
+    }
 }
 ?>

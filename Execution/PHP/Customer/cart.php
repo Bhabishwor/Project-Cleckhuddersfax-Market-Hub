@@ -1,7 +1,22 @@
+<?php
+ob_start();
+include "header.php";
+
+if (!isset($_SESSION["name"])) {
+    $_SESSION["loginError"] = "Please Login First";
+    header("Location: homepage.php");
+    exit(); // Ensure the script stops executing after the redirect
+}
+
+include "../connection/connection.php";
+
+?>
 <!doctype html>
 <html lang="en">
-  <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +29,6 @@
         .btn-manager {
             float: right;
             margin: 1vw;
-            /* Optional: adjust as needed for spacing */
         }
 
         .box {
@@ -107,83 +121,78 @@
 
 <body class="body">
     <?php
-    include "header.php";
-    include "../connection/connection.php";
+
 
     $customerId = $_SESSION['id'];
     $query = "SELECT c.PRODUCT_ID, c.QUANTITY, c.PRICE, p.PRODUCT_IMAGE_PATH, p.PRODUCT_NAME
-          FROM cart c
-          JOIN product p ON c.PRODUCT_ID = p.PRODUCT_ID
-          WHERE c.CUSTOMER_ID = :customerId";
+              FROM cart c
+              JOIN product p ON c.PRODUCT_ID = p.PRODUCT_ID
+              WHERE c.CUSTOMER_ID = :customerId";
     $stmt = oci_parse($conn, $query);
     oci_bind_by_name($stmt, ":customerId", $customerId);
     oci_execute($stmt);
+
+    $cartItems = [];
+    while ($row_cart = oci_fetch_assoc($stmt)) {
+        $cartItems[] = $row_cart;
+    }
     ?>
 
     <div class="main-div">
         <div class="div1">
             <div class="box">
-                <section class="order-item">
-                    <div class="item-div">
-                        <b>Product Image</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Product Name</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Quantity</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Price</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Edit</b>
-                    </div>
-                    <div class="item-div">
-                        <b>Delete</b>
-                    </div>
-                </section>
-                <hr>
-                <?php
-                $totalPrice = 0;
-                while ($row_cart = oci_fetch_assoc($stmt)) {
-                    $productImagePath = $row_cart['PRODUCT_IMAGE_PATH'];
-                    $productName = $row_cart['PRODUCT_NAME'];
-                    $productPrice = $row_cart['PRICE'];
-                    $productQuantity = $row_cart['QUANTITY'];
-                    $totalPrice += $productPrice * $productQuantity;
-
-                    echo '<section class="order-item" data-product-id="' . $row_cart['PRODUCT_ID'] . '">';
-                    echo '    <div class="item-div"><img src="' . htmlspecialchars($productImagePath) . '" alt="Order Item 1" width="70" height="70"></div>';
-                    echo '    <div class="item-div">';
-                    echo '        <b>' . htmlspecialchars($productName) . '</b>';
-                    echo '    </div>';
-                    echo '    <div class="item-div quantity-container">';
-                    echo '        <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>';
-                    echo '        <input type="text" class="quantity-input" value="' . htmlspecialchars($productQuantity) . '" readonly>';
-                    echo '        <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>';
-                    echo '    </div>';
-                    echo '    <div class="item-div">';
-                    echo '        <b>$' . number_format($productPrice, 2) . '</b>';
-                    echo '    </div>';
-                    echo '    <div class="item-div">';
-                    echo '        <a href="#" onclick="updateQuantity(' . $row_cart['PRODUCT_ID'] . ', this)"><img src="../../Image/buttons/edit.png" alt="Edit" width="80" height="80"></a>';
-                    echo '    </div>';
-                    echo '    <div class="item-div">';
-                    echo '        <a href="#" onclick="deleteProduct(' . $row_cart['PRODUCT_ID'] . ', this)"><img src="../../Image/buttons/delete.png" alt="Delete" width="80" height="80"></a>';
-                    echo '    </div>';
-                    echo '</section>';
-                    echo '<hr>';
-                }
-                ?>
-                <a href="order_confirmation.php">
-                    <button type="button" class="btn btn-success btn-manager mt-4">Confirm Order</button>
-                </a>
+                <?php if (empty($cartItems)): ?>
+                    <h3 style="text-align: center;">Your cart is empty</h3>
+                <?php else: ?>
+                    <section class="order-item">
+                        <div class="item-div"><b>Product Image</b></div>
+                        <div class="item-div"><b>Product Name</b></div>
+                        <div class="item-div"><b>Quantity</b></div>
+                        <div class="item-div"><b>Price</b></div>
+                        <div class="item-div"><b>Edit</b></div>
+                        <div class="item-div"><b>Delete</b></div>
+                    </section>
+                    <hr>
+                    <?php
+                    $totalPrice = 0;
+                    foreach ($cartItems as $row_cart) {
+                        $productImagePath = $row_cart['PRODUCT_IMAGE_PATH'];
+                        $productName = $row_cart['PRODUCT_NAME'];
+                        $productPrice = $row_cart['PRICE'];
+                        $productQuantity = $row_cart['QUANTITY'];
+                        $totalPrice += $productPrice * $productQuantity;
+                        ?>
+                        <section class="order-item" data-product-id="<?php echo $row_cart['PRODUCT_ID']; ?>">
+                            <div class="item-div"><img src="<?php echo htmlspecialchars($productImagePath); ?>"
+                                    alt="Order Item 1" width="70" height="70"></div>
+                            <div class="item-div"><b><?php echo htmlspecialchars($productName); ?></b></div>
+                            <div class="item-div quantity-container">
+                                <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
+                                <input type="text" class="quantity-input"
+                                    value="<?php echo htmlspecialchars($productQuantity); ?>" readonly>
+                                <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <div class="item-div"><b>$<?php echo number_format($productPrice, 2); ?></b></div>
+                            <div class="item-div"><a href="#"
+                                    onclick="updateQuantity(<?php echo $row_cart['PRODUCT_ID']; ?>, this)"><img
+                                        src="../../Image/buttons/edit.png" alt="Edit" width="80" height="80"></a></div>
+                            <div class="item-div"><a href="#"
+                                    onclick="deleteProduct(<?php echo $row_cart['PRODUCT_ID']; ?>, this)"><img
+                                        src="../../Image/buttons/delete.png" alt="Delete" width="80" height="80"></a></div>
+                        </section>
+                        <hr>
+                    <?php } ?>
+                    <a href="order_confirmation.php">
+                        <button type="button" class="btn btn-success btn-manager mt-4">Confirm Order</button>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
-
     </div>
+
     <?php include "footer.php"; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script
         src="https://www.paypal.com/sdk/js?client-id=AdKCZSMp56mk6ROcx-_juaoQzgpJaCH_571hD1us2EnuxSL2dqWfrwd86qXVr3r2qGkagXoLDOjvwsei&currency=USD"></script>
     <script>
@@ -207,9 +216,23 @@
             xhr.open("POST", "update_cart.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Success response
+                var response = xhr.responseText;
+                if (response === "success") {
                     alert("Quantity updated successfully!");
+                } else if (response === "exceeds") {
+                    alert("Quantity exceeds the stock value.");
+                    window.location.reload();
+                } else {
+                    alert("An error occurred. Please try again later.");
                 }
+            } else {
+                // Error response
+                alert("An error occurred. Please try again later.");
+            }
+        }
             };
             xhr.send("product_id=" + productId + "&quantity=" + quantity);
         }

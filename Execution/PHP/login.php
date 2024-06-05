@@ -50,6 +50,7 @@ unset($_SESSION['success_msg']);
                         <select class="text_box" id="userType" name="role">
                             <option value="customer">Customer</option>
                             <option value="trader">Trader</option>
+                            <option value="admin">Admin</option>
                         </select>
                         <hr>
                     </div>

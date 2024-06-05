@@ -21,12 +21,7 @@
                 </a>
             </div>
 
-            <div class="col-sm pt-5 pl-5 pr-0">
-                <p><b>Shop</b></p>
-                <p>Shop 1</p>
-                <p>Shop 2</p>
-                <p>Shop 3</p>
-            </div>
+      
             
             <div class="col-sm pt-5 pl-5 pr-0">
                 <p><b>Help</b></p>

@@ -16,7 +16,7 @@ if (!isset($_SESSION['email'])) {
 $email = $_SESSION['email'];
 
 // Fetch customer details from the database
-$sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_EMAIL = :email";
+$sql = "SELECT * FROM USERS WHERE USER_EMAIL = :email";
 $stmt = oci_parse($conn, $sql);
 oci_bind_by_name($stmt, ':email', $email);
 oci_execute($stmt);
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customerAddress = sanitize($_POST['customerAddress']);
 
     // Update customer data
-    $updateSql = "UPDATE CUSTOMER SET CUSTOMER_NAME = :customerName, CUSTOMER_PHONE_NUMBER = :customerPhone, CUSTOMER_ADDRESS = :customerAddress WHERE CUSTOMER_EMAIL = :email";
+    $updateSql = "UPDATE USERS SET USER_NAME = :customerName, USER_PHONE_NUMBER = :customerPhone, USER_ADDRESS = :customerAddress WHERE USER_EMAIL = :email";
     $updateStmt = oci_parse($conn, $updateSql);
     oci_bind_by_name($updateStmt, ":customerName", $customerName);
     oci_bind_by_name($updateStmt, ":customerPhone", $customerPhone);
@@ -118,15 +118,15 @@ oci_close($conn);
     <form id="profileForm" method="post" action="">
       <div class="mb-3">
         <label for="customerName" class="form-label">Customer Name</label>
-        <input type="text" class="form-control" id="customerName" name="customerName" value="<?php echo htmlspecialchars($customer['CUSTOMER_NAME']); ?>" required>
+        <input type="text" class="form-control" id="customerName" name="customerName" value="<?php echo htmlspecialchars($customer['USER_NAME']); ?>" required>
       </div>
       <div class="mb-3">
         <label for="customerPhone" class="form-label">Phone Number</label>
-        <input type="text" class="form-control" id="customerPhone" name="customerPhone" value="<?php echo htmlspecialchars($customer['CUSTOMER_PHONE_NUMBER']); ?>" required>
+        <input type="text" class="form-control" id="customerPhone" name="customerPhone" value="<?php echo htmlspecialchars($customer['USER_PHONE_NUMBER']); ?>" required>
       </div>
       <div class="mb-3">
         <label for="customerAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="customerAddress" name="customerAddress" value="<?php echo htmlspecialchars($customer['CUSTOMER_ADDRESS']); ?>" required>
+        <input type="text" class="form-control" id="customerAddress" name="customerAddress" value="<?php echo htmlspecialchars($customer['USER_ADDRESS']); ?>" required>
       </div>
       <button type="submit" class="btn btn-primary" id="updateProfileBtn">Update Profile</button>
     </form>

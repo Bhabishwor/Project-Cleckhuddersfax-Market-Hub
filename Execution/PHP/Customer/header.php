@@ -62,7 +62,7 @@ if (!isset($_SESSION['cart'])) {
                             <a id="nav-homepage" class="nav-link" href="homepage.php">Home</a>
                         </li>
                         <li>
-                            <a id="nav-shop" class="nav-link" href="#">Shop</a>
+                            <a id="nav-shop" class="nav-link" href="shop.php">Shop</a>
                         </li>
                         <li>
                             <a id="nav-about_us" class="nav-link" href="about_us.php">About Us</a>
@@ -97,6 +97,7 @@ if (!isset($_SESSION['cart'])) {
                             ?>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="customer_profile.php">User Profile</a></li>
+                                <li><a class="dropdown-item" href="customer_orders.php">My Orders</a></li>
                                 <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                             </ul>
                         </div>
@@ -115,7 +116,7 @@ if (!isset($_SESSION['cart'])) {
             </div>
         </nav>
     </header>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

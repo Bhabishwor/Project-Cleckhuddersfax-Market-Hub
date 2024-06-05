@@ -94,13 +94,14 @@ include "trader_navigation_pane.php"; // Start the session at the beginning of t
 
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : ''; // Added this line to define $name
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$traderId = isset($_SESSION['traderId']) ? $_SESSION['traderId'] : '';
-
+$traderId = isset($_SESSION['id']) ? $_SESSION['id'] : '';
+$role = "trader";
 
 // Fetch trader details from the database
-$sql = "SELECT * FROM TRADER WHERE TRADER_EMAIL = :email";
+$sql = "SELECT * FROM users WHERE USER_EMAIL = :email AND USER_ROLE = :roleName";
 $stmt = oci_parse($conn, $sql);
 oci_bind_by_name($stmt, ':email', $email);
+oci_bind_by_name($stmt, ':roleName', $_SESSION['role']);
 oci_execute($stmt);
 
 if (!$stmt) {
@@ -126,21 +127,21 @@ $trader = oci_fetch_assoc($stmt);
                 <div class="d-flex align-items-center mb-4">
                     <!-- Display trader shop image in a circular shape -->
                     <div class="profile-image me-4">
-                        <img src="<?php echo htmlspecialchars($trader['TRADER_SHOP_IMAGE']); ?>" alt="Shop Image" class="img-fluid rounded-circle">
+                        <img src="<?php echo htmlspecialchars($trader['USER_SHOP_IMAGE']); ?>" alt="Shop Image" class="img-fluid rounded-circle">
                     </div>
                     <!-- Trader information -->
                     <div>
                         <h2 class="mb-0">Trader Profile</h2>
-                        <p class="mb-1"><i class="fas fa-user icon"></i><strong>Name:</strong> <?php echo htmlspecialchars($trader['TRADER_NAME']); ?></p>
-                        <p class="mb-1"><i class="fas fa-envelope icon"></i><strong>Email:</strong> <?php echo htmlspecialchars($trader['TRADER_EMAIL']); ?></p>
-                        <p class="mb-1"><i class="fas fa-phone icon"></i><strong>Phone Number:</strong> <?php echo htmlspecialchars($trader['TRADER_PHONE_NUMBER']); ?></p>
-                        <p class="mb-1"><i class="fas fa-home icon"></i><strong>Address:</strong> <?php echo htmlspecialchars($trader['TRADER_ADDRESS']); ?></p>
-                        <p class="mb-1"><i class="fas fa-store icon"></i><strong>Shop:</strong> <?php echo htmlspecialchars($trader['TRADER_SHOP']); ?></p>
+                        <p class="mb-1"><i class="fas fa-user icon"></i><strong>Name:</strong> <?php echo htmlspecialchars($trader['USER_NAME']); ?></p>
+                        <p class="mb-1"><i class="fas fa-envelope icon"></i><strong>Email:</strong> <?php echo htmlspecialchars($trader['USER_EMAIL']); ?></p>
+                        <p class="mb-1"><i class="fas fa-phone icon"></i><strong>Phone Number:</strong> <?php echo htmlspecialchars($trader['USER_PHONE_NUMBER']); ?></p>
+                        <p class="mb-1"><i class="fas fa-home icon"></i><strong>Address:</strong> <?php echo htmlspecialchars($trader['USER_ADDRESS']); ?></p>
+                        <p class="mb-1"><i class="fas fa-store icon"></i><strong>Shop:</strong> <?php echo htmlspecialchars($trader['USER_SHOP']); ?></p>
                     </div>
                 </div>
                 <!-- Edit profile button -->
                 <div class="edit-profile">
-                    <a href="edit_trader.php?trader_id=<?php echo htmlspecialchars($trader['TRADER_ID']); ?>"><button class="btn btn-primary">Edit Profile</button></a>
+                    <a href="edit_trader.php?trader_id=<?php echo htmlspecialchars($trader['USER_ID']); ?>"><button class="btn btn-primary">Edit Profile</button></a>
                 </div>
             </div>
         </div>

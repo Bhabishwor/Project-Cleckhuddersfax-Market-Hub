@@ -25,11 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($row = oci_fetch_assoc($stmt)) {
 
-            // $is_verified = $row['USER_STATUS'];
-            $is_verified = "Verified";
+            $is_verified = $row['USER_STATUS'];
+            $is_adminVerified = $row['ADMIN_VERIFIED'];
 
             if (md5($password) === $row['USER_PASSWORD']) {
-                if ($is_verified == "Verified") {
+                if ($is_verified == "Verified" && $is_adminVerified == "Y") {
 
                     $_SESSION['email'] = $row['USER_EMAIL'];
                     $_SESSION['role'] = $row['USER_ROLE'];
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: Customer/homepage.php");
                     }
                     if ($_SESSION['role'] == "trader") {
-                        header("Location: Trader/trader_navigation_pane.php");
+                        header("Location: Trader/trader_profile.php");
                     }
                 } else {
                     $_SESSION['failmessage'] = "User is not Verified";

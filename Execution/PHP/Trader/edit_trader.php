@@ -5,7 +5,7 @@ session_start(); // Start the session at the beginning of the script
 $email = $_SESSION['email'];
 
 // Fetch trader details from the database
-$sql = "SELECT * FROM TRADER WHERE TRADER_EMAIL = :email";
+$sql = "SELECT * FROM users WHERE USER_EMAIL = :email";
 $stmt = oci_parse($conn, $sql);
 oci_bind_by_name($stmt, ':email', $email);
 oci_execute($stmt);
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $traderPhoneNumber = htmlspecialchars($_POST['traderPhoneNumber']);
     $traderAddress = htmlspecialchars($_POST['traderAddress']);
     $traderEmail = htmlspecialchars($_POST['traderEmail']);
-    $traderShop = htmlspecialchars($_POST['traderShop']);
+    $traderShop = $trader['USER_SHOP']; // Use the trader's existing shop type from the database
 
     // Handle image upload
     $uploadDirectory = "../../Uploaded_Image/Trader/";
@@ -37,40 +37,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imageFileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
     $validExtensions = array("jpg", "jpeg", "png", "gif");
 
+    $updateImage = false; // Flag to check if image needs to be updated
+
     // Check if image file is selected and valid
     if (!empty($_FILES["traderShopImage"]["tmp_name"]) && in_array($imageFileType, $validExtensions)) {
         // Move uploaded image to the upload directory
         if (move_uploaded_file($_FILES["traderShopImage"]["tmp_name"], $targetFilePath)) {
-            // Update trader data in the database with the new image path
-            $updateSql = "UPDATE TRADER SET TRADER_NAME = :traderName, TRADER_PHONE_NUMBER = :traderPhoneNumber, TRADER_ADDRESS = :traderAddress, TRADER_EMAIL = :traderEmail, TRADER_SHOP = :traderShop, TRADER_SHOP_IMAGE = :traderShopImage WHERE TRADER_EMAIL = :email";
-            $updateStmt = oci_parse($conn, $updateSql);
-            oci_bind_by_name($updateStmt, ":traderName", $traderName);
-            oci_bind_by_name($updateStmt, ":traderPhoneNumber", $traderPhoneNumber);
-            oci_bind_by_name($updateStmt, ":traderAddress", $traderAddress);
-            oci_bind_by_name($updateStmt, ":traderEmail", $traderEmail);
-            oci_bind_by_name($updateStmt, ":traderShop", $traderShop);
-            oci_bind_by_name($updateStmt, ":traderShopImage", $targetFilePath);
-            oci_bind_by_name($updateStmt, ":email", $email);
-
-            if (oci_execute($updateStmt)) {
-                echo "Trader profile updated successfully";
-                // Redirect to the trader profile page after successful update
-                header("Location: trader_profile.php");
-                exit();
-            } else {
-                echo "Error updating trader profile";
-            }
-
-            oci_free_statement($updateStmt);
+            $updateImage = true;
         } else {
             echo "Error uploading image";
         }
-    } else {
-        echo "Invalid file type or no file selected";
+    } elseif (!empty($_FILES["traderShopImage"]["tmp_name"]) && !in_array($imageFileType, $validExtensions)) {
+        echo "Invalid file type";
+        exit();
     }
+
+    // Update trader data in the database
+    if ($updateImage) {
+        $updateSql = "UPDATE USERS SET USER_NAME = :traderName, USER_PHONE_NUMBER = :traderPhoneNumber, USER_ADDRESS = :traderAddress, USER_EMAIL = :traderEmail, USER_SHOP = :traderShop, USER_SHOP_IMAGE = :traderShopImage WHERE USER_EMAIL = :email";
+    } else {
+        $updateSql = "UPDATE USERS SET USER_NAME = :traderName, USER_PHONE_NUMBER = :traderPhoneNumber, USER_ADDRESS = :traderAddress, USER_EMAIL = :traderEmail, USER_SHOP = :traderShop WHERE USER_EMAIL = :email";
+    }
+
+    $updateStmt = oci_parse($conn, $updateSql);
+    oci_bind_by_name($updateStmt, ":traderName", $traderName);
+    oci_bind_by_name($updateStmt, ":traderPhoneNumber", $traderPhoneNumber);
+    oci_bind_by_name($updateStmt, ":traderAddress", $traderAddress);
+    oci_bind_by_name($updateStmt, ":traderEmail", $traderEmail);
+    oci_bind_by_name($updateStmt, ":traderShop", $traderShop);
+    if ($updateImage) {
+        oci_bind_by_name($updateStmt, ":traderShopImage", $targetFilePath);
+    }
+    oci_bind_by_name($updateStmt, ":email", $email);
+
+    if (oci_execute($updateStmt)) {
+        echo "Trader profile updated successfully";
+        // Redirect to the trader profile page after successful update
+        header("Location: trader_profile.php");
+        exit();
+    } else {
+        echo "Error updating trader profile";
+    }
+
+    oci_free_statement($updateStmt);
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background-position: center;
         height: 100vh; /* Set body height to full viewport height */
         margin: 10rem 0 0 10rem; /* Remove default margin */
-        /* margin-top: 5rem; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -128,30 +138,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- Input fields to edit trader details -->
       <div class="mb-3">
         <label for="traderName" class="form-label">Trader Name</label>
-        <input type="text" class="form-control" id="traderName" name="traderName" value="<?php echo $trader['TRADER_NAME']; ?>" required>
+        <input type="text" class="form-control" id="traderName" name="traderName" value="<?php echo htmlspecialchars($trader['USER_NAME']); ?>" required>
       </div>
       <div class="mb-3">
         <label for="traderPhoneNumber" class="form-label">Trader Phone Number</label>
-        <input type="number" class="form-control" id="traderPhoneNumber" name="traderPhoneNumber" value="<?php echo $trader['TRADER_PHONE_NUMBER']; ?>" required>
+        <input type="number" class="form-control" id="traderPhoneNumber" name="traderPhoneNumber" value="<?php echo htmlspecialchars($trader['USER_PHONE_NUMBER']); ?>" required>
       </div>
       <div class="mb-3">
         <label for="traderAddress" class="form-label">Trader Address</label>
-        <input type="text" class="form-control" id="traderAddress" name="traderAddress" value="<?php echo $trader['TRADER_ADDRESS']; ?>">
+        <input type="text" class="form-control" id="traderAddress" name="traderAddress" value="<?php echo htmlspecialchars($trader['USER_ADDRESS']); ?>">
       </div>
       <div class="mb-3">
         <label for="traderEmail" class="form-label">Trader Email</label>
-        <input type="email" class="form-control" id="traderEmail" name="traderEmail" value="<?php echo $trader['TRADER_EMAIL']; ?>" required>
+        <input type="email" class="form-control" id="traderEmail" name="traderEmail" value="<?php echo htmlspecialchars($trader['USER_EMAIL']); ?>" required>
       </div>
 
       <div class="mb-3">
         <label for="traderShop" class="form-label">Trader Shop</label>
-        <input type="text" class="form-control" id="traderShop" name="traderShop" value="<?php echo $trader['TRADER_SHOP']; ?>">
+        <input type="text" class="form-control" id="traderShop" name="traderShop" value="<?php echo htmlspecialchars($trader['USER_SHOP']); ?>" readonly>
       </div>
 
       <div class="mb-3">
         <label for="traderShopImage" class="form-label">Trader Shop Image</label>
-        <?php if (!empty($trader['TRADER_SHOP_IMAGE'])): ?>
-            <img src="<?php echo $trader['TRADER_SHOP_IMAGE']; ?>" alt="Trader Shop Image" class="img-fluid mb-3">
+        <?php if (!empty($trader['USER_SHOP_IMAGE'])): ?>
+            <img src="<?php echo htmlspecialchars($trader['USER_SHOP_IMAGE']); ?>" alt="Trader Shop Image" class="img-fluid mb-3">
         <?php endif; ?>
         <input type="file" class="form-control" id="traderShopImage" name="traderShopImage" accept="image/*">
       </div>

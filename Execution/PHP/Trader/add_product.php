@@ -9,10 +9,11 @@ if (!isset($_SESSION['email'])) {
 
 $email = $_SESSION['email']; // Retrieve email from session
 
-// Fetch traderId using the email
-$sql = "SELECT TRADER_ID FROM TRADER WHERE TRADER_EMAIL = :email";
+// Fetch traderId and traderShop (product type) using the email
+$sql = "SELECT USER_ID, USER_SHOP FROM users WHERE USER_EMAIL = :email AND USER_ROLE = :roleName";
 $stmt = oci_parse($conn, $sql);
 oci_bind_by_name($stmt, ":email", $email);
+oci_bind_by_name($stmt, ":roleName", $_SESSION['role']);
 oci_execute($stmt);
 
 $row = oci_fetch_assoc($stmt);
@@ -21,15 +22,16 @@ if (!$row) {
     exit();
 }
 
-$traderId = $row['TRADER_ID'];
+$traderId = $row['USER_ID'];
+$_SESSION['traderShop'] = $row['USER_SHOP']; // Store the trader shop (product type) in session
 
 // Add Product
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $productName = htmlspecialchars($_POST['productName']);
-    $productType = htmlspecialchars($_POST['productType']);
+    $productType = $_SESSION['traderShop']; // Use the trader's registered shop type
     $productPrice = htmlspecialchars($_POST['productPrice']);
     $stock = htmlspecialchars($_POST['stock']);
-    $allergyInformation = htmlspecialchars($_POST['allergyInformation']);
+    $allergyInformation = htmlspecialchars($_POST['allergyInformation']); // Correctly retrieve allergy information
 
     // Check if file is selected
     if (isset($_FILES['productImage']) && $_FILES['productImage']['error'] === UPLOAD_ERR_OK) {
@@ -40,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validExtensions = array("jpg", "jpeg", "png", "gif");
         if (in_array($imageFileType, $validExtensions)) {
             if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $targetFilePath)) {
-                $insertSql = "INSERT INTO PRODUCT (PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_PRICE, STOCK, ALLERGY_INFORMATION, PRODUCT_IMAGE_PATH, TRADER_ID) 
+                $insertSql = "INSERT INTO PRODUCT (PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_PRICE, STOCK, ALLERGY_INFORMATION, PRODUCT_IMAGE_PATH, USER_ID) 
                               VALUES (:productName, :productType, :productPrice, :stock, :allergyInformation, :productImagePath, :traderId)";
                 $insertStmt = oci_parse($conn, $insertSql);
                 oci_bind_by_name($insertStmt, ":productName", $productName);
@@ -114,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="margin-left: 40em;">
         <h1>Add Product</h1>
         <form id="productForm" method="post" enctype="multipart/form-data" action="add_product.php">
             <div class="mb-3">
@@ -122,15 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" id="productName" name="productName" required>
             </div>
             <div class="mb-3">
-    <label for="productType" class="form-label">Product Type</label>
-    <select class="form-select" id="productType" name="productType" required>
-        <option value="Butcher">Butcher</option>
-        <option value="Greengrocer">Greengrocer</option>
-        <option value="Fishmonger">Fishmonger</option>
-        <option value="Bakery">Bakery</option>
-        <option value="Delicatessen">Delicatessen</option>
-    </select>
-</div>
+                <label for="productType" class="form-label">Product Type</label>
+                <input type="text" class="form-control" id="productType" name="productType" value="<?php echo htmlspecialchars($_SESSION['traderShop']); ?>" readonly>
+            </div>
             <div class="mb-3">
                 <label for="productPrice" class="form-label">Product Price</label>
                 <input type="number" class="form-control" id="productPrice" name="productPrice" step="0.01" required>
@@ -140,8 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="number" class="form-control" id="stock" name="stock" required>
             </div>
             <div class="mb-3">
-                <label for="allergyInformation" class="form-label">Allergy Information</label>
-                <input type="text" class="form-control" id="allergyInformation" name="allergyInformation">
+                <label for="allergyInformation" class="form-label">Product Description/Allergy Information</label>
+                <input type="text" class="form-control" id="allergyInformation" name="allergyInformation"> 
             </div>
             <div class="mb-3">
                 <label for="productImage" class="form-label">Product Image</label>

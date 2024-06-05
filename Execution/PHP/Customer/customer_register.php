@@ -157,6 +157,7 @@ function sendMail($email, $v_code, $name)
         $password_confirm = $_POST['cpassword'];
         $role = "customer";
         $status = "Not Verified";
+        $admin_verified = "Y";
         $error = 0;
 
         // Session
@@ -270,10 +271,9 @@ function sendMail($email, $v_code, $name)
 
             $verification_code = bin2hex(random_bytes(16));
 
-            //$query = "INSERT INTO Register_Customer(Customer_Name, Customer_Email, Customer_Phone, Customer_Age, Customer_Gender, Customer_Username, Customer_Pass, Customer_Role) VALUES ('$name', '$email', '$phone', '$age', '$gender', '$username', '$password', '$role')";
     
-            $query = "INSERT INTO users(user_name, user_address, user_email, user_phone_number, user_password, user_role, user_status, verification_code)
-             VALUES (:name, :address, :email, :phone, :password, :role, :status, :verify)";
+            $query = "INSERT INTO users(user_name, user_address, user_email, user_phone_number, user_password, user_role, user_status, verification_code, admin_verified)
+             VALUES (:name, :address, :email, :phone, :password, :role, :status, :verify, :admin_verify)";
             $bind_stmnt = oci_parse($conn, $query);
 
             oci_bind_by_name($bind_stmnt, ':name', $name);
@@ -284,6 +284,7 @@ function sendMail($email, $v_code, $name)
             oci_bind_by_name($bind_stmnt, ':role', $role);
             oci_bind_by_name($bind_stmnt, ':status', $status);
             oci_bind_by_name($bind_stmnt, ':verify', $verification_code);
+            oci_bind_by_name($bind_stmnt, ':admin_verify', $admin_verified);
 
 
             $result = oci_execute($bind_stmnt);
@@ -404,7 +405,6 @@ function sendMail($email, $v_code, $name)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
-    <!-- <script src="../JS/main.js"></script> -->
 </body>
 
 </html>

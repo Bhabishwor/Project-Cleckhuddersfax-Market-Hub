@@ -1,4 +1,17 @@
-<?php include 'header.php'; ?>
+<?php
+include "header.php";
+
+if (isset($_SESSION["loginError"])) {
+    echo "<script>alert('" . $_SESSION["loginError"] . "');</script>";
+    unset($_SESSION["loginError"]);
+}
+
+if (isset($_SESSION["stockMsg"])) {
+    echo "<script>alert('" . $_SESSION["stockMsg"] . "');</script>";
+    unset($_SESSION["stockMsg"]);
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +22,15 @@
     <title>Home | Cleckhuddersfax Market Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/Drn5eB5u75e5K5/Y5q+vcIjP1U/YI4N6Y74K5a"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
@@ -211,7 +233,22 @@
     </style>
 </head>
 
+
 <body>
+
+
+    <?php
+    if (isset($_SESSION['order_placed']) && $_SESSION['order_placed']) {
+        echo "<script>
+                alert('Order Placed Successfully');
+              </script>";
+
+
+        // Unset the session variable
+        unset($_SESSION['order_placed']);
+    }
+    ?>
+
 
 
     <div class="container-fluid p-5">
@@ -220,10 +257,6 @@
                 <p class="welcome-title">WELCOME TO CLECKHUDDERSFAX MARKET HUB</p>
                 <p class="welcome-text">Discover quality products curated just for you.</p>
             </div>
-
-
-
-
 
             <div id="carouselHome" class="carousel slide col-md-7" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
@@ -237,11 +270,11 @@
                             alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png"
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide2.png"
                             alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slide1.png"
+                        <img class="d-block w-100" src="../../Image/homepage_slides/homepage_slider3.png"
                             alt="Third slide">
                     </div>
                 </div>
@@ -262,7 +295,7 @@
                 <!-- Menu Item 1 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item1" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        data-type="Butchers">
+                        data-type="butchers">
                         <img src="../../Image/categories/meat.png" alt="Meat" height="150" width="150">
                     </a>
                 </li>
@@ -270,7 +303,7 @@
                 <!-- Menu Item 2 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item2" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        data-type="Greengrocer">
+                        data-type="greengrocer">
                         <img src="../../Image/categories/fresh_produce.png" alt="Greengrocer" height="150" width="150">
                     </a>
                 </li>
@@ -278,7 +311,7 @@
                 <!-- Menu Item 3 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item3" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        data-type="Delicatessen">
+                        data-type="delicatessen">
                         <img src="../../Image/categories/deli_items.png" alt="Delicatessen" height="150" width="150">
                     </a>
                 </li>
@@ -286,7 +319,7 @@
                 <!-- Menu Item 4 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item4" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        data-type="Fishmonger">
+                        data-type="fishmonger">
                         <img src="../../Image/categories/seafood.png" alt="Fishmonger" height="150" width="150">
                     </a>
                 </li>
@@ -294,7 +327,7 @@
                 <!-- Menu Item 5 -->
                 <li class="nav-item dropdown col-lg-auto col-md-6 col-sm-12 mb-2">
                     <a href="#" id="item5" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        data-type="Bakery">
+                        data-type="bakery">
                         <img src="../../Image/categories/bakery.png" alt="Bakery" height="150" width="150">
                     </a>
                 </li>
@@ -320,12 +353,14 @@
         </div>
     </div>
 
+
     <!-- Products Container -->
     <div class="container my-5">
         <div id="product-container" class="row row-cols-1 row-cols-md-3 g-4">
             <!-- Product cards will be loaded here -->
         </div>
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -389,16 +424,30 @@
                     .catch(error => console.error('Error:', error));
             }
 
-            const wishlistButtons = document.querySelectorAll('#product-container .btn-outline-dark[data-toggle="tooltip"]');
 
-            wishlistButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    this.classList.toggle('active');
-                });
-            });
         });
     </script>
 
+    <script>
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('alert')) {
+                if (urlParams.get('alert') === 'cart_full') {
+                    alert('Your cart is full. You can only add up to 20 items.');
+                    window.location.href = "http://localhost/CommunityHarvest/Execution/PHP/Customer/homepage.php";
+                }
+                else if (urlParams.get('alert') === 'out_of_stock') {
+                    alert('Product Out of Stock');
+                    window.location.href = "http://localhost/CommunityHarvest/Execution/PHP/Customer/homepage.php";
+                }
+            }
+
+        }
+    </script>
+
+    <?php
+    include "footer.php";
+    ?>
 
 </body>
 

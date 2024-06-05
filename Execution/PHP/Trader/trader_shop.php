@@ -34,7 +34,7 @@
   // Check if the 'name' and 'email' session variables are set and display them
   $name = isset($_SESSION['name']) ? $_SESSION['name'] : ''; // Added this line to define $name
   $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-  $traderId = isset($_SESSION['traderId']) ? $_SESSION['traderId'] : '';
+  $traderId = isset($_SESSION['id']) ? $_SESSION['id'] : '';
 
 
   if (!isset($_SESSION['email'])) {
@@ -45,7 +45,7 @@
   $email = $_SESSION['email']; // Retrieve email from session
   
   // Fetch traderId using the email
-  $sql = "SELECT TRADER_ID FROM TRADER WHERE TRADER_EMAIL = :email";
+  $sql = "SELECT USER_ID FROM users WHERE USER_EMAIL = :email";
   $stmt = oci_parse($conn, $sql);
   oci_bind_by_name($stmt, ":email", $email);
   oci_execute($stmt);
@@ -56,83 +56,82 @@
     exit();
   }
 
-  $traderId = $row['TRADER_ID'];
+  $traderId = $row['USER_ID'];
 
   // Fetch products for the trader
-  $sql_products = "SELECT * FROM PRODUCT WHERE TRADER_ID = :traderId";
+  $sql_products = "SELECT * FROM PRODUCT WHERE USER_ID = :traderId";
   $stmt_products = oci_parse($conn, $sql_products);
   oci_bind_by_name($stmt_products, ":traderId", $traderId);
   oci_execute($stmt_products);
   ?>
 
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1 class="product-heading" style="margin-top: 2em; margin-right: 5em; text-align: center;">
-      <i class="fas fa-box-open"></i> YOUR PRODUCTS
-    </h1>
-    <!-- Add Product Button -->
-    <div class="container-fluid" style="margin-left: 7em;">
-      <div class="row">
-        <div class="col-lg-9 col-md-8 text-center">
-          <button class="btn btn-primary mt-3 mb-3" onclick="location.href='add_product.php'">
-            <i class="fas fa-plus-circle"></i> Add Product
-          </button>
-        </div>
+ <!-- Main Content -->
+<div class="main-content">
+  <h1 class="product-heading" style="margin-top: 2em; margin-right: 5em; text-align: center;">
+    <b><i class="fas fa-box-open"></i> YOUR PRODUCTS</b>
+  </h1>
+  <!-- Add Product Button -->
+  <div class="container-fluid" style="margin-left: 7em;">
+    <div class="row">
+      <div class="col-lg-9 col-md-8 text-center">
+        <button class="btn btn-primary mt-3 mb-3" onclick="location.href='add_product.php'">
+          <i class="fas fa-plus-circle"></i> Add Product
+        </button>
       </div>
-    </div>
-
-    <div class="row" style="margin-right: 3em;">
-      <?php
-      // Display product data
-      while ($row_product = oci_fetch_assoc($stmt_products)) {
-        echo "<div class='col-md-4 mb-4'>";
-        echo "<div class='card'>";
-        echo "<div class='card-img-container'>";
-        echo "<img src='" . $row_product['PRODUCT_IMAGE_PATH'] . "' class='card-img-top' alt='Product Image'>";
-        echo "</div>";
-        echo "<div class='card-body'>";
-        echo "<h5 class='card-title'>" . $row_product['PRODUCT_NAME'] . "</h5>";
-        echo "<div class='card-text'>";
-        echo "<p><strong>Type:</strong> " . $row_product['PRODUCT_TYPE'] . "</p>";
-        echo "<p><strong>Price:</strong> $" . number_format($row_product['PRODUCT_PRICE'], 2) . "</p>";
-        echo "<p><strong>Stock:</strong> " . $row_product['STOCK'] . "</p>";
-        echo "<p><strong>Allergy Information:</strong> " . $row_product['ALLERGY_INFORMATION'] . "</p>";
-        echo "</div>"; // Closing card-text div
-        // Buttons for each product
-        echo "<div class='card-buttons mt-3 d-flex justify-content-between'>";
-        echo "<a href='edit_product.php?product_id=" . $row_product['PRODUCT_ID'] . "' class='btn btn-primary btn-sm'>Edit</a>";
-        echo "<button class='btn btn-danger btn-sm' onclick='confirmDelete(" . $row_product['PRODUCT_ID'] . ")'>Delete</button>";
-        echo "</div>";
-        echo "</div>"; // Closing card-body div
-        echo "</div>"; // Closing card div
-        echo "</div>"; // Closing col-md-4 div
-      
-        // Delete Product Modal for each product
-        echo "<div class='modal fade' id='deleteProductModal" . $row_product['PRODUCT_ID'] . "' tabindex='-1' role='dialog' aria-labelledby='deleteProductModalLabel" . $row_product['PRODUCT_ID'] . "' aria-hidden='true'>";
-        echo "<div class='modal-dialog' role='document'>";
-        echo "<div class='modal-content'>";
-        echo "<div class='modal-header'>";
-        echo "<h5 class='modal-title' id='deleteProductModalLabel" . $row_product['PRODUCT_ID'] . "'>Delete Product</h5>";
-        echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
-        echo "<span aria-hidden='true'>&times;</span>";
-        echo "</button>";
-        echo "</div>";
-        echo "<div class='modal-body'>";
-        echo "Are you sure you want to delete this product?";
-        echo "</div>";
-        echo "<div class='modal-footer'>";
-        echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-        echo "<a href='delete.php?product_id=" . $row_product['PRODUCT_ID'] . "' class='btn btn-danger'>Delete</a>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-      }
-      ?>
     </div>
   </div>
 
+  <div class="row" style="margin-right: 3em;">
+    <?php
+    // Display product data
+    while ($row_product = oci_fetch_assoc($stmt_products)) {
+      echo "<div class='col-md-4 mb-4'>";
+      echo "<div class='card'>";
+      echo "<div class='card-img-container'>";
+      echo "<img src='" . $row_product['PRODUCT_IMAGE_PATH'] . "' class='card-img-top' alt='Product Image'>";
+      echo "</div>";
+      echo "<div class='card-body'>";
+      echo "<h5 class='card-title'>" . $row_product['PRODUCT_NAME'] . "</h5>";
+      echo "<div class='card-text'>";
+      echo "<p><strong>Type:</strong> " . $row_product['PRODUCT_TYPE'] . "</p>";
+      echo "<p><strong>Price:</strong> $" . number_format($row_product['PRODUCT_PRICE'], 2) . "</p>";
+      echo "<p><strong>Stock:</strong> " . $row_product['STOCK'] . "</p>";
+      // Enlarged area for product description/allergy information
+      echo "<div style='max-height: 100px; overflow-y: auto;'><strong>Product Description/Allergy Information:</strong> " . $row_product['ALLERGY_INFORMATION'] . "</div>";
+      echo "</div>"; // Closing card-text div
+      // Buttons for each product
+      echo "<div class='card-buttons mt-3 d-flex justify-content-between'>";
+      echo "<a href='edit_product.php?product_id=" . $row_product['PRODUCT_ID'] . "' class='btn btn-primary btn-sm'>Edit</a>";
+      echo "<button class='btn btn-danger btn-sm' onclick='confirmDelete(" . $row_product['PRODUCT_ID'] . ")'>Delete</button>";
+      echo "</div>";
+      echo "</div>"; // Closing card-body div
+      echo "</div>"; // Closing card div
+      echo "</div>"; // Closing col-md-4 div
+      // Delete Product Modal for each product
+      echo "<div class='modal fade' id='deleteProductModal" . $row_product['PRODUCT_ID'] . "' tabindex='-1' role='dialog' aria-labelledby='deleteProductModalLabel" . $row_product['PRODUCT_ID'] . "' aria-hidden='true'>";
+      echo "<div class='modal-dialog' role='document'>";
+      echo "<div class='modal-content'>";
+      echo "<div class='modal-header'>";
+      echo "<h5 class='modal-title' id='deleteProductModalLabel" . $row_product['PRODUCT_ID'] . "'>Delete Product</h5>";
+      echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+      echo "<span aria-hidden='true'>&times;</span>";
+      echo "</button>";
+      echo "</div>";
+      echo "<div class='modal-body'>";
+      echo "Are you sure you want to delete this product?";
+      echo "</div>";
+      echo "<div class='modal-footer'>";
+      echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+      echo "<a href='delete.php?product_id=" . $row_product['PRODUCT_ID'] . "' class='btn btn-danger'>Delete</a>";
+      echo "</div>";
+      echo "</div>";
+      echo "</div>";
+      echo "</div>";
+    }
+    ?>
+  </div>
+</div>
 
 
   <script>

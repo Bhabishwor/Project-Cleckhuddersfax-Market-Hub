@@ -1,9 +1,10 @@
 <?php
+session_start();
 include "../connection/connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = isset($_POST['Product_Id']) ? intval($_POST['Product_Id']) : 0;
-    $customer_id = 1; // Replace with actual customer ID from session or other source
+    $customer_id = $_SESSION['id'];
     $rating = isset($_POST['Rating']) ? intval($_POST['Rating']) : 0;
     $review_description = isset($_POST['Review_Description']) ? trim($_POST['Review_Description']) : '';
 

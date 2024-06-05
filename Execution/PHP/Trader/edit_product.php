@@ -1,5 +1,28 @@
 <?php
 include "../connection/connection.php";
+session_start(); // Start the session
+
+if (!isset($_SESSION['email'])) {
+    echo "Email not set in session.";
+    exit();
+}
+
+$email = $_SESSION['email']; // Retrieve email from session
+
+// Fetch traderId and traderShop (product type) using the email
+$sql = "SELECT USER_ID, USER_SHOP FROM users WHERE USER_EMAIL = :email";
+$stmt = oci_parse($conn, $sql);
+oci_bind_by_name($stmt, ":email", $email);
+oci_execute($stmt);
+
+$row = oci_fetch_assoc($stmt);
+if (!$row) {
+    echo "Trader not found.";
+    exit();
+}
+
+$traderId = $row['USER_ID'];
+$_SESSION['traderShop'] = $row['USER_SHOP']; // Store the trader shop (product type) in session
 
 // Define the sanitize function
 function sanitize($input) {
@@ -24,7 +47,7 @@ if ($product_id) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize form inputs
     $productName = sanitize($_POST['productName']);
-    $productType = sanitize($_POST['productType']);
+    $productType = $_SESSION['traderShop']; // Use the trader's registered shop type
     $productPrice = sanitize($_POST['productPrice']);
     $stock = sanitize($_POST['stock']);
     $allergyInformation = sanitize($_POST['allergyInformation']);
@@ -48,10 +71,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 oci_bind_by_name($updateStmt, ":allergyInformation", $allergyInformation);
                 oci_bind_by_name($updateStmt, ":productImagePath", $targetFilePath);
                 oci_bind_by_name($updateStmt, ":product_id", $product_id);
+
+                if (oci_execute($updateStmt)) {
+                    oci_free_statement($updateStmt);
+                    oci_close($conn);
+                    echo "Product updated successfully";
+                    header("Location: trader_shop.php");
+                    exit();
+                } else {
+                    $e = oci_error($updateStmt);
+                    echo "Error: " . $e['message'];
+                }
+            } else {
+                echo "Sorry, there was an error uploading your file.";
             }
         } else {
             echo "Invalid file type.";
-            exit;
         }
     } else {
         // Update product data without image
@@ -63,22 +98,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         oci_bind_by_name($updateStmt, ":stock", $stock);
         oci_bind_by_name($updateStmt, ":allergyInformation", $allergyInformation);
         oci_bind_by_name($updateStmt, ":product_id", $product_id);
-    }
 
-    if (oci_execute($updateStmt)) {
-        echo "Product updated successfully";
-        header("Location: trader_shop.php");
-    } else {
-        $e = oci_error($updateStmt);
-        echo "Error: " . $e['message'];
+        if (oci_execute($updateStmt)) {
+            oci_free_statement($updateStmt);
+            oci_close($conn);
+            echo "Product updated successfully";
+            header("Location: trader_shop.php");
+            exit();
+        } else {
+            $e = oci_error($updateStmt);
+            echo "Error: " . $e['message'];
+        }
     }
-
-    oci_free_statement($updateStmt);
 }
-
-oci_close($conn);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +160,7 @@ oci_close($conn);
 </head>
 <body>
   <!-- Edit Product Form -->
-  <div class="container">
+  <div class="container" style="margin-left: 30em;">
     <h1>Edit Product</h1>
     <?php if ($product): ?>
     <form id="productForm" method="post" enctype="multipart/form-data" action="">
@@ -136,15 +169,9 @@ oci_close($conn);
         <input type="text" class="form-control" id="productName" name="productName" value="<?php echo $product['PRODUCT_NAME']; ?>" required>
       </div>
       <div class="mb-3">
-    <label for="productType" class="form-label">Product Type</label>
-    <select class="form-select" id="productType" name="productType" required>
-        <option value="Butcher">Butcher</option>
-        <option value="Greengrocer">Greengrocer</option>
-        <option value="Fishmonger">Fishmonger</option>
-        <option value="Bakery">Bakery</option>
-        <option value="Delicatessen">Delicatessen</option>
-    </select>
-</div>
+        <label for="productType" class="form-label">Product Type</label>
+        <input type="text" class="form-control" id="productType" name="productType" value="<?php echo $_SESSION['traderShop']; ?>" readonly>
+      </div>
       <div class="mb-3">
         <label for="productPrice" class="form-label">Product Price</label>
         <input type="number" class="form-control" id="productPrice" name="productPrice" value="<?php echo $product['PRODUCT_PRICE']; ?>" step="0.01" required>
@@ -154,9 +181,10 @@ oci_close($conn);
         <input type="number" class="form-control" id="stock" name="stock" value="<?php echo $product['STOCK']; ?>" required>
       </div>
       <div class="mb-3">
-        <label for="allergyInformation" class="form-label">Allergy Information</label>
-        <input type="text" class="form-control" id="allergyInformation" name="allergyInformation" value="<?php echo $product['ALLERGY_INFORMATION']; ?>">
-      </div>
+    <label for="allergyInformation" class="form-label">Product Description/Allergy Information</label>
+    <textarea class="form-control" id="allergyInformation" name="allergyInformation" rows="4"><?php echo $product['ALLERGY_INFORMATION']; ?></textarea>
+</div>
+
       <div class="mb-3">
         <label for="productImage" class="form-label">Product Image</label>
         <?php if (!empty($product['PRODUCT_IMAGE_PATH'])): ?>
